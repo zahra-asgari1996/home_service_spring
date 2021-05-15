@@ -15,5 +15,19 @@ public class Service {
     @Enumerated
     private TypeOfService type;
 
+    public Integer getId() {
+        return id;
+    }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public TypeOfService getType() {
+        return type;
+    }
+
+    public void setType(TypeOfService type) {
+        this.type = type;
+    }
 }
