@@ -1,4 +1,6 @@
 package ir.maktab.configuration;
+import ir.maktab.data.domain.Service;
+import ir.maktab.data.domain.SubService;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
@@ -46,8 +48,8 @@ public class Config {
                 .applySettings(settings).build();
 
         MetadataSources metadataSources = new MetadataSources(serviceRegistry);
-//        metadataSources.addAnnotatedClass(Manager.class);
-//        metadataSources.addAnnotatedClass(Customer.class);
+        metadataSources.addAnnotatedClass(Service.class);
+        metadataSources.addAnnotatedClass(SubService.class);
 //        metadataSources.addAnnotatedClass(Account.class);
 //        metadataSources.addAnnotatedClass(Transaction.class);
         Metadata metadata = metadataSources.buildMetadata();

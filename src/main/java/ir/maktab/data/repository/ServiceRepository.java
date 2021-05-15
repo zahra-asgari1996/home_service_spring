@@ -4,7 +4,7 @@ import ir.maktab.data.domain.Service;
 
 public interface ServiceRepository {
     void saveNewService(Service service);
-    Service findService(Service service);
+    Service getService(Service service);
     void  deleteService(Service service);
     void updateService(Service service);
 }

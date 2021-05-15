@@ -23,7 +23,7 @@ public class ServiceRepositoryImpl implements  ServiceRepository{
     }
 
     @Override
-    public Service findService(Service service) {
+    public Service getService(Service service) {
         Session session= sessionFactory.openSession();
         session.beginTransaction();
         Service service1=session.get(Service.class,service.getId());
