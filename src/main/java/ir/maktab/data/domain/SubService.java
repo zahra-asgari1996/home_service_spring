@@ -1,6 +1,8 @@
 package ir.maktab.data.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 //@DiscriminatorValue(value = "Sub_Service")
@@ -16,44 +18,60 @@ public class SubService {
     private String name;
     @ManyToOne
     private Service service;
-
-    public Service getService() {
-        return service;
-    }
-
-    public void setService(Service service) {
-        this.service = service;
-    }
+    @ManyToMany(mappedBy = "services")
+    private List<Expert> experts=new ArrayList<>();
 
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public SubService setId(Integer id) {
         this.id = id;
+        return this;
     }
 
     public Double getBasePrice() {
         return basePrice;
     }
 
-    public void setBasePrice(Double basePrice) {
+    public SubService setBasePrice(Double basePrice) {
         this.basePrice = basePrice;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public SubService setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public SubService setName(String name) {
         this.name = name;
+        return this;
+    }
+
+    public Service getService() {
+        return service;
+    }
+
+    public SubService setService(Service service) {
+        this.service = service;
+        return this;
+    }
+
+    public List<Expert> getExperts() {
+        return experts;
+    }
+
+    public SubService setExperts(List<Expert> experts) {
+        this.experts = experts;
+        return this;
     }
 }

@@ -1,6 +1,5 @@
 package ir.maktab.configuration;
-import ir.maktab.data.domain.Service;
-import ir.maktab.data.domain.SubService;
+import ir.maktab.data.domain.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
@@ -43,6 +42,8 @@ public class Config {
                 environment.getRequiredProperty("hibernate.show_sql"));
         settings.put("hibernate.format_sql",
                 environment.getRequiredProperty("hibernate.format_sql"));
+        settings.put("hibernate.dialect",
+                environment.getRequiredProperty("hibernate.dialect"));
 
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(settings).build();
@@ -50,8 +51,9 @@ public class Config {
         MetadataSources metadataSources = new MetadataSources(serviceRegistry);
         metadataSources.addAnnotatedClass(Service.class);
         metadataSources.addAnnotatedClass(SubService.class);
-//        metadataSources.addAnnotatedClass(Account.class);
-//        metadataSources.addAnnotatedClass(Transaction.class);
+        metadataSources.addAnnotatedClass(Expert.class);
+        metadataSources.addAnnotatedClass(Manager.class);
+        metadataSources.addAnnotatedClass(Customer.class);
         Metadata metadata = metadataSources.buildMetadata();
         return metadata.getSessionFactoryBuilder().build();
     }

@@ -14,42 +14,38 @@ public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Enumerated
-    private TypeOfService type;
     @Column
     private String name;
-    @OneToMany
+    @OneToMany(mappedBy = "service")
     private List<SubService> subServices=new ArrayList<>();
+
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Service setId(Integer id) {
+        this.id = id;
+        return this;
+    }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public Service setName(String name) {
         this.name = name;
+        return this;
     }
 
     public List<SubService> getSubServices() {
         return subServices;
     }
 
-    public void setSubServices(List<SubService> subServices) {
+    public Service setSubServices(List<SubService> subServices) {
         this.subServices = subServices;
+        return this;
     }
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public TypeOfService getType() {
-        return type;
-    }
-
-    public void setType(TypeOfService type) {
-        this.type = type;
-    }
 }
