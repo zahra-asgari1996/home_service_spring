@@ -1,5 +1,6 @@
 package ir.maktab.dto;
 
+import ir.maktab.data.enums.Role;
 import ir.maktab.data.enums.Situation;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -17,9 +18,20 @@ public class UserDto {
     private String password;
     private Situation situation;
     private Date date;
+    private Role role;
+
 
     public Integer getId() {
         return id;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public UserDto setRole(Role role) {
+        this.role = role;
+        return this;
     }
 
     public UserDto setId(Integer id) {

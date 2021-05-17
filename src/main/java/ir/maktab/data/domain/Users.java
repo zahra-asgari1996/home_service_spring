@@ -1,5 +1,6 @@
 package ir.maktab.data.domain;
 
+import ir.maktab.data.enums.Role;
 import ir.maktab.data.enums.Situation;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -18,14 +19,36 @@ public class Users {
     private String email;
     @Column(nullable = false)
     private String password;
-    @Enumerated
+    @Enumerated(value = EnumType.STRING)
     private Situation situation;
     @Column
     @CreationTimestamp
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date date;
+    @Enumerated(value = EnumType.STRING)
+    private Role role;
+    @Column
+    private Double credit;
 
     public Users() {
+    }
+
+    public Double getCredit() {
+        return credit;
+    }
+
+    public Users setCredit(Double credit) {
+        this.credit = credit;
+        return this;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public Users setRole(Role role) {
+        this.role = role;
+        return this;
     }
 
     public Integer getId() {
