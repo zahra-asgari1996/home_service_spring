@@ -1,6 +1,7 @@
 package ir.maktab.data.domain;
 
 import ir.maktab.data.enums.OrderSituation;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,10 +13,16 @@ public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column
     private Double proposedPrice;
+    @Column
     private String jobDescription;
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
     private Date dateOfOrderRegistration;
+    @Temporal(TemporalType.DATE)
     private Date dateOfWork;
+    @Enumerated(value = EnumType.STRING)
     private OrderSituation situation;
     @ManyToOne
     private Customer customer;
@@ -98,12 +105,12 @@ public class Orders {
         return this;
     }
 
-//    public Expert getExpert() {
-//        return expert;
-//    }
-//
-//    public Orders setExpert(Expert expert) {
-//        this.expert = expert;
-//        return this;
-//    }
+    public List<Offers> getOffers() {
+        return offers;
+    }
+
+    public Orders setOffers(List<Offers> offers) {
+        this.offers = offers;
+        return this;
+    }
 }
