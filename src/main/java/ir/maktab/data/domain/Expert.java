@@ -13,8 +13,8 @@ public class Expert extends Users {
     private byte[] image;
     @ManyToMany
     private List<SubService> services=new ArrayList<>();
-    @OneToMany(mappedBy = "expert")
-    private List<Orders> orders=new ArrayList<>();
+//    @OneToMany(mappedBy = "expert")
+//    private List<Orders> orders=new ArrayList<>();
 
     public Integer getRate() {
         return rate;

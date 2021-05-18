@@ -19,8 +19,8 @@ public class Orders {
     private Customer customer;
     @ManyToOne
     private SubService subService;
-    @ManyToOne
-    private Expert expert;
+//    @ManyToOne
+//    private Expert expert;
 
     public Integer getId() {
         return id;
@@ -94,12 +94,12 @@ public class Orders {
         return this;
     }
 
-    public Expert getExpert() {
-        return expert;
-    }
-
-    public Orders setExpert(Expert expert) {
-        this.expert = expert;
-        return this;
-    }
+//    public Expert getExpert() {
+//        return expert;
+//    }
+//
+//    public Orders setExpert(Expert expert) {
+//        this.expert = expert;
+//        return this;
+//    }
 }
