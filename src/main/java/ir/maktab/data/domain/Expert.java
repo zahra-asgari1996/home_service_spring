@@ -13,10 +13,10 @@ public class Expert extends Users {
     private byte[] image;
     @ManyToMany
     private List<SubService> services=new ArrayList<>();
-//    @OneToMany(mappedBy = "expert")
-//    private List<Orders> orders=new ArrayList<>();
     @OneToMany(mappedBy = "expert")
     private List<Offers> offers=new ArrayList<>();
+    @OneToMany(mappedBy = "expert")
+    private List<Comments> comments=new ArrayList<>();
 
     public Integer getRate() {
         return rate;
@@ -45,4 +45,21 @@ public class Expert extends Users {
         return this;
     }
 
+    public List<Offers> getOffers() {
+        return offers;
+    }
+
+    public Expert setOffers(List<Offers> offers) {
+        this.offers = offers;
+        return this;
+    }
+
+    public List<Comments> getComments() {
+        return comments;
+    }
+
+    public Expert setComments(List<Comments> comments) {
+        this.comments = comments;
+        return this;
+    }
 }
