@@ -1,12 +1,17 @@
 package ir.maktab.data.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
 public class Address {
+    @Column
     private String city;
+    @Column
     private String street;
+    @Column
     private String alley;
+    @Column
     private String plaque;
 
     public String getCity() {
