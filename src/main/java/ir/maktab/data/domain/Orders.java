@@ -3,7 +3,9 @@ package ir.maktab.data.domain;
 import ir.maktab.data.enums.OrderSituation;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Orders {
@@ -19,6 +21,8 @@ public class Orders {
     private Customer customer;
     @ManyToOne
     private SubService subService;
+    @OneToMany(mappedBy = "orders")
+    private List<Offers> offers=new ArrayList<>();
 //    @ManyToOne
 //    private Expert expert;
 
