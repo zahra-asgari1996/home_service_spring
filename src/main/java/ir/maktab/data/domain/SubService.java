@@ -76,4 +76,13 @@ public class SubService {
         this.experts = experts;
         return this;
     }
+
+    public List<Orders> getOrders() {
+        return orders;
+    }
+
+    public SubService setOrders(List<Orders> orders) {
+        this.orders = orders;
+        return this;
+    }
 }
