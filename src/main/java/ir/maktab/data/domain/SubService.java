@@ -20,6 +20,8 @@ public class SubService {
     private Service service;
     @ManyToMany(mappedBy = "services")
     private List<Expert> experts=new ArrayList<>();
+    @OneToMany(mappedBy = "subService")
+    private List<Orders> orders=new ArrayList<>();
 
     public Integer getId() {
         return id;
