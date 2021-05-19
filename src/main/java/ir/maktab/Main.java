@@ -1,7 +1,9 @@
 package ir.maktab;
 
 import ir.maktab.configuration.Config;
+import ir.maktab.data.domain.Customer;
 import ir.maktab.data.domain.Service;
+import ir.maktab.data.repository.CustomerRepository;
 import ir.maktab.dto.ServiceDto;
 import ir.maktab.web.ServiceController;
 import org.springframework.context.ApplicationContext;
@@ -11,6 +13,12 @@ public class Main {
     static ApplicationContext iocContainer=
             new AnnotationConfigApplicationContext(Config.class);
     public static void main(String[] args) {
+        CustomerRepository customerRepository=iocContainer.getBean(CustomerRepository.class);
+        Customer customer=new Customer();
+        customer.setName("zahra");
+        customer.setEmail("aaaaa");
+        customer.setPassword("111");
+        customerRepository.saveNewCustomer(customer);
 //        ServiceDto service=new ServiceDto();
 //        service.setName("a");
 //        ServiceController serviceController=iocContainer.getBean(ServiceController.class);

@@ -54,6 +54,10 @@ public class Config {
         metadataSources.addAnnotatedClass(Expert.class);
         metadataSources.addAnnotatedClass(Manager.class);
         metadataSources.addAnnotatedClass(Customer.class);
+        metadataSources.addAnnotatedClass(Users.class);
+        metadataSources.addAnnotatedClass(Offers.class);
+        metadataSources.addAnnotatedClass(Orders.class);
+        metadataSources.addAnnotatedClass(Comments.class);
         Metadata metadata = metadataSources.buildMetadata();
         return metadata.getSessionFactoryBuilder().build();
     }
