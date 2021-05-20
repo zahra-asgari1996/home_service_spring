@@ -9,5 +9,5 @@ public interface OrderService {
     void saveNewOrder(OrderDto dto);
     void deleteOrder(OrderDto dto);
     void updateOrder(OrderDto dto);
-    List<Orders> fetchAllOrders();
+    List<OrderDto> fetchAllOrders();
 }

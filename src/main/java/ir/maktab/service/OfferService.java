@@ -9,5 +9,5 @@ public interface OfferService {
     void saveNewOffer(OfferDto dto);
     void deleteOffer(OfferDto dto);
     void updateOffer(OfferDto dto);
-    List<Offers> fetchAllOffers();
+    List<OfferDto> fetchAllOffers();
 }
