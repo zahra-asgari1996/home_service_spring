@@ -1,9 +1,12 @@
 package ir.maktab.data.repository;
 
 import ir.maktab.data.domain.Service;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class ServiceRepositoryImpl implements  ServiceRepository{
@@ -48,5 +51,16 @@ public class ServiceRepositoryImpl implements  ServiceRepository{
         session.update(service);
         session.getTransaction().commit();
         session.close();
+    }
+
+    @Override
+    public List<Service> fetchAllServices() {
+        Session session= sessionFactory.openSession();
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(Service.class);
+        List <Service> list = criteria.list();
+        session.getTransaction().commit();
+        session.close();
+        return list;
     }
 }
