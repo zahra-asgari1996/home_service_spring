@@ -1,9 +1,13 @@
 package ir.maktab.data.repository;
 
+import ir.maktab.data.domain.Service;
 import ir.maktab.data.domain.SubService;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class SubServiceRepositoryImpl implements SubServiceRepository{
@@ -49,5 +53,16 @@ public class SubServiceRepositoryImpl implements SubServiceRepository{
         session.getTransaction().commit();
         session.close();
         return service;
+    }
+
+    @Override
+    public List<SubService> fetchAllSubServices() {
+        Session session= sessionFactory.openSession();
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(SubService.class);
+        List <SubService> list = criteria.list();
+        session.getTransaction().commit();
+        session.close();
+        return list;
     }
 }
