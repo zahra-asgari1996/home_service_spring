@@ -5,7 +5,7 @@ import ir.maktab.dto.OrderDto;
 import org.springframework.stereotype.Component;
 
 @Component
-public class OrderMappingImpl implements OrderMapping {
+public class OrderMapperImpl implements OrderMapper {
     @Override
     public Orders toOrder(OrderDto dto) {
         Orders order=new Orders();

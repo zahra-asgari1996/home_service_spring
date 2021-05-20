@@ -5,7 +5,7 @@ import ir.maktab.dto.OfferDto;
 import org.springframework.stereotype.Component;
 
 @Component
-public class OfferMappingImpl implements OfferMapping {
+public class OfferMapperImpl implements OfferMapper {
     @Override
     public Offers toOffer(OfferDto dto) {
         Offers offer = new Offers();
