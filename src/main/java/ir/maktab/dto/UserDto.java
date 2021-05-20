@@ -19,6 +19,7 @@ public class UserDto {
     private Situation situation;
     private Date date;
     private Role role;
+    private Double credit;
 
 
     public Integer getId() {
@@ -92,4 +93,16 @@ public class UserDto {
         this.date = date;
         return this;
     }
+
+    public Double getCredit() {
+        return credit;
+    }
+
+    public UserDto setCredit(Double credit) {
+        this.credit = credit;
+        return this;
+    }
+
+
+
 }
