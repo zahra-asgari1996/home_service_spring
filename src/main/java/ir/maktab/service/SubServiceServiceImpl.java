@@ -3,6 +3,7 @@ package ir.maktab.service;
 import ir.maktab.data.repository.SubServiceRepository;
 import ir.maktab.dto.ExpertDto;
 import ir.maktab.dto.SubServiceDto;
+import ir.maktab.service.exception.DuplicatedDataException;
 import ir.maktab.service.mapper.ExpertMapper;
 import ir.maktab.service.mapper.SubServiceMapper;
 import org.springframework.stereotype.Service;
@@ -23,9 +24,13 @@ public class SubServiceServiceImpl implements SubServiceService{
     }
 
     @Override
-    public void saveNewSubService(SubServiceDto subServiceDto) {
-        subServiceRepository.saveNewSubService(
-                subServiceMapper.convertToSubService(subServiceDto));
+    public void saveNewSubService(SubServiceDto subServiceDto) throws DuplicatedDataException {
+        if (subServiceRepository.findByName(subServiceDto.getName())){
+            throw new DuplicatedDataException("This Sub Service Available In DB");
+        }else {
+            subServiceRepository.saveNewSubService(
+                    subServiceMapper.convertToSubService(subServiceDto));
+        }
     }
 
     @Override

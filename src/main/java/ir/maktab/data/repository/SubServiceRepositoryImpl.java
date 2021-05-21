@@ -6,6 +6,7 @@ import ir.maktab.data.domain.SubService;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -99,5 +100,20 @@ public class SubServiceRepositoryImpl implements SubServiceRepository {
         session.getTransaction().commit();
         session.close();
 
+    }
+
+    @Override
+    public boolean findByName(String name) {
+        Session session= sessionFactory.openSession();
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(SubService.class);
+        criteria.add(Restrictions.eq("name",name));
+        List list = criteria.list();
+        session.beginTransaction().commit();
+        session.close();
+        if (list!=null){
+            return true;
+        }
+        return false;
     }
 }

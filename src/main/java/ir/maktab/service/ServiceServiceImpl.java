@@ -23,8 +23,9 @@ public class ServiceServiceImpl implements ServiceService{
     public void saveNewService(ServiceDto serviceDto) throws DuplicatedDataException {
         if(serviceRepository.findByName(serviceDto.getName())){
             throw new DuplicatedDataException("This Service Available In DB");
+        }else {
+            serviceRepository.saveNewService(serviceMapper.convertToService(serviceDto));
         }
-        serviceRepository.saveNewService(serviceMapper.convertToService(serviceDto));
     }
 
     @Override
