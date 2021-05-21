@@ -16,6 +16,12 @@ public class Customer extends Users {
     @OneToMany(mappedBy = "customer")
     private List<Comments> comments=new ArrayList<>();
 
+    public Customer() {
+        this.setRole(Role.Customer);
+    }
+
+
+
     public List<Orders> getOrders() {
         return orders;
     }

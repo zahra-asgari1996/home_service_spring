@@ -1,5 +1,7 @@
 package ir.maktab.data.domain;
 
+import ir.maktab.data.enums.Role;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +19,11 @@ public class Expert extends Users {
     private List<Offers> offers=new ArrayList<>();
     @OneToMany(mappedBy = "expert")
     private List<Comments> comments=new ArrayList<>();
+
+    public Expert() {
+        this.setRole(Role.Expert);
+    }
+
 
     public Integer getRate() {
         return rate;
