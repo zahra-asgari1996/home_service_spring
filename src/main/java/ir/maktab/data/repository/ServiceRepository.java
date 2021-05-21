@@ -10,4 +10,5 @@ public interface ServiceRepository {
     void  deleteService(Service service);
     void updateService(Service service);
     List<Service> fetchAllServices();
+    boolean findByName(String name);
 }

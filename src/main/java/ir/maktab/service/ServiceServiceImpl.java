@@ -2,6 +2,7 @@ package ir.maktab.service;
 
 import ir.maktab.data.repository.ServiceRepository;
 import ir.maktab.dto.ServiceDto;
+import ir.maktab.service.exception.DuplicatedDataException;
 import ir.maktab.service.mapper.ServiceMapper;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,10 @@ public class ServiceServiceImpl implements ServiceService{
     }
 
     @Override
-    public void saveNewService(ServiceDto serviceDto) {
+    public void saveNewService(ServiceDto serviceDto) throws DuplicatedDataException {
+        if(serviceRepository.findByName(serviceDto.getName())){
+            throw new DuplicatedDataException("This Service Available In DB");
+        }
         serviceRepository.saveNewService(serviceMapper.convertToService(serviceDto));
     }
 

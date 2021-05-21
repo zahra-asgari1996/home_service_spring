@@ -4,6 +4,7 @@ import ir.maktab.data.domain.Service;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -62,5 +63,20 @@ public class ServiceRepositoryImpl implements  ServiceRepository{
         session.getTransaction().commit();
         session.close();
         return list;
+    }
+
+    @Override
+    public boolean findByName(String name) {
+        Session session= sessionFactory.openSession();
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(Service.class);
+        criteria.add(Restrictions.eq("name",name));
+        List list = criteria.list();
+        session.beginTransaction().commit();
+        session.close();
+        if (list!=null){
+            return true;
+        }
+        return false;
     }
 }
