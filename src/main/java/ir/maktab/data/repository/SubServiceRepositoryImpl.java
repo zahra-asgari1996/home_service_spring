@@ -1,5 +1,6 @@
 package ir.maktab.data.repository;
 
+import ir.maktab.data.domain.Expert;
 import ir.maktab.data.domain.Service;
 import ir.maktab.data.domain.SubService;
 import org.hibernate.Criteria;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class SubServiceRepositoryImpl implements SubServiceRepository{
+public class SubServiceRepositoryImpl implements SubServiceRepository {
     private final SessionFactory sessionFactory;
 
     public SubServiceRepositoryImpl(SessionFactory sessionFactory) {
@@ -19,7 +20,7 @@ public class SubServiceRepositoryImpl implements SubServiceRepository{
 
     @Override
     public void saveNewSubService(SubService subService) {
-        Session session= sessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.save(subService);
         session.getTransaction().commit();
@@ -28,7 +29,7 @@ public class SubServiceRepositoryImpl implements SubServiceRepository{
 
     @Override
     public void updateSubService(SubService subService) {
-        Session session= sessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.update(subService);
         session.getTransaction().commit();
@@ -37,7 +38,7 @@ public class SubServiceRepositoryImpl implements SubServiceRepository{
 
     @Override
     public void deleteSubService(SubService subService) {
-        Session session= sessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.update(subService);
         session.getTransaction().commit();
@@ -47,9 +48,9 @@ public class SubServiceRepositoryImpl implements SubServiceRepository{
 
     @Override
     public SubService getSubService(SubService subService) {
-        Session session= sessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         session.beginTransaction();
-        SubService service=session.get(SubService.class, subService.getId());
+        SubService service = session.get(SubService.class, subService.getId());
         session.getTransaction().commit();
         session.close();
         return service;
@@ -57,12 +58,46 @@ public class SubServiceRepositoryImpl implements SubServiceRepository{
 
     @Override
     public List<SubService> fetchAllSubServices() {
-        Session session= sessionFactory.openSession();
+        Session session = sessionFactory.openSession();
         session.beginTransaction();
         Criteria criteria = session.createCriteria(SubService.class);
-        List <SubService> list = criteria.list();
+        List<SubService> list = criteria.list();
         session.getTransaction().commit();
         session.close();
         return list;
+    }
+
+    @Override
+    public void deleteExpertFromSubService(SubService service, Expert expert) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        SubService subService = session.get(SubService.class, service.getId());
+        subService.getExperts().remove(expert);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    @Override
+    public void updateExpertInSubService(SubService service, Expert newExpert,Expert oldExpert) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        SubService subService = session.get(SubService.class, service.getId());
+        subService.getExperts().remove(oldExpert);
+        subService.getExperts().add(newExpert);
+        session.getTransaction().commit();
+        session.close();
+
+
+    }
+
+    @Override
+    public void addExpertToSubService(SubService service, Expert expert) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        SubService subService = session.get(SubService.class, service.getId());
+        subService.getExperts().add(expert);
+        session.getTransaction().commit();
+        session.close();
+
     }
 }

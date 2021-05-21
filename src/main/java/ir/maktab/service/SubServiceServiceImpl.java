@@ -1,7 +1,9 @@
 package ir.maktab.service;
 
 import ir.maktab.data.repository.SubServiceRepository;
+import ir.maktab.dto.ExpertDto;
 import ir.maktab.dto.SubServiceDto;
+import ir.maktab.service.mapper.ExpertMapper;
 import ir.maktab.service.mapper.SubServiceMapper;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +14,12 @@ import java.util.stream.Collectors;
 public class SubServiceServiceImpl implements SubServiceService{
     private final SubServiceRepository subServiceRepository;
     private final SubServiceMapper subServiceMapper;
+    private final ExpertMapper mapper;
 
-    public SubServiceServiceImpl(SubServiceRepository subServiceRepository, SubServiceMapper subServiceMapper) {
+    public SubServiceServiceImpl(SubServiceRepository subServiceRepository, SubServiceMapper subServiceMapper, ExpertMapper mapper) {
         this.subServiceRepository = subServiceRepository;
         this.subServiceMapper = subServiceMapper;
+        this.mapper = mapper;
     }
 
     @Override
@@ -46,5 +50,28 @@ public class SubServiceServiceImpl implements SubServiceService{
         return subServiceRepository.fetchAllSubServices()
                 .stream().map(i->subServiceMapper.covertToSubServiceDto(i))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteExpertFromSubService(SubServiceDto service, ExpertDto expert) {
+        subServiceRepository.
+                deleteExpertFromSubService(
+                        subServiceMapper.convertToSubService(service),mapper.toExpert(expert) );
+    }
+
+    @Override
+    public void updateExpertInSubService(SubServiceDto service, ExpertDto newExpert, ExpertDto oldExpert) {
+        subServiceRepository.
+                updateExpertInSubService
+                        (subServiceMapper.convertToSubService(service),mapper.toExpert(newExpert),mapper.toExpert(oldExpert) );
+
+    }
+
+    @Override
+    public void addExpertToSubService(SubServiceDto service, ExpertDto expert) {
+        subServiceRepository.
+                addExpertToSubService
+                        (subServiceMapper.convertToSubService(service),mapper.toExpert(expert) );
+
     }
 }
