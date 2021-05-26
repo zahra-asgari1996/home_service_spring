@@ -30,8 +30,8 @@ public class Orders {
     private SubService subService;
     @OneToMany(mappedBy = "orders")
     private List<Offers> offers=new ArrayList<>();
-//    @ManyToOne
-//    private Expert expert;
+    @ManyToOne
+    private Expert expert;
 
     public Integer getId() {
         return id;
@@ -111,6 +111,15 @@ public class Orders {
 
     public Orders setOffers(List<Offers> offers) {
         this.offers = offers;
+        return this;
+    }
+
+    public Expert getExpert() {
+        return expert;
+    }
+
+    public Orders setExpert(Expert expert) {
+        this.expert = expert;
         return this;
     }
 }

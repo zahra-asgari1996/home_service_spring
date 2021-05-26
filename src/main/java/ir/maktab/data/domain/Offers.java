@@ -1,5 +1,6 @@
 package ir.maktab.data.domain;
 
+import ir.maktab.data.enums.OfferSituation;
 import jdk.jfr.Timestamp;
 
 import javax.persistence.*;
@@ -24,6 +25,8 @@ public class Offers {
     private Date startTime;
     @ManyToOne
     private Expert expert;
+    @Enumerated(EnumType.STRING)
+    private OfferSituation offerSituation;
 
     public Integer getId() {
         return id;
@@ -85,6 +88,15 @@ public class Offers {
 
     public Offers setExpert(Expert expert) {
         this.expert = expert;
+        return this;
+    }
+
+    public OfferSituation getOfferSituation() {
+        return offerSituation;
+    }
+
+    public Offers setOfferSituation(OfferSituation offerSituation) {
+        this.offerSituation = offerSituation;
         return this;
     }
 }

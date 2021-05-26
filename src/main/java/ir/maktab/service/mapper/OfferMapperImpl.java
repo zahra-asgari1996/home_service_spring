@@ -24,6 +24,7 @@ public class OfferMapperImpl implements OfferMapper {
         offer.setOrders(orderMapper.toOrder(dto.getOrders()));
         offer.setDurationOfWork(dto.getDurationOfWork());
         offer.setStartTime(dto.getStartTime());
+        offer.setOfferSituation(dto.getOfferSituation());
         return offer;
     }
 
@@ -37,6 +38,7 @@ public class OfferMapperImpl implements OfferMapper {
         dto.setId(offer.getId());
         dto.setStartTime(offer.getStartTime());
         dto.setOrders(orderMapper.toOrderDto(offer.getOrders()));
+        dto.setOfferSituation(offer.getOfferSituation());
         return dto;
     }
 }

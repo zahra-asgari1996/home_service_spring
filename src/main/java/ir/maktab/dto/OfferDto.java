@@ -2,6 +2,7 @@ package ir.maktab.dto;
 
 import ir.maktab.data.domain.Expert;
 import ir.maktab.data.domain.Orders;
+import ir.maktab.data.enums.OfferSituation;
 import jdk.jfr.Timestamp;
 
 import javax.persistence.Column;
@@ -18,6 +19,7 @@ public class OfferDto {
     private Double durationOfWork;
     private Date startTime;
     private ExpertDto expert;
+    private OfferSituation offerSituation;
 
     public Integer getId() {
         return id;
@@ -25,6 +27,15 @@ public class OfferDto {
 
     public OfferDto setId(Integer id) {
         this.id = id;
+        return this;
+    }
+
+    public OfferSituation getOfferSituation() {
+        return offerSituation;
+    }
+
+    public OfferDto setOfferSituation(OfferSituation offerSituation) {
+        this.offerSituation = offerSituation;
         return this;
     }
 

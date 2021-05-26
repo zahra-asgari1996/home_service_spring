@@ -19,7 +19,8 @@ public class Expert extends Users {
     private List<Offers> offers=new ArrayList<>();
     @OneToMany(mappedBy = "expert")
     private List<Comments> comments=new ArrayList<>();
-
+    @OneToMany
+    private List<Orders> orders=new ArrayList<>();
     public Expert() {
         this.setRole(Role.Expert);
     }
@@ -67,6 +68,15 @@ public class Expert extends Users {
 
     public Expert setComments(List<Comments> comments) {
         this.comments = comments;
+        return this;
+    }
+
+    public List<Orders> getOrders() {
+        return orders;
+    }
+
+    public Expert setOrders(List<Orders> orders) {
+        this.orders = orders;
         return this;
     }
 }

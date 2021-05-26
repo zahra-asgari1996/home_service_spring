@@ -11,11 +11,13 @@ public class ExpertMapperImpl implements ExpertMapper {
     private final CommentMapper commentMapper;
     private final OfferMapper offerMapper;
     private final SubServiceMapper serviceMapper;
+    private final OrderMapper orderMapper;
 
-    public ExpertMapperImpl(CommentMapper commentMapper, OfferMapper offerMapper, SubServiceMapper serviceMapper) {
+    public ExpertMapperImpl(CommentMapper commentMapper, OfferMapper offerMapper, SubServiceMapper serviceMapper, OrderMapper orderMapper) {
         this.commentMapper = commentMapper;
         this.offerMapper = offerMapper;
         this.serviceMapper = serviceMapper;
+        this.orderMapper = orderMapper;
     }
 
     @Override
@@ -35,6 +37,7 @@ public class ExpertMapperImpl implements ExpertMapper {
         expert.setRate(dto.getRate());
         expert.setOffers(dto.getOffers().stream().map(i->offerMapper.toOffer(i)).collect(Collectors.toList()));
         expert.setServices(dto.getServices().stream().map(i->serviceMapper.convertToSubService(i)).collect(Collectors.toList()));
+        expert.setOrders(dto.getOrders().stream().map(i->orderMapper.toOrder(i)).collect(Collectors.toList()));
         return expert;
     }
 
@@ -55,6 +58,7 @@ public class ExpertMapperImpl implements ExpertMapper {
         dto.setImage(expert.getImage());
         dto.setRate(expert.getRate());
         dto.setServices(expert.getServices().stream().map(i->serviceMapper.covertToSubServiceDto(i)).collect(Collectors.toList()));
+        dto.setOrders(expert.getOrders().stream().map(i->orderMapper.toOrderDto(i)).collect(Collectors.toList()));
         return dto;
     }
 }

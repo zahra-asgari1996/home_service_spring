@@ -11,11 +11,13 @@ public class OrderMapperImpl implements OrderMapper {
     private final CustomerMapper customerMapper;
     private final OfferMapper offerMapper;
     private final SubServiceMapper serviceMapper;
+    private final ExpertMapper expertMapper;
 
-    public OrderMapperImpl(CustomerMapper customerMapper, OfferMapper offerMapper, SubServiceMapper serviceMapper) {
+    public OrderMapperImpl(CustomerMapper customerMapper, OfferMapper offerMapper, SubServiceMapper serviceMapper, ExpertMapper expertMapper) {
         this.customerMapper = customerMapper;
         this.offerMapper = offerMapper;
         this.serviceMapper = serviceMapper;
+        this.expertMapper = expertMapper;
     }
 
     @Override
@@ -30,6 +32,7 @@ public class OrderMapperImpl implements OrderMapper {
         order.setProposedPrice(order.getProposedPrice());
         order.setSituation(dto.getSituation());
         order.setSubService(serviceMapper.convertToSubService(dto.getSubService()));
+        order.setExpert(expertMapper.toExpert(dto.getExpert()));
         return order;
     }
 
@@ -45,6 +48,7 @@ public class OrderMapperImpl implements OrderMapper {
         dto.setProposedPrice(order.getProposedPrice());
         dto.setSituation(order.getSituation());
         dto.setDateOfWork(order.getDateOfWork());
+        dto.setExpert(expertMapper.toExpertDto(order.getExpert()));
         return dto;
     }
 }

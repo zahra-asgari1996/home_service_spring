@@ -17,6 +17,16 @@ public class ExpertDto extends UserDto{
     private List<SubServiceDto> services=new ArrayList<>();
     private List<OfferDto> offers=new ArrayList<>();
     private List<CommentDto> comments=new ArrayList<>();
+    private List<OrderDto> orders=new ArrayList<>();
+
+    public List<OrderDto> getOrders() {
+        return orders;
+    }
+
+    public ExpertDto setOrders(List<OrderDto> orders) {
+        this.orders = orders;
+        return this;
+    }
 
     public Integer getRate() {
         return rate;
