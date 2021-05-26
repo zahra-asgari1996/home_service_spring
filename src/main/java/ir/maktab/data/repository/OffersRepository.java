@@ -23,7 +23,6 @@ public interface OffersRepository extends JpaRepository<Offers,Integer>, JpaSpec
     void deleteOffer(Offers offers);
     void updateOffer(Offers offers);
     List<Offers> fetchAllOffers();
-//    List<Offers> findOffersByOrders(Orders order);
     static Specification<Offers> findOffersByOrders(Orders orders){
         return (root, cq, cb) -> {
             Predicate predicate = null;
