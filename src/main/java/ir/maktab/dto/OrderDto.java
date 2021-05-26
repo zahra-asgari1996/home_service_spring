@@ -20,7 +20,6 @@ public class OrderDto {
     private SubServiceDto subService;
     private List<OfferDto> offers=new ArrayList<>();
     private ExpertDto expert;
-    //متخصص رو ندارم
 
     public Integer getId() {
         return id;

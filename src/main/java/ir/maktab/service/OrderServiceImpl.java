@@ -1,5 +1,6 @@
 package ir.maktab.service;
 
+import ir.maktab.data.enums.OrderSituation;
 import ir.maktab.data.repository.OrderRepository;
 import ir.maktab.dto.OrderDto;
 import ir.maktab.service.mapper.OrderMapper;
@@ -20,6 +21,7 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public void saveNewOrder(OrderDto dto) {
+        dto.setSituation(OrderSituation.Waiting_for_expert_suggestions);
         repository.saveNewOrder(mapper.toOrder(dto));
 
     }
