@@ -12,7 +12,7 @@ import java.util.List;
 public class ServiceDto {
     private Integer id;
     private String name;
-    private List<SubService> subServices=new ArrayList<>();
+    private List<SubServiceDto> subServices=new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -30,11 +30,12 @@ public class ServiceDto {
         this.name = name;
     }
 
-    public List<SubService> getSubServices() {
+    public List<SubServiceDto> getSubServices() {
         return subServices;
     }
 
-    public void setSubServices(List<SubService> subServices) {
+    public ServiceDto setSubServices(List<SubServiceDto> subServices) {
         this.subServices = subServices;
+        return this;
     }
 }

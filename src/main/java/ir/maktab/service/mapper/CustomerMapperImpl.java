@@ -4,8 +4,18 @@ import ir.maktab.data.domain.Customer;
 import ir.maktab.dto.CustomerDto;
 import org.springframework.stereotype.Component;
 
+import java.util.stream.Collectors;
+
 @Component
 public class CustomerMapperImpl implements CustomerMapper {
+    private final CommentMapper commentMapper;
+    private final OrderMapper orderMapper;
+
+    public CustomerMapperImpl(CommentMapper commentMapper, OrderMapper orderMapper) {
+        this.commentMapper = commentMapper;
+        this.orderMapper = orderMapper;
+    }
+
     @Override
     public Customer toCustomer(CustomerDto dto) {
         Customer customer=new Customer();
@@ -18,8 +28,16 @@ public class CustomerMapperImpl implements CustomerMapper {
         customer.setSituation(dto.getSituation());
         customer.setDate(dto.getDate());
         customer.setCredit(dto.getCredit());
-        customer.setComments(dto.getComments());
-        customer.setOrders(dto.getOrders());
+        customer.setComments(
+                dto.getComments().stream().map
+                        (i->commentMapper.toComment(i))
+                        .collect(Collectors.toList()));
+
+        customer.setOrders(
+                dto.getOrders().stream().map
+                        (i->orderMapper.toOrder(i))
+                        .collect(Collectors.toList()));
+
         return customer;
     }
 
@@ -32,8 +50,8 @@ public class CustomerMapperImpl implements CustomerMapper {
         dto.setEmail(customer.getEmail());
         dto.setPassword(customer.getPassword());
         dto.setDate(customer.getDate());
-        dto.setComments(customer.getComments());
-        dto.setOrders(customer.getOrders());
+        dto.setComments(customer.getComments().stream().map(i->commentMapper.toCommentDto(i)).collect(Collectors.toList()));
+        dto.setOrders(customer.getOrders().stream().map(i->orderMapper.toOrderDto(i)).collect(Collectors.toList()));
         dto.setRole(customer.getRole());
         dto.setSituation(customer.getSituation());
         dto.setCredit(customer.getCredit());

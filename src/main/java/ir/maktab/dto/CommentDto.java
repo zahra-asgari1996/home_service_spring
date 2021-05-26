@@ -6,8 +6,8 @@ import ir.maktab.data.domain.Expert;
 
 public class CommentDto {
     private Integer id;
-    private Customer customer;
-    private Expert expert;
+    private CustomerDto customer;
+    private ExpertDto expert;
     private String comment;
     private Double rate;
 
@@ -20,20 +20,20 @@ public class CommentDto {
         return this;
     }
 
-    public Customer getCustomer() {
+    public CustomerDto getCustomer() {
         return customer;
     }
 
-    public CommentDto setCustomer(Customer customer) {
+    public CommentDto setCustomer(CustomerDto customer) {
         this.customer = customer;
         return this;
     }
 
-    public Expert getExpert() {
+    public ExpertDto getExpert() {
         return expert;
     }
 
-    public CommentDto setExpert(Expert expert) {
+    public CommentDto setExpert(ExpertDto expert) {
         this.expert = expert;
         return this;
     }

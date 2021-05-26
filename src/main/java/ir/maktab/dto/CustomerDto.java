@@ -8,23 +8,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDto extends UserDto{
-    private List<Orders> orders=new ArrayList<>();
-    private List<Comments> comments=new ArrayList<>();
+    private List<OrderDto> orders=new ArrayList<>();
+    private List<CommentDto> comments=new ArrayList<>();
 
-    public List<Orders> getOrders() {
+    public List<OrderDto> getOrders() {
         return orders;
     }
 
-    public CustomerDto setOrders(List<Orders> orders) {
+    public CustomerDto setOrders(List<OrderDto> orders) {
         this.orders = orders;
         return this;
     }
 
-    public List<Comments> getComments() {
+    public List<CommentDto> getComments() {
         return comments;
     }
 
-    public CustomerDto setComments(List<Comments> comments) {
+    public CustomerDto setComments(List<CommentDto> comments) {
         this.comments = comments;
         return this;
     }

@@ -16,9 +16,9 @@ public class OrderDto {
     private Date dateOfOrderRegistration;
     private Date dateOfWork;
     private OrderSituation situation;
-    private Customer customer;
-    private SubService subService;
-    private List<Offers> offers=new ArrayList<>();
+    private CustomerDto customer;
+    private SubServiceDto subService;
+    private List<OfferDto> offers=new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -74,29 +74,29 @@ public class OrderDto {
         return this;
     }
 
-    public Customer getCustomer() {
+    public CustomerDto getCustomer() {
         return customer;
     }
 
-    public OrderDto setCustomer(Customer customer) {
+    public OrderDto setCustomer(CustomerDto customer) {
         this.customer = customer;
         return this;
     }
 
-    public SubService getSubService() {
+    public SubServiceDto getSubService() {
         return subService;
     }
 
-    public OrderDto setSubService(SubService subService) {
+    public OrderDto setSubService(SubServiceDto subService) {
         this.subService = subService;
         return this;
     }
 
-    public List<Offers> getOffers() {
+    public List<OfferDto> getOffers() {
         return offers;
     }
 
-    public OrderDto setOffers(List<Offers> offers) {
+    public OrderDto setOffers(List<OfferDto> offers) {
         this.offers = offers;
         return this;
     }

@@ -14,9 +14,9 @@ import java.util.List;
 public class ExpertDto extends UserDto{
     private Integer rate;
     private byte[] image;
-    private List<SubService> services=new ArrayList<>();
-    private List<Offers> offers=new ArrayList<>();
-    private List<Comments> comments=new ArrayList<>();
+    private List<SubServiceDto> services=new ArrayList<>();
+    private List<OfferDto> offers=new ArrayList<>();
+    private List<CommentDto> comments=new ArrayList<>();
 
     public Integer getRate() {
         return rate;
@@ -36,29 +36,29 @@ public class ExpertDto extends UserDto{
         return this;
     }
 
-    public List<SubService> getServices() {
+    public List<SubServiceDto> getServices() {
         return services;
     }
 
-    public ExpertDto setServices(List<SubService> services) {
+    public ExpertDto setServices(List<SubServiceDto> services) {
         this.services = services;
         return this;
     }
 
-    public List<Offers> getOffers() {
+    public List<OfferDto> getOffers() {
         return offers;
     }
 
-    public ExpertDto setOffers(List<Offers> offers) {
+    public ExpertDto setOffers(List<OfferDto> offers) {
         this.offers = offers;
         return this;
     }
 
-    public List<Comments> getComments() {
+    public List<CommentDto> getComments() {
         return comments;
     }
 
-    public ExpertDto setComments(List<Comments> comments) {
+    public ExpertDto setComments(List<CommentDto> comments) {
         this.comments = comments;
         return this;
     }

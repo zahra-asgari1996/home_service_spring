@@ -8,7 +8,7 @@ public class SubServiceDto {
     private Double basePrice;
     private String description;
     private String name;
-    private Service service;
+    private ServiceDto service;
 
     public Integer getId() {
         return id;
@@ -42,11 +42,12 @@ public class SubServiceDto {
         this.name = name;
     }
 
-    public Service getService() {
+    public ServiceDto getService() {
         return service;
     }
 
-    public void setService(Service service) {
+    public SubServiceDto setService(ServiceDto service) {
         this.service = service;
+        return this;
     }
 }

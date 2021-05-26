@@ -1,12 +1,17 @@
 package ir.maktab.service.mapper;
 
-import ir.maktab.data.domain.Service;
 import ir.maktab.data.domain.SubService;
 import ir.maktab.dto.SubServiceDto;
 import org.springframework.stereotype.Component;
 
 @Component
 public class SubServiceMapperImpl  implements SubServiceMapper{
+    private final ServiceMapper serviceMapper;
+
+    public SubServiceMapperImpl(ServiceMapper serviceMapper) {
+        this.serviceMapper = serviceMapper;
+    }
+
     @Override
     public SubServiceDto covertToSubServiceDto(SubService subService) {
         SubServiceDto subServiceDto=new SubServiceDto();
@@ -14,7 +19,7 @@ public class SubServiceMapperImpl  implements SubServiceMapper{
         subServiceDto.setName(subService.getName());
         subServiceDto.setBasePrice(subService.getBasePrice());
         subServiceDto.setDescription(subService.getDescription());
-        subServiceDto.setService(subService.getService());
+        subServiceDto.setService(serviceMapper.convertToServiceDto(subService.getService()));
         return subServiceDto;
     }
 
@@ -25,7 +30,7 @@ public class SubServiceMapperImpl  implements SubServiceMapper{
         subService.setName(subServiceDto.getName());
         subService.setBasePrice(subServiceDto.getBasePrice());
         subService.setDescription(subServiceDto.getDescription());
-        subService.setService(subServiceDto.getService());
+        subService.setService(serviceMapper.convertToService(subServiceDto.getService()));
         return subService;
     }
 }

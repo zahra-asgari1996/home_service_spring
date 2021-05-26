@@ -12,12 +12,12 @@ import java.util.Date;
 
 public class OfferDto {
     private Integer id;
-    private Orders orders;
+    private OrderDto orders;
     private Date SubmitOffer;
     private Double offerPrice;
     private Double durationOfWork;
     private Date startTime;
-    private Expert expert;
+    private ExpertDto expert;
 
     public Integer getId() {
         return id;
@@ -25,15 +25,6 @@ public class OfferDto {
 
     public OfferDto setId(Integer id) {
         this.id = id;
-        return this;
-    }
-
-    public Orders getOrders() {
-        return orders;
-    }
-
-    public OfferDto setOrders(Orders orders) {
-        this.orders = orders;
         return this;
     }
 
@@ -73,11 +64,20 @@ public class OfferDto {
         return this;
     }
 
-    public Expert getExpert() {
+    public OrderDto getOrders() {
+        return orders;
+    }
+
+    public OfferDto setOrders(OrderDto orders) {
+        this.orders = orders;
+        return this;
+    }
+
+    public ExpertDto getExpert() {
         return expert;
     }
 
-    public OfferDto setExpert(Expert expert) {
+    public OfferDto setExpert(ExpertDto expert) {
         this.expert = expert;
         return this;
     }

@@ -4,8 +4,20 @@ import ir.maktab.data.domain.Expert;
 import ir.maktab.dto.ExpertDto;
 import org.springframework.stereotype.Component;
 
+import java.util.stream.Collectors;
+
 @Component
 public class ExpertMapperImpl implements ExpertMapper {
+    private final CommentMapper commentMapper;
+    private final OfferMapper offerMapper;
+    private final SubServiceMapper serviceMapper;
+
+    public ExpertMapperImpl(CommentMapper commentMapper, OfferMapper offerMapper, SubServiceMapper serviceMapper) {
+        this.commentMapper = commentMapper;
+        this.offerMapper = offerMapper;
+        this.serviceMapper = serviceMapper;
+    }
+
     @Override
     public Expert toExpert(ExpertDto dto) {
         Expert expert=new Expert();
@@ -18,11 +30,11 @@ public class ExpertMapperImpl implements ExpertMapper {
         expert.setSituation(dto.getSituation());
         expert.setDate(dto.getDate());
         expert.setCredit(dto.getCredit());
-        expert.setComments(dto.getComments());
+        expert.setComments(dto.getComments().stream().map(i->commentMapper.toComment(i)).collect(Collectors.toList()));
         expert.setImage(dto.getImage());
         expert.setRate(dto.getRate());
-        expert.setOffers(dto.getOffers());
-        expert.setServices(dto.getServices());
+        expert.setOffers(dto.getOffers().stream().map(i->offerMapper.toOffer(i)).collect(Collectors.toList()));
+        expert.setServices(dto.getServices().stream().map(i->serviceMapper.convertToSubService(i)).collect(Collectors.toList()));
         return expert;
     }
 
@@ -35,14 +47,14 @@ public class ExpertMapperImpl implements ExpertMapper {
         dto.setEmail(expert.getEmail());
         dto.setPassword(expert.getPassword());
         dto.setDate(expert.getDate());
-        dto.setComments(expert.getComments());
+        dto.setComments(expert.getComments().stream().map(i->commentMapper.toCommentDto(i)).collect(Collectors.toList()));
         dto.setRole(expert.getRole());
         dto.setSituation(expert.getSituation());
         dto.setCredit(expert.getCredit());
-        dto.setOffers(expert.getOffers());
+        dto.setOffers(expert.getOffers().stream().map(i->offerMapper.toOfferDto(i)).collect(Collectors.toList()));
         dto.setImage(expert.getImage());
         dto.setRate(expert.getRate());
-        dto.setServices(expert.getServices());
+        dto.setServices(expert.getServices().stream().map(i->serviceMapper.covertToSubServiceDto(i)).collect(Collectors.toList()));
         return dto;
     }
 }
