@@ -1,6 +1,12 @@
 package ir.maktab.dto;
 
+import ir.maktab.data.domain.Expert;
+import ir.maktab.data.domain.Orders;
 import ir.maktab.data.domain.Service;
+
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class SubServiceDto {
@@ -9,6 +15,8 @@ public class SubServiceDto {
     private String description;
     private String name;
     private ServiceDto service;
+    private List<ExpertDto> experts=new ArrayList<>();
+    private List<OrderDto> orders=new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -44,6 +52,24 @@ public class SubServiceDto {
 
     public ServiceDto getService() {
         return service;
+    }
+
+    public List<ExpertDto> getExperts() {
+        return experts;
+    }
+
+    public SubServiceDto setExperts(List<ExpertDto> experts) {
+        this.experts = experts;
+        return this;
+    }
+
+    public List<OrderDto> getOrders() {
+        return orders;
+    }
+
+    public SubServiceDto setOrders(List<OrderDto> orders) {
+        this.orders = orders;
+        return this;
     }
 
     public SubServiceDto setService(ServiceDto service) {

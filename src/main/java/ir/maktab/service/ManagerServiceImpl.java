@@ -20,22 +20,22 @@ public class ManagerServiceImpl  implements ManagerService{
 
     @Override
     public void saveNewManager(ManagerDto dto) {
-        repository.saveNewManager(mapper.toManager(dto));
+        repository.save(mapper.toManager(dto));
     }
 
     @Override
     public void deleteManager(ManagerDto dto) {
-        repository.deleteManager(mapper.toManager(dto));
+        repository.delete(mapper.toManager(dto));
     }
 
     @Override
     public void updateManager(ManagerDto dto) {
-        repository.updateManager(mapper.toManager(dto));
+        repository.save(mapper.toManager(dto));
     }
 
     @Override
     public List<ManagerDto> fetchAllManagers() {
-        return repository.fetchAllManagers()
+        return repository.findAll()
                 .stream().map(manager -> mapper.toManagerDto(manager))
                 .collect(Collectors.toList());
     }

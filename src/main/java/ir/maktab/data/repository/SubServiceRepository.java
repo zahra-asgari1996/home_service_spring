@@ -17,4 +17,5 @@ public interface SubServiceRepository extends JpaRepository<SubService,Integer> 
     void updateExpertInSubService(SubService service,Expert newExpert,Expert oldExpert);
     void addExpertToSubService(SubService service,Expert expert);
     boolean findByName(String name);
+    void findAllByExperts();
 }

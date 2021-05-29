@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<UserDto> fetchAllUsers() {
-        return  repository.fetchAllUsers()
+        return  repository.findAll()
                 .stream().map
                         (i->mapper.toUserDto(i))
                 .collect(Collectors.toList());

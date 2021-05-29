@@ -20,24 +20,24 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void saveNewCustomer(CustomerDto dto) {
-        customerRepository.saveNewCustomer(customerMapper.toCustomer(dto));
+        customerRepository.save(customerMapper.toCustomer(dto));
     }
 
     @Override
     public void updateCustomer(CustomerDto dto) {
-        customerRepository.updateCustomer(customerMapper.toCustomer(dto));
+        customerRepository.save(customerMapper.toCustomer(dto));
 
     }
 
     @Override
     public void deleteCustomer(CustomerDto dto) {
-        customerRepository.deleteCustomer(customerMapper.toCustomer(dto));
+        customerRepository.delete(customerMapper.toCustomer(dto));
 
     }
 
     @Override
     public List<CustomerDto> fetchAllCustomers() {
-        return customerRepository.fetchAllCustomers()
+        return customerRepository.findAll()
                 .stream()
                 .map(i -> customerMapper.toCustomerDto(i))
                 .collect(Collectors.toList());

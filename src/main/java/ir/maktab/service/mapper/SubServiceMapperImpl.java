@@ -4,12 +4,18 @@ import ir.maktab.data.domain.SubService;
 import ir.maktab.dto.SubServiceDto;
 import org.springframework.stereotype.Component;
 
+import java.util.stream.Collectors;
+
 @Component
 public class SubServiceMapperImpl  implements SubServiceMapper{
     private final ServiceMapper serviceMapper;
+    private final ExpertMapper expertMapper;
+    private final OrderMapper orderMapper;
 
-    public SubServiceMapperImpl(ServiceMapper serviceMapper) {
+    public SubServiceMapperImpl(ServiceMapper serviceMapper, ExpertMapper expertMapper, OrderMapper orderMapper) {
         this.serviceMapper = serviceMapper;
+        this.expertMapper = expertMapper;
+        this.orderMapper = orderMapper;
     }
 
     @Override
@@ -20,6 +26,7 @@ public class SubServiceMapperImpl  implements SubServiceMapper{
         subServiceDto.setBasePrice(subService.getBasePrice());
         subServiceDto.setDescription(subService.getDescription());
         subServiceDto.setService(serviceMapper.convertToServiceDto(subService.getService()));
+        subServiceDto.setExperts(subService.getExperts().stream().map(i->expertMapper.toExpertDto(i)).collect(Collectors.toList()));
         return subServiceDto;
     }
 

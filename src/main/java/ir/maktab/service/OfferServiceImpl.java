@@ -45,30 +45,32 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public void deleteOffer(OfferDto dto) {
-        repository.deleteOffer(mapper.toOffer(dto));
+        repository.delete(mapper.toOffer(dto));
 
     }
 
     @Override
     public void updateOffer(OfferDto dto) {
-        repository.updateOffer(mapper.toOffer(dto));
+        repository.save(mapper.toOffer(dto));
 
     }
 
     @Override
     public List<OfferDto> fetchAllOffers() {
-        return repository.fetchAllOffers()
+        return repository.findAll()
                 .stream().map(i -> mapper.toOfferDto(i))
                 .collect(Collectors.toList());
     }
     public List<OfferDto> sortedList(OrderDto orderDto,int offset,int limit){
-        Pageable pageable= PageRequest.of(offset,limit,Sort.Direction.ASC,"offerPrice");
-        Page<Offers> matchedNectarines =
-                repository.findAll(OffersRepository.findOffersByOrders(orderMapper.toOrder(orderDto)), pageable);
-        return
-                matchedNectarines
-                        .getContent().stream()
-                        .map(i->mapper.toOfferDto(i)).collect(Collectors.toList());
+        List<Offers> offerPrice = repository.findAll(Sort.by("expert.rate").and(Sort.by("offerPrice")));
+        return offerPrice.stream().filter(i->i.getOrders().equals(orderDto)).map(i->mapper.toOfferDto(i)).collect(Collectors.toList());
+//        Pageable pageable= PageRequest.of(offset,limit,Sort.Direction.ASC,"offerPrice");
+//        Page<Offers> matchedNectarines =
+//                repository.findAll(OffersRepository.findOffersByOrders(orderMapper.toOrder(orderDto)), pageable);
+//        return
+//                matchedNectarines
+//                        .getContent().stream()
+//                        .map(i->mapper.toOfferDto(i)).collect(Collectors.toList());
 
     }
 }

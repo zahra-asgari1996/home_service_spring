@@ -20,22 +20,22 @@ private final ExpertMapper expertMapper;
 
     @Override
     public void saveNewExpert(ExpertDto expert) {
-        expertRepository.saveNewExpert(expertMapper.toExpert(expert));
+        expertRepository.save(expertMapper.toExpert(expert));
     }
 
     @Override
     public void deleteExpert(ExpertDto expert) {
-        expertRepository.deleteExpert(expertMapper.toExpert(expert));
+        expertRepository.delete(expertMapper.toExpert(expert));
     }
 
     @Override
     public void updateExpert(ExpertDto expert) {
-        expertRepository.updateExpert(expertMapper.toExpert(expert));
+        expertRepository.save(expertMapper.toExpert(expert));
     }
 
     @Override
     public List<ExpertDto> fetchAllExperts() {
-        return expertRepository.fetchAllExperts()
+        return expertRepository.findAll()
                 .stream()
                 .map(i->expertMapper.toExpertDto(i))
                 .collect(Collectors.toList());

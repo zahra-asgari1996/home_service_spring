@@ -21,25 +21,25 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public void saveNewComment(CommentDto dto) {
-        commentsRepository.saveNewComment(commentMapper.toComment(dto));
+        commentsRepository.save(commentMapper.toComment(dto));
     }
 
     @Override
     public void deleteComment(CommentDto dto) {
-        commentsRepository.deleteComment(commentMapper.toComment(dto));
+        commentsRepository.delete(commentMapper.toComment(dto));
 
     }
 
     @Override
     public void updateComment(CommentDto dto) {
-        commentsRepository.updateComment(commentMapper.toComment(dto));
+        commentsRepository.save(commentMapper.toComment(dto));
 
     }
 
     @Override
     public List<CommentDto> fetchAllComments() {
         return
-                commentsRepository.fetchAllComments()
+                commentsRepository.findAll()
                         .stream()
                         .map(i->commentMapper.toCommentDto(i)).collect(Collectors.toList());
     }

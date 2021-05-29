@@ -24,7 +24,7 @@ public class ServiceServiceImpl implements ServiceService{
         if(serviceRepository.findByName(serviceDto.getName())){
             throw new DuplicatedDataException("This Service Available In DB");
         }else {
-            serviceRepository.saveNewService(serviceMapper.convertToService(serviceDto));
+            serviceRepository.save(serviceMapper.convertToService(serviceDto));
         }
     }
 
@@ -35,17 +35,17 @@ public class ServiceServiceImpl implements ServiceService{
 
     @Override
     public void deleteService(ServiceDto dto) {
-        serviceRepository.deleteService(serviceMapper.convertToService(dto));
+        serviceRepository.delete(serviceMapper.convertToService(dto));
     }
 
     @Override
     public void updateService(ServiceDto dto) {
-        serviceRepository.updateService(serviceMapper.convertToService(dto));
+        serviceRepository.save(serviceMapper.convertToService(dto));
     }
 
     @Override
     public List<ServiceDto> fetchAllServices() {
-        return serviceRepository.fetchAllServices()
+        return serviceRepository.findAll()
                 .stream().map(i->serviceMapper.convertToServiceDto(i))
                 .collect(Collectors.toList());
     }
