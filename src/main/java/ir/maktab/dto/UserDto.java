@@ -21,6 +21,10 @@ public class UserDto {
     private Role role;
     private Double credit;
 
+    public UserDto() {
+        this.credit=0.0;
+        this.situation=Situation.New;
+    }
 
     public Integer getId() {
         return id;

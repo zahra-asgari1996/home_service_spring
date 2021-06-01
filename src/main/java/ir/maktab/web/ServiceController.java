@@ -2,6 +2,7 @@ package ir.maktab.web;
 
 import ir.maktab.dto.ServiceDto;
 import ir.maktab.service.ServiceService;
+import ir.maktab.service.exception.DuplicatedDataException;
 import org.springframework.stereotype.Controller;
 
 @Controller
@@ -13,7 +14,7 @@ public class ServiceController {
         this.service = service;
     }
 
-    public void saveNewService(ServiceDto serviceDto){
+    public void saveNewService(ServiceDto serviceDto) throws DuplicatedDataException {
         service.saveNewService(serviceDto);
     }
 }

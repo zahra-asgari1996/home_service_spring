@@ -6,13 +6,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CommentMapperImpl implements CommentMapper {
-    private final CustomerMapper customerMapper;
-    private final ExpertMapper expertMapper;
-
-    public CommentMapperImpl(CustomerMapper customerMapper, ExpertMapper expertMapper) {
-        this.customerMapper = customerMapper;
-        this.expertMapper = expertMapper;
-    }
+//    private final CustomerMapper customerMapper;
+//    private final ExpertMapper expertMapper;
+//
+//    public CommentMapperImpl(CustomerMapper customerMapper, ExpertMapper expertMapper) {
+//        this.customerMapper = customerMapper;
+//        this.expertMapper = expertMapper;
+//    }
 
     @Override
     public Comments toComment(CommentDto dto) {
@@ -20,8 +20,8 @@ public class CommentMapperImpl implements CommentMapper {
         comments.setId(dto.getId());
         comments.setRate(dto.getRate());
         comments.setComment(dto.getComment());
-        comments.setCustomer(customerMapper.toCustomer(dto.getCustomer()));
-        comments.setExpert(expertMapper.toExpert(dto.getExpert()));
+//        comments.setCustomer(customerMapper.toCustomer(dto.getCustomer()));
+//        comments.setExpert(expertMapper.toExpert(dto.getExpert()));
         return comments;
     }
 
@@ -31,8 +31,8 @@ public class CommentMapperImpl implements CommentMapper {
         dto.setId(comments.getId());
         dto.setComment(comments.getComment());
         dto.setRate(comments.getRate());
-        dto.setCustomer(customerMapper.toCustomerDto(comments.getCustomer()));
-        dto.setExpert(expertMapper.toExpertDto(comments.getExpert()));
+//        dto.setCustomer(customerMapper.toCustomerDto(comments.getCustomer()));
+//        dto.setExpert(expertMapper.toExpertDto(comments.getExpert()));
         return dto;
     }
 }

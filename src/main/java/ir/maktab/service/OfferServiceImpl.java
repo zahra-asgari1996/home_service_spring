@@ -22,12 +22,10 @@ import java.util.stream.Collectors;
 public class OfferServiceImpl implements OfferService {
     private final OffersRepository repository;
     private final OfferMapper mapper;
-    private final OrderMapper orderMapper;
 
     public OfferServiceImpl(OffersRepository repository, OfferMapper mapper, OrderMapper orderMapper) {
         this.repository = repository;
         this.mapper = mapper;
-        this.orderMapper = orderMapper;
     }
 
     @Override

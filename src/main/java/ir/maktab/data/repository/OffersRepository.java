@@ -19,17 +19,17 @@ import java.util.List;
 public interface OffersRepository extends JpaRepository<Offers,Integer>, JpaSpecificationExecutor<Offers> {
 
 
-    void saveNewOffer(Offers offers);
-    void deleteOffer(Offers offers);
-    void updateOffer(Offers offers);
-    List<Offers> fetchAllOffers();
-    static Specification<Offers> findOffersByOrders(Orders orders){
-        return (root, cq, cb) -> {
-            Predicate predicate = null;
-            if (orders != null) {
-                predicate = cb.equal(root.get("orders"), orders);
-            }
-            return cq.where(predicate).getRestriction();
-        };
-    }
+//    void saveNewOffer(Offers offers);
+//    void deleteOffer(Offers offers);
+//    void updateOffer(Offers offers);
+//    List<Offers> fetchAllOffers();
+//    static Specification<Offers> findOffersByOrders(Orders orders){
+//        return (root, cq, cb) -> {
+//            Predicate predicate = null;
+//            if (orders != null) {
+//                predicate = cb.equal(root.get("orders"), orders);
+//            }
+//            return cq.where(predicate).getRestriction();
+//        };
+//    }
 }

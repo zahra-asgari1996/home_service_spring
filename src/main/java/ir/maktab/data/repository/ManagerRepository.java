@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface ManagerRepository extends JpaRepository<Manager,Integer> {
-    void saveNewManager(Manager manager);
-    void deleteManager(Manager manager);
-    void updateManager(Manager manager);
-    List<Manager> fetchAllManagers();
+//    void saveNewManager(Manager manager);
+//    void deleteManager(Manager manager);
+//    void updateManager(Manager manager);
+//    List<Manager> fetchAllManagers();
 }

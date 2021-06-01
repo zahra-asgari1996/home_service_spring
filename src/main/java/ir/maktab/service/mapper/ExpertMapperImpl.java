@@ -8,17 +8,17 @@ import java.util.stream.Collectors;
 
 @Component
 public class ExpertMapperImpl implements ExpertMapper {
-    private final CommentMapper commentMapper;
-    private final OfferMapper offerMapper;
-    private final SubServiceMapper serviceMapper;
-    private final OrderMapper orderMapper;
-
-    public ExpertMapperImpl(CommentMapper commentMapper, OfferMapper offerMapper, SubServiceMapper serviceMapper, OrderMapper orderMapper) {
-        this.commentMapper = commentMapper;
-        this.offerMapper = offerMapper;
-        this.serviceMapper = serviceMapper;
-        this.orderMapper = orderMapper;
-    }
+//    private final CommentMapper commentMapper;
+//    private final OfferMapper offerMapper;
+//    private final SubServiceMapper serviceMapper;
+//    private final OrderMapper orderMapper;
+//
+//    public ExpertMapperImpl(CommentMapper commentMapper, OfferMapper offerMapper, SubServiceMapper serviceMapper, OrderMapper orderMapper) {
+//        this.commentMapper = commentMapper;
+//        this.offerMapper = offerMapper;
+//        this.serviceMapper = serviceMapper;
+//        this.orderMapper = orderMapper;
+//    }
 
     @Override
     public Expert toExpert(ExpertDto dto) {
@@ -32,12 +32,12 @@ public class ExpertMapperImpl implements ExpertMapper {
         expert.setSituation(dto.getSituation());
         expert.setDate(dto.getDate());
         expert.setCredit(dto.getCredit());
-        expert.setComments(dto.getComments().stream().map(i->commentMapper.toComment(i)).collect(Collectors.toList()));
+//        expert.setComments(dto.getComments().stream().map(i->commentMapper.toComment(i)).collect(Collectors.toList()));
         expert.setImage(dto.getImage());
         expert.setRate(dto.getRate());
-        expert.setOffers(dto.getOffers().stream().map(i->offerMapper.toOffer(i)).collect(Collectors.toList()));
-        expert.setServices(dto.getServices().stream().map(i->serviceMapper.convertToSubService(i)).collect(Collectors.toList()));
-        expert.setOrders(dto.getOrders().stream().map(i->orderMapper.toOrder(i)).collect(Collectors.toList()));
+//        expert.setOffers(dto.getOffers().stream().map(i->offerMapper.toOffer(i)).collect(Collectors.toList()));
+//        expert.setServices(dto.getServices().stream().map(i->serviceMapper.convertToSubService(i)).collect(Collectors.toList()));
+//        expert.setOrders(dto.getOrders().stream().map(i->orderMapper.toOrder(i)).collect(Collectors.toList()));
         return expert;
     }
 
@@ -50,15 +50,15 @@ public class ExpertMapperImpl implements ExpertMapper {
         dto.setEmail(expert.getEmail());
         dto.setPassword(expert.getPassword());
         dto.setDate(expert.getDate());
-        dto.setComments(expert.getComments().stream().map(i->commentMapper.toCommentDto(i)).collect(Collectors.toList()));
+//        dto.setComments(expert.getComments().stream().map(i->commentMapper.toCommentDto(i)).collect(Collectors.toList()));
         dto.setRole(expert.getRole());
         dto.setSituation(expert.getSituation());
         dto.setCredit(expert.getCredit());
-        dto.setOffers(expert.getOffers().stream().map(i->offerMapper.toOfferDto(i)).collect(Collectors.toList()));
+//        dto.setOffers(expert.getOffers().stream().map(i->offerMapper.toOfferDto(i)).collect(Collectors.toList()));
         dto.setImage(expert.getImage());
         dto.setRate(expert.getRate());
-        dto.setServices(expert.getServices().stream().map(i->serviceMapper.covertToSubServiceDto(i)).collect(Collectors.toList()));
-        dto.setOrders(expert.getOrders().stream().map(i->orderMapper.toOrderDto(i)).collect(Collectors.toList()));
+//        dto.setServices(expert.getServices().stream().map(i->serviceMapper.covertToSubServiceDto(i)).collect(Collectors.toList()));
+//        dto.setOrders(expert.getOrders().stream().map(i->orderMapper.toOrderDto(i)).collect(Collectors.toList()));
         return dto;
     }
 }

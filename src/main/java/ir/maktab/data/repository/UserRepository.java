@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<Users,Integer> {
-    List<Users> fetchAllUsers();
-    void changePassword(Users user);
-    List<Users> findByProperty(SearchCustomerDto dto);
+//    List<Users> fetchAllUsers();
+//    void changePassword(Users user);
+//    List<Users> findByProperty(SearchCustomerDto dto);
 }

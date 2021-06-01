@@ -3,6 +3,8 @@ package ir.maktab.dto;
 import ir.maktab.data.domain.Comments;
 import ir.maktab.data.domain.Offers;
 import ir.maktab.data.domain.SubService;
+import ir.maktab.data.enums.Role;
+import ir.maktab.data.enums.Situation;
 
 import javax.persistence.Column;
 import javax.persistence.Lob;
@@ -18,6 +20,12 @@ public class ExpertDto extends UserDto{
     private List<OfferDto> offers=new ArrayList<>();
     private List<CommentDto> comments=new ArrayList<>();
     private List<OrderDto> orders=new ArrayList<>();
+
+    public ExpertDto() {
+        super.setCredit(0.0);
+        super.setRole(Role.Expert);
+        super.setSituation(Situation.New);
+    }
 
     public List<OrderDto> getOrders() {
         return orders;

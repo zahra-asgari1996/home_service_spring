@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface UserService {
     List<UserDto> fetchAllUsers();
-    void changePassword(UserDto dto);
-    List<UserDto> findByProperty(SearchCustomerDto dto);
+    void save(UserDto userDto);
+//    void changePassword(UserDto dto);
+//    List<UserDto> findByProperty(SearchCustomerDto dto);
 }

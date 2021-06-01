@@ -14,15 +14,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class SubServiceServiceImpl implements SubServiceService{
+public class SubServiceServiceImpl implements SubServiceService
+ {
     private final SubServiceRepository subServiceRepository;
     private final SubServiceMapper subServiceMapper;
-    private final ExpertMapper mapper;
 
     public SubServiceServiceImpl(SubServiceRepository subServiceRepository, SubServiceMapper subServiceMapper, ExpertMapper mapper) {
         this.subServiceRepository = subServiceRepository;
         this.subServiceMapper = subServiceMapper;
-        this.mapper = mapper;
     }
 
     @Override

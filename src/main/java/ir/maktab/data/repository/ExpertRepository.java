@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface ExpertRepository extends JpaRepository<Expert,Integer> {
-    void saveNewExpert(Expert expert);
-    void deleteExpert(Expert expert);
-    void updateExpert(Expert expert);
-    List<Expert> fetchAllExperts();
+//    void saveNewExpert(Expert expert);
+//    void deleteExpert(Expert expert);
+//    void updateExpert(Expert expert);
+//    List<Expert> fetchAllExperts();
 }

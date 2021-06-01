@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface OrderRepository extends JpaRepository<Orders,Integer> {
-    void saveNewOrder(Orders orders);
-    void deleteOrder(Orders orders);
-    void updateOrder(Orders orders);
-    List<Orders> fetchAllOrders();
+//    void saveNewOrder(Orders orders);
+//    void deleteOrder(Orders orders);
+//    void updateOrder(Orders orders);
+//    List<Orders> fetchAllOrders();
 }

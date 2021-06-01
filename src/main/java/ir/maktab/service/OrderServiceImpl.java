@@ -18,14 +18,11 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService{
     private final OrderRepository repository;
     private final OrderMapper mapper;
-    private final OfferMapper offerMapper;
-    private final OffersRepository offersRepository;
+
 
     public OrderServiceImpl(OrderRepository repository, OrderMapper mapper, OfferMapper offerMapper, OffersRepository offersRepository) {
         this.repository = repository;
         this.mapper = mapper;
-        this.offerMapper = offerMapper;
-        this.offersRepository = offersRepository;
     }
 
     @Override

@@ -8,15 +8,15 @@ import java.util.stream.Collectors;
 
 @Component
 public class SubServiceMapperImpl  implements SubServiceMapper{
-    private final ServiceMapper serviceMapper;
-    private final ExpertMapper expertMapper;
-    private final OrderMapper orderMapper;
-
-    public SubServiceMapperImpl(ServiceMapper serviceMapper, ExpertMapper expertMapper, OrderMapper orderMapper) {
-        this.serviceMapper = serviceMapper;
-        this.expertMapper = expertMapper;
-        this.orderMapper = orderMapper;
-    }
+//    private final ServiceMapper serviceMapper;
+//    private final ExpertMapper expertMapper;
+//    private final OrderMapper orderMapper;
+//
+//    public SubServiceMapperImpl(ServiceMapper serviceMapper, ExpertMapper expertMapper, OrderMapper orderMapper) {
+//        this.serviceMapper = serviceMapper;
+//        this.expertMapper = expertMapper;
+//        this.orderMapper = orderMapper;
+//    }
 
     @Override
     public SubServiceDto covertToSubServiceDto(SubService subService) {
@@ -25,8 +25,8 @@ public class SubServiceMapperImpl  implements SubServiceMapper{
         subServiceDto.setName(subService.getName());
         subServiceDto.setBasePrice(subService.getBasePrice());
         subServiceDto.setDescription(subService.getDescription());
-        subServiceDto.setService(serviceMapper.convertToServiceDto(subService.getService()));
-        subServiceDto.setExperts(subService.getExperts().stream().map(i->expertMapper.toExpertDto(i)).collect(Collectors.toList()));
+//        subServiceDto.setService(serviceMapper.convertToServiceDto(subService.getService()));
+//        subServiceDto.setExperts(subService.getExperts().stream().map(i->expertMapper.toExpertDto(i)).collect(Collectors.toList()));
         return subServiceDto;
     }
 
@@ -37,7 +37,7 @@ public class SubServiceMapperImpl  implements SubServiceMapper{
         subService.setName(subServiceDto.getName());
         subService.setBasePrice(subServiceDto.getBasePrice());
         subService.setDescription(subServiceDto.getDescription());
-        subService.setService(serviceMapper.convertToService(subServiceDto.getService()));
+//        subService.setService(serviceMapper.convertToService(subServiceDto.getService()));
         return subService;
     }
 }

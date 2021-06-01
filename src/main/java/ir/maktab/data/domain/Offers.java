@@ -1,7 +1,8 @@
 package ir.maktab.data.domain;
 
 import ir.maktab.data.enums.OfferSituation;
-import jdk.jfr.Timestamp;
+
+
 
 import javax.persistence.*;
 import java.util.Date;
@@ -13,14 +14,14 @@ public class Offers {
     private Integer id;
     @ManyToOne
     private Orders orders;
-    @Timestamp
+
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date SubmitOffer;
     @Column
     private Double offerPrice;
     @Column
     private Double durationOfWork;
-    @Timestamp
+
     @Temporal(value = TemporalType.TIME)
     private Date startTime;
     @ManyToOne
