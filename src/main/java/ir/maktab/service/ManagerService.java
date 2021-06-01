@@ -10,4 +10,5 @@ public interface ManagerService {
     void deleteManager(ManagerDto dto);
     void updateManager(ManagerDto dto);
     List<ManagerDto> fetchAllManagers();
+    ManagerDto findByUserName(String userName);
 }

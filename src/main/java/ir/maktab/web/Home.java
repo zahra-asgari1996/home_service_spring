@@ -15,19 +15,19 @@ public class Home {
         return "home";
     }
 
-    @GetMapping(value = "/manager")
+    @GetMapping(value = "/managerPage")
     public ModelAndView goToLoginManagerPage(){
-        return new ModelAndView("loginManager","manager",new ManagerDto());
+        return new ModelAndView("loginManagerPage","manager",new ManagerDto());
     }
 
     @GetMapping(value = "/expert")
     public ModelAndView goToRegisterExpertPage(){
-        return new ModelAndView("expertPage","expert",new ExpertDto());
+        return new ModelAndView("expertHomePage","expert",new ExpertDto());
     }
 
     @GetMapping(value = "/customer")
     public ModelAndView goToRegisterCustomerPage(){
-        return new ModelAndView("customerPage","customer",new CustomerDto());
+        return new ModelAndView("customerHomePage","customer",new CustomerDto());
     }
 
 }

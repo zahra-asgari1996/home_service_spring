@@ -21,7 +21,7 @@
                 <a class="nav-link" href="">Home <span class="sr-only"></span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="manager">Manager Page</a>
+                <a class="nav-link" href="managerPage">Manager Page</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="customer">Customer Page</a>

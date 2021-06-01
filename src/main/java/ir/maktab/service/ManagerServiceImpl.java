@@ -1,11 +1,13 @@
 package ir.maktab.service;
 
+import ir.maktab.data.domain.Manager;
 import ir.maktab.data.repository.ManagerRepository;
 import ir.maktab.dto.ManagerDto;
 import ir.maktab.service.mapper.ManagerMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,4 +41,14 @@ public class ManagerServiceImpl  implements ManagerService{
                 .stream().map(manager -> mapper.toManagerDto(manager))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public ManagerDto findByUserName(String userName) {
+        Optional<Manager> manager = repository.findByUserName(userName);
+        if (manager.isPresent()){
+            return mapper.toManagerDto(manager.get());
+        }
+        return null ;
+    }
 }
+
