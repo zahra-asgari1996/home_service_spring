@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(value = "/registerCustomer")
+@RequestMapping(value = "/customer")
 public class CustomerController {
     private final CustomerService customerService;
 

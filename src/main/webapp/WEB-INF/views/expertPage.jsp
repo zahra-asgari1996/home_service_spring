@@ -12,7 +12,7 @@
     <title>Expert Page</title>
 </head>
 <body>
-<form:form modelAttribute="expert" action="/registerExpert/register" method="post">
+<form:form modelAttribute="expert" action="/expert/register" method="post">
     <table>
         <tr>
             <td>

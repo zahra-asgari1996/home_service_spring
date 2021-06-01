@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(value = "/registerExpert")
+@RequestMapping(value = "/expert")
 public class ExpertController {
     private final ExpertService expertService;
 

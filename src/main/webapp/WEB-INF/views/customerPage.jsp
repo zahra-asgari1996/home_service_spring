@@ -14,7 +14,7 @@
     <title>Register User </title>
 </head>
 <body>
-<form:form modelAttribute="customer" action="/registerCustomer/register" method="post">
+<form:form modelAttribute="customer" action="/customer/register" method="post">
     <table>
         <tr>
             <td>
