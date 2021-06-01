@@ -16,18 +16,18 @@ public class Home {
     }
 
     @GetMapping(value = "/manager")
-    public String goToLoginManagerPage(){
-        return "loginManager";
+    public ModelAndView goToLoginManagerPage(){
+        return new ModelAndView("loginManager","manager",new ManagerDto());
     }
 
     @GetMapping(value = "/expert")
-    public String goToRegisterExpertPage(){
-        return "expertPage";
+    public ModelAndView goToRegisterExpertPage(){
+        return new ModelAndView("expertPage","expert",new ExpertDto());
     }
 
     @GetMapping(value = "/customer")
-    public String goToRegisterCustomerPage(){
-        return "customerPage";
+    public ModelAndView goToRegisterCustomerPage(){
+        return new ModelAndView("customerPage","customer",new CustomerDto());
     }
 
 }

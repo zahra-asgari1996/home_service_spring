@@ -12,7 +12,7 @@
     <title>Login Manager</title>
 </head>
 <body>
-<form:form modelAttribute="manager" action="/manager/signin" method="post">
+<form:form modelAttribute="manager" action="/manager/signIn" method="post">
     <form:label path="userName">User Name:</form:label>
     <form:input path="userName" name="userName"></form:input>
     <form:label path="password">Password:</form:label>

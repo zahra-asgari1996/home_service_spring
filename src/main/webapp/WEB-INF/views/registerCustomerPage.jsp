@@ -3,16 +3,18 @@
   Created by IntelliJ IDEA.
   User: Home
   Date: 6/1/2021
-  Time: 12:40 PM
+  Time: 2:14 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Expert Page</title>
+    <title>Title</title>
 </head>
 <body>
-<form:form modelAttribute="expert" action="/registerExpert/register" method="post">
+
+
+<form:form modelAttribute="customer" action="/customer/registerCustomerPage/register" method="post">
     <table>
         <tr>
             <td>

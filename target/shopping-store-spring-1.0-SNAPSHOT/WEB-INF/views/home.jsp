@@ -21,18 +21,15 @@
                 <a class="nav-link" href="">Home <span class="sr-only"></span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="loginManager">Login Manager</a>
+                <a class="nav-link" href="manager">Manager Page</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="loginUser">Login User</a>
+                <a class="nav-link" href="customer">Customer Page</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="registerCustomer">Register Customer</a>
+                <a class="nav-link" href="expert">Expert Page</a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="registerExpert">Register Expert</a>
-            </li>
         </ul>
     </div>
 </nav>

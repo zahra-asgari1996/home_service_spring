@@ -1,20 +1,20 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="td" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="fom" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: Home
   Date: 6/1/2021
-  Time: 10:16 AM
+  Time: 2:14 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Register User </title>
+    <title>Title</title>
 </head>
 <body>
-<form:form modelAttribute="customer" action="/registerCustomer/register" method="post">
+
+
+<form:form modelAttribute="customer" action="/customer/registerCustomerPage/register" method="post">
     <table>
         <tr>
             <td>
