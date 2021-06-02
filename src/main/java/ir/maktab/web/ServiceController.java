@@ -4,8 +4,10 @@ import ir.maktab.dto.ServiceDto;
 import ir.maktab.service.ServiceService;
 import ir.maktab.service.exception.DuplicatedDataException;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping(value = "/service")
 public class ServiceController {
     private final ServiceService service;
 

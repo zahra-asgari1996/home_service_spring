@@ -21,6 +21,8 @@ public class Expert extends Users {
     private List<Comments> comments=new ArrayList<>();
     @OneToMany
     private List<Orders> orders=new ArrayList<>();
+    @Column
+    private String field;
     public Expert() {
         this.setRole(Role.Expert);
     }

@@ -1,6 +1,8 @@
 package ir.maktab.service;
 
 import ir.maktab.data.repository.UserRepository;
+import ir.maktab.data.repository.UserSpecification;
+import ir.maktab.dto.FilterUsersDto;
 import ir.maktab.dto.SearchCustomerDto;
 import ir.maktab.dto.UserDto;
 import ir.maktab.service.mapper.UserMapper;
@@ -33,6 +35,12 @@ public class UserServiceImpl implements UserService{
     public void save(UserDto userDto) {
 
         repository.save(mapper.toUser(userDto));
+    }
+
+    @Override
+    public List<UserDto> filterUsers(FilterUsersDto dto) {
+        return repository.findAll(UserSpecification.filterUsers(dto)).stream().map(i->mapper.toUserDto(i))
+                .collect(Collectors.toList());
     }
 
 //    @Override
