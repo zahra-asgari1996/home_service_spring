@@ -12,5 +12,5 @@ public interface ServiceRepository extends JpaRepository<Service,Integer> {
 //    void  deleteService(Service service);
 //    void updateService(Service service);
 //    List<Service> fetchAllServices();
-    boolean findByName(String name);
+    Service findByName(String name);
 }

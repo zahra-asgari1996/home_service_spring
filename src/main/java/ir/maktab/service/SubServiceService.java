@@ -5,12 +5,13 @@ import ir.maktab.data.domain.SubService;
 import ir.maktab.dto.ExpertDto;
 import ir.maktab.dto.SubServiceDto;
 import ir.maktab.service.exception.DuplicatedDataException;
+import ir.maktab.service.exception.NotFoundServiceException;
 
 import java.util.List;
 
 public interface SubServiceService {
 
-    void saveNewSubService(SubServiceDto dto) throws DuplicatedDataException;
+    void saveNewSubService(SubServiceDto dto) throws DuplicatedDataException, NotFoundServiceException;
     void updateSubService(SubServiceDto dto);
     void deleteSubService(SubServiceDto dto);
     SubServiceDto getSubService(SubServiceDto dto);

@@ -1,37 +1,45 @@
 package ir.maktab.service;
 
-import ir.maktab.data.domain.SubService;
+import ir.maktab.data.repository.ServiceRepository;
 import ir.maktab.data.repository.SubServiceRepository;
 import ir.maktab.dto.ExpertDto;
 import ir.maktab.dto.SubServiceDto;
 import ir.maktab.service.exception.DuplicatedDataException;
-import ir.maktab.service.mapper.ExpertMapper;
+import ir.maktab.service.exception.NotFoundServiceException;
+import ir.maktab.service.mapper.ServiceMapper;
 import ir.maktab.service.mapper.SubServiceMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class SubServiceServiceImpl implements SubServiceService
- {
+public class SubServiceServiceImpl implements SubServiceService {
     private final SubServiceRepository subServiceRepository;
     private final SubServiceMapper subServiceMapper;
+    private final ServiceRepository service;
+    private final ServiceMapper serviceMapper;
 
-    public SubServiceServiceImpl(SubServiceRepository subServiceRepository, SubServiceMapper subServiceMapper, ExpertMapper mapper) {
+    public SubServiceServiceImpl(SubServiceRepository subServiceRepository, SubServiceMapper subServiceMapper, ServiceRepository service, ServiceMapper serviceMapper) {
         this.subServiceRepository = subServiceRepository;
         this.subServiceMapper = subServiceMapper;
+        this.service = service;
+        this.serviceMapper = serviceMapper;
     }
 
+
     @Override
-    public void saveNewSubService(SubServiceDto subServiceDto) throws DuplicatedDataException {
-        if (subServiceRepository.findByName(subServiceDto.getName())){
+    public void saveNewSubService(SubServiceDto subServiceDto) throws DuplicatedDataException, NotFoundServiceException {
+        if (subServiceRepository.findByName(subServiceDto.getName()) != null) {
             throw new DuplicatedDataException("This Sub Service Available In DB");
-        }else {
-            subServiceRepository.save(
-                    subServiceMapper.convertToSubService(subServiceDto));
         }
+        if (service.findByName(subServiceDto.getService().getName()) == null) {
+            throw new NotFoundServiceException("This Service Is Not Available!");
+        }
+        subServiceDto.setService(serviceMapper.convertToServiceDto(service.findByName(subServiceDto.getService().getName())));
+        subServiceRepository.save(
+                subServiceMapper.convertToSubService(subServiceDto));
+
     }
 
     @Override
@@ -54,7 +62,7 @@ public class SubServiceServiceImpl implements SubServiceService
     @Override
     public List<SubServiceDto> fetchAllSubServices() {
         return subServiceRepository.findAll()
-                .stream().map(i->subServiceMapper.covertToSubServiceDto(i))
+                .stream().map(i -> subServiceMapper.covertToSubServiceDto(i))
                 .collect(Collectors.toList());
     }
 

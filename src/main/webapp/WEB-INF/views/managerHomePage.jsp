@@ -21,16 +21,16 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="">Home <span class="sr-only"></span></a>
+                <a class="nav-link" href="/">Home <span class="sr-only"></span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/user/searchUser">Search Users</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="addService">Add Service</a>
+                <a class="nav-link" href="/service/addNewService">Add Service</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="expert">Add New Service</a>
+                <a class="nav-link" href="/subService/addNewSubService">Add Sub Service</a>
             </li>
 
         </ul>
