@@ -22,12 +22,12 @@ public class Home {
 
     @GetMapping(value = "/expert")
     public ModelAndView goToRegisterExpertPage(){
-        return new ModelAndView("expertHomePage","expert",new ExpertDto());
+        return new ModelAndView("expertPage","expert",new ExpertDto());
     }
 
     @GetMapping(value = "/customer")
     public ModelAndView goToRegisterCustomerPage(){
-        return new ModelAndView("customerHomePage","customer",new CustomerDto());
+        return new ModelAndView("customerPage","customer",new CustomerDto());
     }
 
 }

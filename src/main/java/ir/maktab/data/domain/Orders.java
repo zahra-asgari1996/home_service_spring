@@ -32,6 +32,7 @@ public class Orders {
     private List<Offers> offers=new ArrayList<>();
     @ManyToOne
     private Expert expert;
+    private Address address;
 
     public Integer getId() {
         return id;
@@ -39,6 +40,15 @@ public class Orders {
 
     public Orders setId(Integer id) {
         this.id = id;
+        return this;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public Orders setAddress(Address address) {
+        this.address = address;
         return this;
     }
 

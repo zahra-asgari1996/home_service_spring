@@ -13,7 +13,14 @@ public class Expert extends Users {
     @Lob
     @Column(columnDefinition="BLOB",length =300000)
     private byte[] image;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "expert_services",
+            joinColumns = {
+                    @JoinColumn(name = "expert_id", referencedColumnName = "id",
+                            nullable = false, updatable = false)},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "service_id", referencedColumnName = "id",
+                            nullable = false, updatable = false)})
     private List<SubService> services=new ArrayList<>();
     @OneToMany(mappedBy = "expert")
     private List<Offers> offers=new ArrayList<>();
@@ -23,6 +30,16 @@ public class Expert extends Users {
     private List<Orders> orders=new ArrayList<>();
     @Column
     private String field;
+
+    public String getField() {
+        return field;
+    }
+
+    public Expert setField(String field) {
+        this.field = field;
+        return this;
+    }
+
     public Expert() {
         this.setRole(Role.Expert);
     }

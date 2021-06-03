@@ -1,15 +1,14 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: Home
-  Date: 6/1/2021
-  Time: 12:40 PM
+  Date: 6/2/2021
+  Time: 9:01 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Expert Page</title>
+    <title>Title</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 </head>
@@ -25,14 +24,17 @@
                 <a class="nav-link" href="/">Home <span class="sr-only"></span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/expert/registerExpertPage">Register </a>
+                <a class="nav-link" href="/expert/selectField">Select Field</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/expert/loginExpertPage">Login </a>
-            </li>
+<%--            <li class="nav-item">--%>
+<%--                <a class="nav-link" href="customer">Customer Page</a>--%>
+<%--            </li>--%>
+<%--            <li class="nav-item">--%>
+<%--                <a class="nav-link" href="expert">Expert Page</a>--%>
+<%--            </li>--%>
+
         </ul>
     </div>
 </nav>
-
 </body>
 </html>

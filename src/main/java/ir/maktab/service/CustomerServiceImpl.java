@@ -1,11 +1,14 @@
 package ir.maktab.service;
 
+import ir.maktab.data.domain.Customer;
 import ir.maktab.data.repository.CustomerRepository;
 import ir.maktab.dto.CustomerDto;
+import ir.maktab.service.exception.NotFoundCustomerException;
 import ir.maktab.service.mapper.CustomerMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,5 +44,14 @@ public class CustomerServiceImpl implements CustomerService {
                 .stream()
                 .map(i -> customerMapper.toCustomerDto(i))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public CustomerDto findByEmail(String email) throws NotFoundCustomerException {
+        Optional<Customer> customer = customerRepository.findByEmail(email);
+        if (customer.isPresent()){
+            return customerMapper.toCustomerDto(customer.get());
+        }
+        throw new NotFoundCustomerException("Customer Is Not Available");
     }
 }

@@ -16,6 +16,7 @@ import java.util.List;
 public class ExpertDto extends UserDto{
     private Integer rate;
     private byte[] image;
+    private String field;
     private List<SubServiceDto> services=new ArrayList<>();
     private List<OfferDto> offers=new ArrayList<>();
     private List<CommentDto> comments=new ArrayList<>();
@@ -25,6 +26,15 @@ public class ExpertDto extends UserDto{
         super.setCredit(0.0);
         super.setRole(Role.Expert);
         super.setSituation(Situation.New);
+    }
+
+    public String getField() {
+        return field;
+    }
+
+    public ExpertDto setField(String field) {
+        this.field = field;
+        return this;
     }
 
     public List<OrderDto> getOrders() {

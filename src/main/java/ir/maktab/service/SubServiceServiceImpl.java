@@ -1,16 +1,19 @@
 package ir.maktab.service;
 
+import ir.maktab.data.domain.SubService;
 import ir.maktab.data.repository.ServiceRepository;
 import ir.maktab.data.repository.SubServiceRepository;
 import ir.maktab.dto.ExpertDto;
 import ir.maktab.dto.SubServiceDto;
 import ir.maktab.service.exception.DuplicatedDataException;
 import ir.maktab.service.exception.NotFoundServiceException;
+import ir.maktab.service.exception.NotFoundSubServiceException;
 import ir.maktab.service.mapper.ServiceMapper;
 import ir.maktab.service.mapper.SubServiceMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -88,11 +91,22 @@ public class SubServiceServiceImpl implements SubServiceService {
 
     @Override
     public void addExpertToSubService(SubServiceDto service, ExpertDto expert) {
+        System.out.println(service.getExperts().size());
         service.getExperts().add(expert);
+        System.out.println(service.getExperts().size());
         subServiceRepository.save(subServiceMapper.convertToSubService(service));
 //        subServiceRepository.
 //                addExpertToSubService
 //                        (subServiceMapper.convertToSubService(service),mapper.toExpert(expert) );
 
+    }
+
+    @Override
+    public SubServiceDto findByName(String name) throws NotFoundSubServiceException {
+        Optional<SubService> subService=subServiceRepository.findByName(name);
+        if (subService.isPresent()){
+            return subServiceMapper.covertToSubServiceDto(subService.get());
+        }
+        throw  new NotFoundSubServiceException("Sub Service Not Found");
     }
 }

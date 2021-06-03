@@ -20,6 +20,16 @@ public class OrderDto {
     private SubServiceDto subService;
     private List<OfferDto> offers=new ArrayList<>();
     private ExpertDto expert;
+    private AddressDto addressDto;
+
+    public AddressDto getAddressDto() {
+        return addressDto;
+    }
+
+    public OrderDto setAddressDto(AddressDto addressDto) {
+        this.addressDto = addressDto;
+        return this;
+    }
 
     public Integer getId() {
         return id;

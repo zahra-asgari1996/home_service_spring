@@ -18,7 +18,7 @@ public class SubService {
     private String name;
     @ManyToOne
     private Service service;
-    @ManyToMany(mappedBy = "services")
+    @ManyToMany(mappedBy = "services", fetch = FetchType.LAZY)
     private List<Expert> experts=new ArrayList<>();
     @OneToMany(mappedBy = "subService")
     private List<Orders> orders=new ArrayList<>();

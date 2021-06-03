@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface SubServiceRepository extends JpaRepository<SubService,Integer> {
 //    void saveNewSubService(SubService subService);
@@ -16,6 +18,6 @@ public interface SubServiceRepository extends JpaRepository<SubService,Integer> 
 //    void deleteExpertFromSubService(SubService service,Expert expert);
 //    void updateExpertInSubService(SubService service,Expert newExpert,Expert oldExpert);
 //    void addExpertToSubService(SubService service,Expert expert);
-    SubService findByName(String name);
+    Optional<SubService> findByName(String name);
 //    void findAllByExperts();
 }
