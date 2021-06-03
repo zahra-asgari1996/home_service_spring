@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: Home
@@ -11,6 +12,10 @@
     <title>Title</title>
 </head>
 <body>
-
+<form:form modelAttribute="loginCustomer" action="/customer/loginCustomerPage/login" method="post">
+    <form:input path="email" placeHolder="Email"></form:input>
+    <form:input path="password" placeHolder="Password"></form:input>
+    <form:button value="login">Login</form:button>
+</form:form>
 </body>
 </html>
