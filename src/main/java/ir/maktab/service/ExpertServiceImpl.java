@@ -1,8 +1,11 @@
 package ir.maktab.service;
 
 import ir.maktab.data.domain.Expert;
+import ir.maktab.data.domain.SubService;
 import ir.maktab.data.repository.ExpertRepository;
+import ir.maktab.data.repository.SubServiceRepository;
 import ir.maktab.dto.ExpertDto;
+import ir.maktab.dto.SelectFieldForExpertDto;
 import ir.maktab.dto.SubServiceDto;
 import ir.maktab.service.exception.NotFoundExpertException;
 import ir.maktab.service.mapper.ExpertMapper;
@@ -17,10 +20,12 @@ import java.util.stream.Collectors;
 public class ExpertServiceImpl implements ExpertService {
 private final ExpertRepository expertRepository;
 private final ExpertMapper expertMapper;
+private final SubServiceRepository subServiceRepository;
 
-    public ExpertServiceImpl(ExpertRepository expertRepository, ExpertMapper expertMapper) {
+    public ExpertServiceImpl(ExpertRepository expertRepository, ExpertMapper expertMapper, SubServiceRepository subServiceRepository) {
         this.expertRepository = expertRepository;
         this.expertMapper = expertMapper;
+        this.subServiceRepository = subServiceRepository;
     }
 
     @Override
@@ -64,5 +69,14 @@ private final ExpertMapper expertMapper;
 //        service.getExperts().add(expert);
 //        System.out.println(service.getExperts().size());
 //        subServiceRepository.save(subServiceMapper.convertToSubService(service));
+    }
+
+    @Override
+    public void addExpertToSubService(SelectFieldForExpertDto dto) {
+        //is present
+        Optional<SubService> service = subServiceRepository.findByName(dto.getSubServiceDto().getName());
+        Optional<Expert> expert = expertRepository.findByEmail(dto.getExpertDto().getEmail());
+        expert.get().getServices().add(service.get());
+        expertRepository.save(expert.get());
     }
 }

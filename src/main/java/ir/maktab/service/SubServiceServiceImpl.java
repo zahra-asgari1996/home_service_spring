@@ -109,4 +109,10 @@ public class SubServiceServiceImpl implements SubServiceService {
         }
         throw  new NotFoundSubServiceException("Sub Service Not Found");
     }
+
+    @Override
+    public List<String> getSubServicesByServiceName(String service) {
+        return subServiceRepository.findByServiceName(service).stream().map(i->i.getName()).collect(Collectors.toList());
+
+    }
 }

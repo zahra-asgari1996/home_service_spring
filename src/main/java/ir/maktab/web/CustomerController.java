@@ -4,6 +4,7 @@ import ir.maktab.dto.CustomerDto;
 import ir.maktab.dto.LoginCustomerDto;
 import ir.maktab.dto.OrderDto;
 import ir.maktab.service.CustomerService;
+import ir.maktab.service.ServiceService;
 import ir.maktab.service.SubServiceService;
 import ir.maktab.service.exception.NotFoundCustomerException;
 import org.springframework.stereotype.Controller;
@@ -14,15 +15,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping(value = "/customer")
 public class CustomerController {
     private final CustomerService customerService;
     private final SubServiceService subServiceService;
+    private final ServiceService service;
 
-    public CustomerController(CustomerService customerService, SubServiceService subServiceService) {
+    public CustomerController(CustomerService customerService, SubServiceService subServiceService, ServiceService service) {
         this.customerService = customerService;
         this.subServiceService = subServiceService;
+        this.service = service;
     }
 
     @PostMapping("/registerCustomerPage/register")
@@ -56,14 +62,18 @@ public class CustomerController {
     }
 
     @GetMapping("/createOrder")
-    public String createOrder(Model model){
+    public String createOrder(Model model, HttpServletRequest request){
         model.addAttribute("newOrder", new OrderDto());
+        model.addAttribute("serviceList",service.fetchAllServices());
+        model.addAttribute("selectedService","select");
+        HttpSession session = request.getSession();
+        session.setAttribute("serviceList" ,service.fetchAllServices());
         return "createOrderPage";
     }
 
     @PostMapping("/createOrder")
     public String createNewOrder(@ModelAttribute("newOrder") OrderDto dto,Model model){
-        model.addAttribute("subServiceList",subServiceService.fetchAllSubServices());
+        //model.addAttribute("subServiceList",subServiceService.fetchAllSubServices());
         return"createOrderPage";
     }
 }

@@ -21,4 +21,6 @@ public interface SubServiceService {
     void updateExpertInSubService(SubServiceDto service,ExpertDto newExpert,ExpertDto oldExpert);
     void addExpertToSubService(SubServiceDto service,ExpertDto expert);
     SubServiceDto findByName(String name) throws NotFoundSubServiceException;
+
+    List<String> getSubServicesByServiceName(String service);
 }

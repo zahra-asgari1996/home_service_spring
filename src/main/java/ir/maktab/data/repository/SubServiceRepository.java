@@ -3,6 +3,8 @@ package ir.maktab.data.repository;
 import ir.maktab.data.domain.Expert;
 import ir.maktab.data.domain.SubService;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,4 +22,6 @@ public interface SubServiceRepository extends JpaRepository<SubService,Integer> 
 //    void addExpertToSubService(SubService service,Expert expert);
     Optional<SubService> findByName(String name);
 //    void findAllByExperts();
+    @Query("select s from SubService as s where s.service.name=:name")
+    List<SubService> findByServiceName(@Param("name") String name);
 }

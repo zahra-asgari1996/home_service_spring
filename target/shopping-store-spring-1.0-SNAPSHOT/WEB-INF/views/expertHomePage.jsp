@@ -24,7 +24,7 @@
                 <a class="nav-link" href="/">Home <span class="sr-only"></span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/expert/selectField">Select Field</a>
+                <a class="nav-link" href="/expert/selectField">Select Field </a>
             </li>
 <%--            <li class="nav-item">--%>
 <%--                <a class="nav-link" href="customer">Customer Page</a>--%>

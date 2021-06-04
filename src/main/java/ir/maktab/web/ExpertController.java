@@ -1,5 +1,6 @@
 package ir.maktab.web;
 
+import ir.maktab.data.domain.Expert;
 import ir.maktab.dto.ExpertDto;
 import ir.maktab.dto.LoginExpertDto;
 import ir.maktab.dto.SelectFieldForExpertDto;
@@ -10,11 +11,11 @@ import ir.maktab.service.exception.NotFoundExpertException;
 import ir.maktab.service.exception.NotFoundSubServiceException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value = "/expert")
@@ -41,10 +42,14 @@ public class ExpertController {
     }
 
     @PostMapping("/loginExpertPage/login")
-    public String loginExpert(@ModelAttribute("loginExpert") LoginExpertDto dto) throws NotFoundExpertException {
+    public String loginExpert(@ModelAttribute("loginExpert") LoginExpertDto dto, Model model,
+                              HttpServletRequest request) throws NotFoundExpertException {
         ExpertDto expertDto = expertService.findByEmail(dto.getEmail());
         if (expertDto!=null){
             if (expertDto.getPassword().equals(dto.getPassword())){
+                HttpSession session = request.getSession();
+                session.setAttribute("expert",expertDto);
+                //model.addAttribute("email",expertDto.getEmail());
                 return "expertHomePage";
             }else {
                 return "loginExpertPage";
@@ -55,16 +60,24 @@ public class ExpertController {
     }
 
     @GetMapping("/selectField")
-    public String selectField(Model model){
+    public String selectField(Model model,  @SessionAttribute ("expert") ExpertDto expertDto
+
+                              ){
         model.addAttribute("selectFieldForExpert",new SelectFieldForExpertDto());
+        //HttpSession session = request.getSession(false);
         return "selectFieldForExpert";
     }
 
     @PostMapping("/selectField")
-    public String selectField(@ModelAttribute("selectFieldForExpert") SelectFieldForExpertDto dto) throws NotFoundExpertException, NotFoundSubServiceException {
-        ExpertDto expertDto= expertService.findByEmail(dto.getExpertDto().getEmail());
-        SubServiceDto subServiceDto=subServiceService.findByName(dto.getSubServiceDto().getName());
-        expertService.addExpertToSubService(subServiceDto,expertDto);
+    public String selectField(@ModelAttribute("selectFieldForExpert") SelectFieldForExpertDto dto,
+                              //@ModelAttribute ("email") String email,
+                              @SessionAttribute("expert")ExpertDto expert
+                              ) throws NotFoundExpertException, NotFoundSubServiceException {
+//        ExpertDto expertDto= expertService.findByEmail(expert.getEmail());
+//        SubServiceDto subServiceDto=subServiceService.findByName(dto.getSubServiceDto().getName());
+//        String email = (String) model.getAttribute("email");
+        dto.setExpertDto(expert);
+        expertService.addExpertToSubService(dto);
         //subServiceService.addExpertToSubService(subServiceDto,expertDto);
         return "expertHomePage";
     }
