@@ -33,7 +33,7 @@ public class SubServiceServiceImpl implements SubServiceService {
 
     @Override
     public void saveNewSubService(SubServiceDto subServiceDto) throws DuplicatedDataException, NotFoundServiceException {
-        if (subServiceRepository.findByName(subServiceDto.getName()) != null) {
+        if (subServiceRepository.findByName(subServiceDto.getName()).isPresent()) {
             throw new DuplicatedDataException("This Sub Service Available In DB");
         }
         if (service.findByName(subServiceDto.getService().getName()) == null) {
@@ -111,6 +111,7 @@ public class SubServiceServiceImpl implements SubServiceService {
     }
 
     @Override
+    //ist of dto beferst
     public List<String> getSubServicesByServiceName(String service) {
         return subServiceRepository.findByServiceName(service).stream().map(i->i.getName()).collect(Collectors.toList());
 

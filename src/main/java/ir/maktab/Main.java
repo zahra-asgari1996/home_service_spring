@@ -1,27 +1,15 @@
 package ir.maktab;
 
 import ir.maktab.configuration.AppConfiguration;
-import ir.maktab.data.domain.Customer;
-import ir.maktab.data.domain.Manager;
-import ir.maktab.data.domain.Service;
-import ir.maktab.data.domain.Users;
-import ir.maktab.data.enums.Role;
+import ir.maktab.data.domain.Expert;
 import ir.maktab.data.repository.*;
-import ir.maktab.dto.*;
-import ir.maktab.service.ExpertService;
-import ir.maktab.service.ServiceService;
-import ir.maktab.service.SubServiceService;
-import ir.maktab.service.UserService;
 import ir.maktab.service.exception.DuplicatedDataException;
 import ir.maktab.service.exception.NotFoundExpertException;
 import ir.maktab.service.exception.NotFoundServiceException;
 import ir.maktab.service.exception.NotFoundSubServiceException;
-import ir.maktab.web.ServiceController;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.data.jpa.domain.Specification;
 
-import java.util.List;
 import java.util.Optional;
 
 public class Main {
@@ -58,9 +46,9 @@ public class Main {
 //
 //        List<UserDto> userDtos = userService.filterUsers(filter);
 //        System.out.println(userDtos.size());
-        SubServiceService service=context.getBean(SubServiceService.class);
-        SubServiceDto a = service.findByName("a");
-        System.out.println(a.getId());
+//        SubServiceService service=context.getBean(SubServiceService.class);
+//        SubServiceDto a = service.findByName("a");
+//        System.out.println(a.getId());
 //        ServiceDto serviceDto=new ServiceDto();
 //        serviceDto.setName("t");
        // ServiceService serviceService=context.getBean(ServiceService.class);
@@ -68,14 +56,14 @@ public class Main {
 //        SubServiceDto subServiceDto=new SubServiceDto();
 //        subServiceDto.setName("a");
         //subServiceDto.setService(serviceDto);
-        ExpertService expertService=context.getBean(ExpertService.class);
-        ExpertDto byEmail = expertService.findByEmail("zahra.asgari1996@yahoo.com");
-        System.out.println(byEmail.getId());
+//        ExpertService expertService=context.getBean(ExpertService.class);
+//        ExpertDto byEmail = expertService.findByEmail("zahra.asgari1996@yahoo.com");
+//        System.out.println(byEmail.getId());
 //        ExpertDto expertDto=new ExpertDto();
 //        expertDto.setEmail("ali@gmail.com");
 //        expertDto.setPassword("123");
         //expertDto.getServices().add(subServiceDto);
-        expertService.addExpertToSubService(a,byEmail);
+//        expertService.addExpertToSubService(a,byEmail);
 //        ServiceRepository serviceRepository=context.getBean(ServiceRepository.class);
 //        Service tamir = serviceRepository.findByName("tamir");
 //        System.out.println(tamir.getName());
@@ -84,7 +72,15 @@ public class Main {
 //        service.saveNewSubService(subServiceDto);
 
 //
+        OrderRepository orderRepository=context.getBean(OrderRepository.class);
 
+//        List<Orders> list = orderRepository.findOrdersBaseOnExpertSubServices(1);
+//        System.out.println(list.size());
+//        System.out.println();
+        ExpertRepository expertRepository=context.getBean(ExpertRepository.class);
+        Optional<Expert> byEmail = expertRepository.findByEmail("zahra.asgari1996@yahoo.com");
+        System.out.println(byEmail.get().getId());
+        System.out.println(orderRepository.findOrdersBaseOnExpertSubServices(byEmail.get()).size());
 
     }
 }

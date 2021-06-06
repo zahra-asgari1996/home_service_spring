@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -40,12 +42,17 @@ public class SubServiceController {
     }
 
     @GetMapping("/getSubService")
-    public String getSubServices(@RequestParam("service") String service, Model model, @SessionAttribute("serviceList")List<ServiceDto> serviceList){
+    public String getSubServices(@RequestParam("service") String service, Model model,
+                                 @SessionAttribute("serviceList")List<ServiceDto> serviceList
+                                 ,@SessionAttribute("newOrder") OrderDto dto,
+                                 HttpServletRequest request
+    ){
+        HttpSession session = request.getSession(false);
         List<String> subServices=subServiceService.getSubServicesByServiceName(service);
 //        if (serviceList.contains(service)){
 //
 //        }
-        model.addAttribute("newOrder",new OrderDto());
+        model.addAttribute("newOrder",dto);
         model.addAttribute("subServiceList",subServices);
 //        serviceList.remove(service);
         model.addAttribute("serviceList",serviceList);

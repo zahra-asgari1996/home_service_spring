@@ -1,11 +1,11 @@
 package ir.maktab.dto;
 
-import ir.maktab.data.enums.Role;
+import ir.maktab.data.enums.UserRole;
 
 public class FilterUsersDto {
     private String name;
     private String lastName;
-    private Role role;
+    private UserRole userRole;
     private String email;
     private Integer rate;
     private String field;
@@ -28,12 +28,12 @@ public class FilterUsersDto {
         return this;
     }
 
-    public Role getRole() {
-        return role;
+    public UserRole getRole() {
+        return userRole;
     }
 
-    public FilterUsersDto setRole(Role role) {
-        this.role = role;
+    public FilterUsersDto setRole(UserRole userRole) {
+        this.userRole = userRole;
         return this;
     }
 

@@ -1,9 +1,11 @@
 package ir.maktab.dto;
 
+import ir.maktab.data.domain.Address;
 import ir.maktab.data.domain.Customer;
 import ir.maktab.data.domain.Offers;
 import ir.maktab.data.domain.SubService;
 import ir.maktab.data.enums.OrderSituation;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,20 +16,21 @@ public class OrderDto {
     private Double proposedPrice;
     private String jobDescription;
     private Date dateOfOrderRegistration;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date dateOfWork;
     private OrderSituation situation;
     private CustomerDto customer;
     private SubServiceDto subService;
     private List<OfferDto> offers=new ArrayList<>();
     private ExpertDto expert;
-    private AddressDto addressDto;
+    private Address address;
 
-    public AddressDto getAddressDto() {
-        return addressDto;
+    public Address getAddress() {
+        return address;
     }
 
-    public OrderDto setAddressDto(AddressDto addressDto) {
-        this.addressDto = addressDto;
+    public OrderDto setAddress(Address address) {
+        this.address = address;
         return this;
     }
 

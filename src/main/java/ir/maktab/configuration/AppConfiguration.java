@@ -23,11 +23,13 @@ public class AppConfiguration {
         return messageSource;
     }
 
+
     @Bean(name = "multipartResolver")
-    public CommonsMultipartResolver multipartResolver(){
-       CommonsMultipartResolver commonsMultipartResolver =new CommonsMultipartResolver();
-       commonsMultipartResolver.setMaxUploadSize(100000);
-       return commonsMultipartResolver;
+    public CommonsMultipartResolver getCommonsMultipartResolver() {
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+        multipartResolver.setMaxUploadSize(20971520);   // 20MB
+        multipartResolver.setMaxInMemorySize(1048576);  // 1MB
+        return multipartResolver;
     }
 }
 

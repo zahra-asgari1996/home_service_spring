@@ -1,15 +1,8 @@
 package ir.maktab.dto;
 
-import ir.maktab.data.domain.Comments;
-import ir.maktab.data.domain.Offers;
-import ir.maktab.data.domain.SubService;
-import ir.maktab.data.enums.Role;
-import ir.maktab.data.enums.Situation;
+import ir.maktab.data.enums.UserRole;
+import ir.maktab.data.enums.UserSituation;
 
-import javax.persistence.Column;
-import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +17,8 @@ public class ExpertDto extends UserDto{
 
     public ExpertDto() {
         super.setCredit(0.0);
-        super.setRole(Role.Expert);
-        super.setSituation(Situation.New);
+        super.setRole(UserRole.Expert);
+        super.setSituation(UserSituation.New);
     }
 
     public String getField() {

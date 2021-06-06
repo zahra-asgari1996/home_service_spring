@@ -20,7 +20,7 @@ public class SubService {
     private Service service;
     @ManyToMany(mappedBy = "services", fetch = FetchType.LAZY)
     private List<Expert> experts=new ArrayList<>();
-    @OneToMany(mappedBy = "subService")
+    @OneToMany(mappedBy = "subService",fetch = FetchType.LAZY)
     private List<Orders> orders=new ArrayList<>();
 
     public Integer getId() {

@@ -1,13 +1,8 @@
 package ir.maktab.dto;
 
-import ir.maktab.data.enums.Role;
-import ir.maktab.data.enums.Situation;
-import org.hibernate.annotations.CreationTimestamp;
+import ir.maktab.data.enums.UserRole;
+import ir.maktab.data.enums.UserSituation;
 
-import javax.persistence.Column;
-import javax.persistence.Enumerated;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import java.util.Date;
 
 public class UserDto {
@@ -16,26 +11,26 @@ public class UserDto {
     private String lastName;
     private String email;
     private String password;
-    private Situation situation;
+    private UserSituation userSituation;
     private Date date;
-    private Role role;
+    private UserRole userRole;
     private Double credit;
 
     public UserDto() {
         this.credit=0.0;
-        this.situation=Situation.New;
+        this.userSituation = UserSituation.New;
     }
 
     public Integer getId() {
         return id;
     }
 
-    public Role getRole() {
-        return role;
+    public UserRole getRole() {
+        return userRole;
     }
 
-    public UserDto setRole(Role role) {
-        this.role = role;
+    public UserDto setRole(UserRole userRole) {
+        this.userRole = userRole;
         return this;
     }
 
@@ -80,12 +75,12 @@ public class UserDto {
         return this;
     }
 
-    public Situation getSituation() {
-        return situation;
+    public UserSituation getSituation() {
+        return userSituation;
     }
 
-    public UserDto setSituation(Situation situation) {
-        this.situation = situation;
+    public UserDto setSituation(UserSituation userSituation) {
+        this.userSituation = userSituation;
         return this;
     }
 

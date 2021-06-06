@@ -20,6 +20,7 @@ public class Offers {
     @Column
     private Double offerPrice;
     @Column
+    //long  daghighe bashe
     private Double durationOfWork;
 
     @Temporal(value = TemporalType.TIME)

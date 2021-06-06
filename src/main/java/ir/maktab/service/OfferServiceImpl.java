@@ -33,7 +33,7 @@ public class OfferServiceImpl implements OfferService {
         if (dto.getOfferPrice() < dto.getOrders().getSubService().getBasePrice()) {
             throw new LessOfferPriceException("Offer Price Is Less Than Sub Service Base Price");
         }
-        if (dto.getOrders().getExpert().getServices().equals(dto.getOrders().getSubService())) {
+        if (dto.getOrders().getExpert().getServices().contains(dto.getOrders().getSubService())) {
             throw new NotSubServiceInExpertsListException("Sub Service Is Not In Experts List");
         }
         dto.getOrders().setSituation(OrderSituation.Waiting_for_expert_selection);
@@ -59,7 +59,7 @@ public class OfferServiceImpl implements OfferService {
                 .stream().map(i -> mapper.toOfferDto(i))
                 .collect(Collectors.toList());
     }
-    public List<OfferDto> sortedList(OrderDto orderDto,int offset,int limit){
+    public List<OfferDto> getOrderOffersSortByRateAndPrice(OrderDto orderDto,int offset,int limit){
         List<Offers> offerPrice = repository.findAll(Sort.by("expert.rate").and(Sort.by("offerPrice")));
         return offerPrice.stream().filter(i->i.getOrders().equals(orderDto)).map(i->mapper.toOfferDto(i)).collect(Collectors.toList());
 //        Pageable pageable= PageRequest.of(offset,limit,Sort.Direction.ASC,"offerPrice");

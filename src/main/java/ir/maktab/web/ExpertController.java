@@ -1,11 +1,10 @@
 package ir.maktab.web;
 
-import ir.maktab.data.domain.Expert;
 import ir.maktab.dto.ExpertDto;
 import ir.maktab.dto.LoginExpertDto;
 import ir.maktab.dto.SelectFieldForExpertDto;
-import ir.maktab.dto.SubServiceDto;
 import ir.maktab.service.ExpertService;
+import ir.maktab.service.OrderService;
 import ir.maktab.service.SubServiceService;
 import ir.maktab.service.exception.NotFoundExpertException;
 import ir.maktab.service.exception.NotFoundSubServiceException;
@@ -22,10 +21,12 @@ import javax.servlet.http.HttpSession;
 public class ExpertController {
     private final ExpertService expertService;
     private final SubServiceService subServiceService;
+    private final OrderService orderService;
 
-    public ExpertController(ExpertService expertService, SubServiceService subServiceService) {
+    public ExpertController(ExpertService expertService, SubServiceService subServiceService, OrderService orderService) {
         this.expertService = expertService;
         this.subServiceService = subServiceService;
+        this.orderService = orderService;
     }
     @PostMapping(value = "/registerExpertPage/register")
     public String save(@ModelAttribute("expert")ExpertDto expertDto){
@@ -80,5 +81,14 @@ public class ExpertController {
         expertService.addExpertToSubService(dto);
         //subServiceService.addExpertToSubService(subServiceDto,expertDto);
         return "expertHomePage";
+    }
+
+    @GetMapping("/showOrders")
+    public ModelAndView showOrders(Model model,HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+        Object expert = session.getAttribute("expert");
+        //model.addAttribute("showOrdersForm",orderService.findOrdersBaseOnExpertSubServices((ExpertDto) expert));
+        return new ModelAndView("showOrdersPage",
+                "ordersList",orderService.findOrdersBaseOnExpertSubServices((ExpertDto) expert));
     }
 }

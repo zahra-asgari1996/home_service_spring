@@ -47,7 +47,7 @@ private final SubServiceRepository subServiceRepository;
     public List<ExpertDto> fetchAllExperts() {
         return expertRepository.findAll()
                 .stream()
-                .map(i->expertMapper.toExpertDto(i))
+                .map(expertMapper::toExpertDto)
                 .collect(Collectors.toList());
     }
 

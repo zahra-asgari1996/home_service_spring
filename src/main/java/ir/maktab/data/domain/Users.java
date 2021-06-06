@@ -1,7 +1,7 @@
 package ir.maktab.data.domain;
 
-import ir.maktab.data.enums.Role;
-import ir.maktab.data.enums.Situation;
+import ir.maktab.data.enums.UserRole;
+import ir.maktab.data.enums.UserSituation;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -21,13 +21,13 @@ public class Users {
     @Column(nullable = false)
     private String password;
     @Enumerated(value = EnumType.STRING)
-    private Situation situation;
+    private UserSituation userSituation;
     @Column
     @CreationTimestamp
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date date;
     @Enumerated(value = EnumType.STRING)
-    private Role role;
+    private UserRole userRole;
     @Column
     private Double credit;
 
@@ -43,12 +43,12 @@ public class Users {
         return this;
     }
 
-    public Role getRole() {
-        return role;
+    public UserRole getRole() {
+        return userRole;
     }
 
-    public Users setRole(Role role) {
-        this.role = role;
+    public Users setRole(UserRole userRole) {
+        this.userRole = userRole;
         return this;
     }
 
@@ -97,12 +97,12 @@ public class Users {
         return this;
     }
 
-    public Situation getSituation() {
-        return situation;
+    public UserSituation getSituation() {
+        return userSituation;
     }
 
-    public Users setSituation(Situation situation) {
-        this.situation = situation;
+    public Users setSituation(UserSituation userSituation) {
+        this.userSituation = userSituation;
         return this;
     }
 

@@ -1,6 +1,7 @@
 package ir.maktab.service;
 
 import ir.maktab.data.domain.Orders;
+import ir.maktab.dto.ExpertDto;
 import ir.maktab.dto.OfferDto;
 import ir.maktab.dto.OrderDto;
 import ir.maktab.service.exception.NotFoundOfferForOrder;
@@ -13,4 +14,5 @@ public interface OrderService {
     void updateOrder(OrderDto dto);
     List<OrderDto> fetchAllOrders();
     void selectOffer(OrderDto orderDto,OfferDto dto) throws NotFoundOfferForOrder;
+    List<OrderDto> findOrdersBaseOnExpertSubServices(ExpertDto expertDto);
 }

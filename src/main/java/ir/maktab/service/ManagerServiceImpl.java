@@ -38,7 +38,7 @@ public class ManagerServiceImpl  implements ManagerService{
     @Override
     public List<ManagerDto> fetchAllManagers() {
         return repository.findAll()
-                .stream().map(manager -> mapper.toManagerDto(manager))
+                .stream().map(mapper::toManagerDto)
                 .collect(Collectors.toList());
     }
 

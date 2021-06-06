@@ -1,14 +1,23 @@
 package ir.maktab.data.repository;
 
+import ir.maktab.data.domain.Expert;
 import ir.maktab.data.domain.Orders;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
 public interface OrderRepository extends JpaRepository<Orders,Integer> {
-//    void saveNewOrder(Orders orders);
-//    void deleteOrder(Orders orders);
-//    void updateOrder(Orders orders);
-//    List<Orders> fetchAllOrders();
+
+
+   @Query("select o from Orders as o where o.subService in (select s from SubService s where :expert member s.experts)")
+    List<Orders> findOrdersBaseOnExpertSubServices(@Param("expert") Expert expert);
+
+
+    @Query("select e.services from Expert as e where e.id=:id")
+    List<Orders> size(@Param("id") Integer id);
+
+    
 }

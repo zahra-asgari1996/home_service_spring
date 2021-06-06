@@ -1,5 +1,5 @@
 package ir.maktab.data.enums;
 
 public enum OfferSituation {
-    accepted
+    accepted,registered,expired,rejected
 }

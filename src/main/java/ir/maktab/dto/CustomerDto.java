@@ -1,11 +1,8 @@
 package ir.maktab.dto;
 
-import ir.maktab.data.domain.Comments;
-import ir.maktab.data.domain.Orders;
-import ir.maktab.data.enums.Role;
-import ir.maktab.data.enums.Situation;
+import ir.maktab.data.enums.UserRole;
+import ir.maktab.data.enums.UserSituation;
 
-import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +12,8 @@ public class CustomerDto extends UserDto{
 
     public CustomerDto() {
         super.setCredit(0.0);
-        super.setRole(Role.Customer);
-        super.setSituation(Situation.New);
+        super.setRole(UserRole.Customer);
+        super.setSituation(UserSituation.New);
     }
 
     public List<OrderDto> getOrders() {

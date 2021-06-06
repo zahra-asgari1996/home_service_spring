@@ -41,6 +41,6 @@ public class CommentServiceImpl implements CommentService{
         return
                 commentsRepository.findAll()
                         .stream()
-                        .map(i->commentMapper.toCommentDto(i)).collect(Collectors.toList());
+                        .map(commentMapper::toCommentDto).collect(Collectors.toList());
     }
 }

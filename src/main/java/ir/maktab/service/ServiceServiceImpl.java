@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ServiceServiceImpl implements ServiceService{
+public class ServiceServiceImpl implements ServiceService {
     private final ServiceRepository serviceRepository;
     private final ServiceMapper serviceMapper;
 
@@ -21,9 +21,9 @@ public class ServiceServiceImpl implements ServiceService{
 
     @Override
     public void saveNewService(ServiceDto serviceDto) throws DuplicatedDataException {
-        if(serviceRepository.findByName(serviceDto.getName())!=null){
+        if (serviceRepository.findByName(serviceDto.getName()) != null) {
             throw new DuplicatedDataException("This Service Available In DB");
-        }else {
+        } else {
             serviceRepository.save(serviceMapper.convertToService(serviceDto));
         }
     }
@@ -46,7 +46,7 @@ public class ServiceServiceImpl implements ServiceService{
     @Override
     public List<ServiceDto> fetchAllServices() {
         return serviceRepository.findAll()
-                .stream().map(i->serviceMapper.convertToServiceDto(i))
+                .stream().map(serviceMapper::convertToServiceDto)
                 .collect(Collectors.toList());
     }
 }

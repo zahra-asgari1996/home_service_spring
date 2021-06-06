@@ -2,13 +2,11 @@ package ir.maktab.web;
 
 import ir.maktab.dto.CustomerDto;
 import ir.maktab.dto.LoginCustomerDto;
-import ir.maktab.dto.OrderDto;
 import ir.maktab.service.CustomerService;
 import ir.maktab.service.ServiceService;
 import ir.maktab.service.SubServiceService;
 import ir.maktab.service.exception.NotFoundCustomerException;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -61,19 +59,19 @@ public class CustomerController {
         }
     }
 
-    @GetMapping("/createOrder")
-    public String createOrder(Model model, HttpServletRequest request){
-        model.addAttribute("newOrder", new OrderDto());
-        model.addAttribute("serviceList",service.fetchAllServices());
-        model.addAttribute("selectedService","select");
-        HttpSession session = request.getSession();
-        session.setAttribute("serviceList" ,service.fetchAllServices());
-        return "createOrderPage";
-    }
+//    @GetMapping("/createOrder")
+//    public String createOrder(Model model, HttpServletRequest request){
+//        model.addAttribute("newOrder", new OrderDto());
+//        model.addAttribute("serviceList",service.fetchAllServices());
+//        model.addAttribute("selectedService","select");
+//        HttpSession session = request.getSession();
+//        session.setAttribute("serviceList" ,service.fetchAllServices());
+//        return "createOrderPage";
+//    }
 
-    @PostMapping("/createOrder")
-    public String createNewOrder(@ModelAttribute("newOrder") OrderDto dto,Model model){
-        //model.addAttribute("subServiceList",subServiceService.fetchAllSubServices());
-        return"createOrderPage";
-    }
+//    @PostMapping("/createOrder")
+//    public String createNewOrder(@ModelAttribute("newOrder") OrderDto dto,Model model){
+//        //model.addAttribute("subServiceList",subServiceService.fetchAllSubServices());
+//        return"createOrderPage";
+//    }
 }

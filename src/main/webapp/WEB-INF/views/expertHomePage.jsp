@@ -26,6 +26,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="/expert/selectField">Select Field </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/expert/showOrders">See Orders </a>
+            </li>
 <%--            <li class="nav-item">--%>
 <%--                <a class="nav-link" href="customer">Customer Page</a>--%>
 <%--            </li>--%>

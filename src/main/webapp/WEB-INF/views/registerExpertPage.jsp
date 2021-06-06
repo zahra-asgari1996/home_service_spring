@@ -52,6 +52,15 @@
         </tr>
 
         <tr>
+            <td>
+                <form:label path="image">Password :</form:label>
+            </td>
+            <td>
+                <form:input path="image" name="image" type="file"></form:input>
+            </td>
+        </tr>
+
+        <tr>
             <td></td>
             <td>
                 <form:button name="register">Register</form:button>

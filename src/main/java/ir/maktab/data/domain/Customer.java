@@ -1,8 +1,7 @@
 package ir.maktab.data.domain;
 
-import ir.maktab.data.enums.Role;
+import ir.maktab.data.enums.UserRole;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
@@ -17,7 +16,7 @@ public class Customer extends Users {
     private List<Comments> comments=new ArrayList<>();
 
     public Customer() {
-        this.setRole(Role.Customer);
+        this.setRole(UserRole.Customer);
     }
 
 

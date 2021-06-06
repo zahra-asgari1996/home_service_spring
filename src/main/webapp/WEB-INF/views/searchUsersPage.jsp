@@ -48,7 +48,7 @@
             <td>name</td>
             <td>last Name</td>
             <td>email</td>
-            <td>role</td>
+            <td>userRole</td>
             <td>data</td>
         </tr>
         <c:forEach items="${usersList}" var="list">
@@ -56,7 +56,7 @@
                 <td>${list.name}</td>
                 <td>${list.lastName}</td>
                 <td>${list.email}</td>
-                <td>${list.role}</td>
+                <td>${list.userRole}</td>
                 <td>${list.date}</td>
             </tr>
         </c:forEach>

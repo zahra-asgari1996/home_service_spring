@@ -1,6 +1,6 @@
 package ir.maktab.data.domain;
 
-import ir.maktab.data.enums.Role;
+import ir.maktab.data.enums.UserRole;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -9,6 +9,7 @@ import java.util.List;
 @Entity
 public class Expert extends Users {
     @Column
+    //double begir
     private Integer rate;
     @Lob
     @Column(columnDefinition="BLOB",length =300000)
@@ -41,7 +42,7 @@ public class Expert extends Users {
     }
 
     public Expert() {
-        this.setRole(Role.Expert);
+        this.setRole(UserRole.Expert);
     }
 
 
