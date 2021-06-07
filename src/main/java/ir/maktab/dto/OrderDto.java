@@ -7,6 +7,7 @@ import ir.maktab.data.domain.SubService;
 import ir.maktab.data.enums.OrderSituation;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 public class OrderDto {
     private Integer id;
     private Double proposedPrice;
+    @NotBlank
     private String jobDescription;
     private Date dateOfOrderRegistration;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

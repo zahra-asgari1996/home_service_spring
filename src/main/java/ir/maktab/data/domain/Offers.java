@@ -20,8 +20,7 @@ public class Offers {
     @Column
     private Double offerPrice;
     @Column
-    //long  daghighe bashe
-    private Double durationOfWork;
+    private Long durationOfWork;
 
     @Temporal(value = TemporalType.TIME)
     private Date startTime;
@@ -66,11 +65,11 @@ public class Offers {
         return this;
     }
 
-    public Double getDurationOfWork() {
+    public Long getDurationOfWork() {
         return durationOfWork;
     }
 
-    public Offers setDurationOfWork(Double durationOfWork) {
+    public Offers setDurationOfWork(Long durationOfWork) {
         this.durationOfWork = durationOfWork;
         return this;
     }

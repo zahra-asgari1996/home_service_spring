@@ -12,7 +12,7 @@ import java.util.Map;
 @ComponentScan("ir.maktab")
 @PropertySource("classpath:database.properties")
 @Import(DataBaseContext.class)
-//@EnableWebMvc
+@EnableWebMvc
 public class AppConfiguration {
 
     @Bean("messageSource")

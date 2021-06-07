@@ -30,6 +30,7 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public void saveNewOffer(OfferDto dto) throws LessOfferPriceException, NotSubServiceInExpertsListException {
+        //find order then
         if (dto.getOfferPrice() < dto.getOrders().getSubService().getBasePrice()) {
             throw new LessOfferPriceException("Offer Price Is Less Than Sub Service Base Price");
         }

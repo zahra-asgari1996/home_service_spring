@@ -1,7 +1,16 @@
 package ir.maktab.dto;
 
+import ir.maktab.service.validation.ValidPassword;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class LoginCustomerDto {
+    @NotBlank(message = "Email Could Not Be Empty ")
+    @Email(message = "error")
     private String email;
+    @ValidPassword
     private String password;
 
     public String getEmail() {

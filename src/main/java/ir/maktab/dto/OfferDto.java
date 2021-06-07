@@ -3,6 +3,7 @@ package ir.maktab.dto;
 import ir.maktab.data.domain.Expert;
 import ir.maktab.data.domain.Orders;
 import ir.maktab.data.enums.OfferSituation;
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 import javax.persistence.Column;
@@ -16,7 +17,8 @@ public class OfferDto {
     private OrderDto orders;
     private Date SubmitOffer;
     private Double offerPrice;
-    private Double durationOfWork;
+    private Long durationOfWork;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date startTime;
     private ExpertDto expert;
     private OfferSituation offerSituation;
@@ -57,11 +59,11 @@ public class OfferDto {
         return this;
     }
 
-    public Double getDurationOfWork() {
+    public Long getDurationOfWork() {
         return durationOfWork;
     }
 
-    public OfferDto setDurationOfWork(Double durationOfWork) {
+    public OfferDto setDurationOfWork(Long durationOfWork) {
         this.durationOfWork = durationOfWork;
         return this;
     }
