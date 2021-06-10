@@ -8,7 +8,6 @@ import javax.validation.constraints.NotNull;
 
 public class LoginCustomerDto {
     @NotBlank(message = "Email Could Not Be Empty ")
-    @Email(message = "error")
     private String email;
     @ValidPassword
     private String password;

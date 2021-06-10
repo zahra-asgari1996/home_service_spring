@@ -7,6 +7,8 @@ import ir.maktab.data.repository.SubServiceRepository;
 import ir.maktab.dto.ExpertDto;
 import ir.maktab.dto.SelectFieldForExpertDto;
 import ir.maktab.dto.SubServiceDto;
+import ir.maktab.service.exception.DuplicatedEmailAddressException;
+import ir.maktab.service.exception.InvalidPassword;
 import ir.maktab.service.exception.NotFoundExpertException;
 import ir.maktab.service.mapper.ExpertMapper;
 import org.springframework.stereotype.Service;
@@ -29,7 +31,11 @@ private final SubServiceRepository subServiceRepository;
     }
 
     @Override
-    public void saveNewExpert(ExpertDto expert) {
+    public void saveNewExpert(ExpertDto expert) throws DuplicatedEmailAddressException {
+        Optional<Expert> optionalExpert = expertRepository.findByEmail(expert.getEmail());
+        if (optionalExpert.isPresent()){
+            throw new DuplicatedEmailAddressException("This Email Is Available ! Please Choose Another Email Or Login... ");
+        }
         expertRepository.save(expertMapper.toExpert(expert));
     }
 
@@ -78,5 +84,28 @@ private final SubServiceRepository subServiceRepository;
         Optional<Expert> expert = expertRepository.findByEmail(dto.getExpertDto().getEmail());
         expert.get().getServices().add(service.get());
         expertRepository.save(expert.get());
+    }
+
+    @Override
+    public ExpertDto loginExpert(ExpertDto dto) throws NotFoundExpertException, InvalidPassword {
+        Optional<Expert> expert = expertRepository.findByEmail(dto.getEmail());
+        if (expert.isPresent()){
+            if (!expert.get().getPassword().equals(dto.getPassword())){
+                throw  new InvalidPassword("Password Is Incorrect ! Please Try Again...");
+            }else {
+                return expertMapper.toExpertDto(expert.get());
+            }
+        }else{
+            throw new NotFoundExpertException("This Email Is Not Available ! Please Try Again... ");
+        }
+    }
+
+
+    @Override
+    public void changePassword(ExpertDto dto) {
+        Optional<Expert> expert = expertRepository.findByEmail(dto.getEmail());
+        Expert expert1 = expert.get();
+        expert1.setEmail(dto.getEmail());
+        expertRepository.save(expert1);
     }
 }

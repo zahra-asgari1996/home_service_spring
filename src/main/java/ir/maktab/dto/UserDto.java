@@ -2,14 +2,26 @@ package ir.maktab.dto;
 
 import ir.maktab.data.enums.UserRole;
 import ir.maktab.data.enums.UserSituation;
+import ir.maktab.service.validation.ChangePasswordValidation;
+import ir.maktab.service.validation.LoginValidation;
+import ir.maktab.service.validation.RegisterValidation;
+import ir.maktab.service.validation.ValidPassword;
 
+import javax.validation.constraints.*;
 import java.util.Date;
 
 public class UserDto {
     private Integer id;
+    @NotBlank(message = "Name Can Not Be Null!",groups ={RegisterValidation.class} )
+    @Size(min = 2,max = 10,message = "Size Should Be Between 2 And 10",groups ={RegisterValidation.class})
     private String name;
+    @NotBlank(message = "Last Name Can Not Be Null!",groups ={RegisterValidation.class})
+    @Size(min = 2,max = 15,message = "Size Should Be Between 2 And 15",groups ={RegisterValidation.class})
     private String lastName;
+    @Email(groups = {LoginValidation.class, RegisterValidation.class})
+    @NotBlank(message = "Email Can Not Be Null!",groups = {LoginValidation.class, RegisterValidation.class})
     private String email;
+    @ValidPassword(groups = {LoginValidation.class, RegisterValidation.class, ChangePasswordValidation.class})
     private String password;
     private UserSituation userSituation;
     private Date date;

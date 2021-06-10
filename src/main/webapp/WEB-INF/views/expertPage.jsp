@@ -25,10 +25,10 @@
                 <a class="nav-link" href="/">Home <span class="sr-only"></span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/expert/registerExpertPage">Register </a>
+                <a class="nav-link" href="/expert/register">Register </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/expert/loginExpertPage">Login </a>
+                <a class="nav-link" href="/expert/login">Login </a>
             </li>
         </ul>
     </div>

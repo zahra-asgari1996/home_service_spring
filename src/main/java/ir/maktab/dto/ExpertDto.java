@@ -3,11 +3,13 @@ package ir.maktab.dto;
 import ir.maktab.data.enums.UserRole;
 import ir.maktab.data.enums.UserSituation;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ExpertDto extends UserDto{
     private Integer rate;
+    @NotNull(message = "You Should Upload Image!")
     private byte[] image;
     private String field;
     private List<SubServiceDto> services=new ArrayList<>();

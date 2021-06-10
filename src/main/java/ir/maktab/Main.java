@@ -74,7 +74,7 @@ public class Main {
 //
         OrderRepository orderRepository=context.getBean(OrderRepository.class);
 
-//        List<Orders> list = orderRepository.findOrdersBaseOnExpertSubServices(1);
+//        List<Orders> list = orderRepository.findOrdersBaseOnExpertSubServicesAndSituation(1);
 //        System.out.println(list.size());
 //        System.out.println();
         ExpertRepository expertRepository=context.getBean(ExpertRepository.class);

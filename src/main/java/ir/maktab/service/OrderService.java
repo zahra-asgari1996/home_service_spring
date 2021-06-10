@@ -14,5 +14,5 @@ public interface OrderService {
     void updateOrder(OrderDto dto);
     List<OrderDto> fetchAllOrders();
     void selectOffer(OrderDto orderDto,OfferDto dto) throws NotFoundOfferForOrder;
-    List<OrderDto> findOrdersBaseOnExpertSubServices(ExpertDto expertDto);
+    List<OrderDto> findOrdersBaseOnExpertSubServicesAndSituation(ExpertDto expertDto);
 }

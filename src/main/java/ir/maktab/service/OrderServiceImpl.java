@@ -88,7 +88,7 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public List<OrderDto> findOrdersBaseOnExpertSubServices(ExpertDto expertDto) {
+    public List<OrderDto> findOrdersBaseOnExpertSubServicesAndSituation(ExpertDto expertDto) {
         List<Orders> orders = repository.findOrdersBaseOnExpertSubServices(expertMapper.toExpert(expertDto));
         return orders.stream().map(i->mapper.toOrderDto(i)).collect(Collectors.toList());
     }

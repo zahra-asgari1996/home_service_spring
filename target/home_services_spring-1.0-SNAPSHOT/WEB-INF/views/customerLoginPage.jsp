@@ -12,14 +12,13 @@
     <title>Title</title>
 </head>
 <body>
-<form:form modelAttribute="loginCustomer" action="/customer/login" method="post">
-    <form:input path="email" placeHolder="Email"/>
-    <p class="text-danger">${notFoundEmail}</p>
-    <p class="text-danger">${email}</p>
 
+<form:form modelAttribute="loginCustomer" action="/customer/login" method="post">
+    <p class="text-danger">${error}</p>
+    <form:input path="email" placeHolder="Email"/>
+    <form:errors path="email"/>
     <form:input path="password" placeHolder="Password"/>
-    <p class="text-danger">${invalidPassword}</p>
-    <p class="text-danger">${password}</p>
+    <form:errors path="password"/>
     <form:button value="login">Login</form:button>
 </form:form>
 </body>

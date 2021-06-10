@@ -4,6 +4,7 @@ import ir.maktab.data.domain.Customer;
 import ir.maktab.data.repository.CustomerRepository;
 import ir.maktab.dto.CustomerDto;
 import ir.maktab.dto.LoginCustomerDto;
+import ir.maktab.service.exception.DuplicatedEmailAddressException;
 import ir.maktab.service.exception.InvalidPassword;
 import ir.maktab.service.exception.NotFoundCustomerException;
 import ir.maktab.service.mapper.CustomerMapper;
@@ -24,7 +25,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void saveNewCustomer(CustomerDto dto) {
+    public void saveNewCustomer(CustomerDto dto) throws DuplicatedEmailAddressException {
+        Optional<Customer> customer = customerRepository.findByEmail(dto.getEmail());
+        if (customer.isPresent()){
+            throw new DuplicatedEmailAddressException("This Email Is Available ! Please Choose Another Email Or Login... ");
+        }
         customerRepository.save(customerMapper.toCustomer(dto));
     }
 
@@ -58,17 +63,24 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public boolean loginCustomer(LoginCustomerDto dto) throws InvalidPassword, NotFoundCustomerException {
+    public CustomerDto loginCustomer(CustomerDto dto) throws InvalidPassword, NotFoundCustomerException {
         Optional<Customer> customer = customerRepository.findByEmail(dto.getEmail());
         if (customer.isPresent()) {
             if (customer.get().getPassword().equals(dto.getPassword())) {
-                return true;
-            } else {
+                return customerMapper.toCustomerDto(customer.get());
+            }else{
                 throw new InvalidPassword("Password Is Incorrect ! Please Try Again");
             }
-
         } else {
-            throw new NotFoundCustomerException("This Email Is Not Available ! Please Try Again");
+            throw new NotFoundCustomerException("This Email Is Not Available ! Please Try Again...");
         }
+    }
+
+    @Override
+    public void changePassword(CustomerDto dto) {
+        Optional<Customer> customer = customerRepository.findByEmail(dto.getEmail());
+        Customer customer1 = customer.get();
+        customer1.setPassword(dto.getPassword());
+        customerRepository.save(customer1);
     }
 }

@@ -27,7 +27,7 @@
                 <a class="nav-link" href="/">Home <span class="sr-only"></span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/customer/registerCustomerPage">Register </a>
+                <a class="nav-link" href="/customer/register">Register </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/customer/login">Login </a>

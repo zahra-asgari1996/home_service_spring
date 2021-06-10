@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://www.springframework.org/tags/form" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -6,6 +7,7 @@
     <title>Login Manager</title>
 </head>
 <body>
+<p class="text-danger">${error}</p>
 <form:form modelAttribute="manager" action="/managerPage/login" method="post">
     <table>
         <tr>
@@ -13,8 +15,8 @@
                 <form:label path="userName">User Name:</form:label>
             </td>
             <td>
-                <form:input path="userName" name="userName"></form:input>
-                <p class="text-danger">${notFoundManager}</p>
+                <form:input path="userName" name="userName"/>
+                <c:errors path="userName"/>
             </td>
         </tr>
 
@@ -23,8 +25,8 @@
                 <form:label path="password">Password:</form:label>
             </td>
             <td>
-                <form:input path="password" name="password"></form:input>
-                <p class="text-danger">${invalidPassword}</p>
+                <form:input path="password" name="password"/>
+                <c:errors path="password"/>
             </td>
         </tr>
         <tr>

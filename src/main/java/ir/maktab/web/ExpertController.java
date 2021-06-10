@@ -1,23 +1,29 @@
 package ir.maktab.web;
 
+import ir.maktab.configuration.LastViewInterceptor;
 import ir.maktab.dto.ExpertDto;
-import ir.maktab.dto.LoginExpertDto;
 import ir.maktab.dto.SelectFieldForExpertDto;
 import ir.maktab.service.ExpertService;
 import ir.maktab.service.OrderService;
 import ir.maktab.service.SubServiceService;
-import ir.maktab.service.exception.NotFoundExpertException;
-import ir.maktab.service.exception.NotFoundSubServiceException;
+import ir.maktab.service.exception.*;
+import ir.maktab.service.validation.LoginValidation;
+import ir.maktab.service.validation.RegisterValidation;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindException;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/expert")
+@SessionAttributes({"expert","loginExpert"})
 public class ExpertController {
     private final ExpertService expertService;
     private final SubServiceService subServiceService;
@@ -28,36 +34,47 @@ public class ExpertController {
         this.subServiceService = subServiceService;
         this.orderService = orderService;
     }
-    @PostMapping(value = "/registerExpertPage/register")
-    public String save(@ModelAttribute("expert")ExpertDto expertDto){
+    @PostMapping(value = "/register")
+    public String save(@ModelAttribute("expert")@Validated(RegisterValidation.class) ExpertDto expertDto)
+            throws DuplicatedEmailAddressException {
         expertService.saveNewExpert(expertDto);
         return "expertHomePage";
     }
-    @GetMapping("/registerExpertPage")
+    @GetMapping("/register")
     public ModelAndView goToExpertRegisterPage(){
-        return new ModelAndView("registerExpertPage","expert",new ExpertDto());
+        return new ModelAndView("expertRegisterPage","expert",new ExpertDto());
     }
-    @GetMapping("/loginExpertPage")
+    @GetMapping("/login")
     public ModelAndView goToLoginExpertPage(){
-        return new ModelAndView("loginExpertPage","loginExpert",new LoginExpertDto());
+        return new ModelAndView("expertLoginPage","loginExpert",new ExpertDto());
     }
 
-    @PostMapping("/loginExpertPage/login")
-    public String loginExpert(@ModelAttribute("loginExpert") LoginExpertDto dto, Model model,
-                              HttpServletRequest request) throws NotFoundExpertException {
-        ExpertDto expertDto = expertService.findByEmail(dto.getEmail());
-        if (expertDto!=null){
-            if (expertDto.getPassword().equals(dto.getPassword())){
-                HttpSession session = request.getSession();
-                session.setAttribute("expert",expertDto);
-                //model.addAttribute("email",expertDto.getEmail());
-                return "expertHomePage";
-            }else {
-                return "loginExpertPage";
-            }
-        }else{
-            return "loginExpertPage";
+    @PostMapping("/login")
+    public String loginExpert(@ModelAttribute("loginExpert")@Validated(LoginValidation.class) ExpertDto dto)
+            throws NotFoundExpertException, InvalidPassword {
+        expertService.loginExpert(dto);
+        return "expertHomePage";
+    }
+
+    @GetMapping("/changePassword")
+    public String changePassword(Model model){
+        model.addAttribute("changePassword",new ExpertDto());
+        return "expertPassChange";
+    }
+
+    @PostMapping("/changePassword")
+    public String changePassword(HttpServletRequest request,@ModelAttribute("changePassword") ExpertDto dto){
+        HttpSession session = request.getSession(false);
+        ExpertDto expert = (ExpertDto) session.getAttribute("expert");
+        ExpertDto loginExpert = (ExpertDto) session.getAttribute("loginExpert");
+        if (expert!=null){
+            dto.setEmail(expert.getEmail());
+            expertService.changePassword(dto);
+        }if (loginExpert!=null){
+            dto.setEmail(loginExpert.getEmail());
+            expertService.changePassword(dto);
         }
+        return "expertHomePage";
     }
 
     @GetMapping("/selectField")
@@ -87,8 +104,29 @@ public class ExpertController {
     public ModelAndView showOrders(Model model,HttpServletRequest request){
         HttpSession session = request.getSession(false);
         Object expert = session.getAttribute("expert");
-        //model.addAttribute("showOrdersForm",orderService.findOrdersBaseOnExpertSubServices((ExpertDto) expert));
+        //model.addAttribute("showOrdersForm",orderService.findOrdersBaseOnExpertSubServicesAndSituation((ExpertDto) expert));
         return new ModelAndView("showOrdersPage",
-                "ordersList",orderService.findOrdersBaseOnExpertSubServices((ExpertDto) expert));
+                "ordersList",orderService.findOrdersBaseOnExpertSubServicesAndSituation((ExpertDto) expert));
     }
+
+    @ExceptionHandler({NotFoundExpertException.class, InvalidPassword.class, DuplicatedEmailAddressException.class
+    })
+    public ModelAndView errorHandler(Exception e,HttpServletRequest request) {
+        Map<String,Object> model = new HashMap<>();
+        model.put("error", e.getLocalizedMessage());
+        model.put("loginExpert", new ExpertDto());
+        String lastView = (String) request.getSession().getAttribute(LastViewInterceptor.LAST_VIEW_ATTRIBUTE);
+        System.out.println(lastView);
+        return new ModelAndView(lastView, model);
+    }
+
+    @ExceptionHandler(value = BindException.class)
+    public ModelAndView bindHandler(BindException ex, HttpServletRequest request) {
+        String lastView = (String) request.getSession().getAttribute(LastViewInterceptor.LAST_VIEW_ATTRIBUTE);
+        System.out.println(lastView);
+        return new ModelAndView(lastView, ex.getBindingResult().getModel());
+
+    }
+
+
 }

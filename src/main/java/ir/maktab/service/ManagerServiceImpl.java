@@ -3,6 +3,8 @@ package ir.maktab.service;
 import ir.maktab.data.domain.Manager;
 import ir.maktab.data.repository.ManagerRepository;
 import ir.maktab.dto.ManagerDto;
+import ir.maktab.service.exception.InvalidPassword;
+import ir.maktab.service.exception.NotFoundManagerException;
 import ir.maktab.service.mapper.ManagerMapper;
 import org.springframework.stereotype.Service;
 
@@ -49,6 +51,21 @@ public class ManagerServiceImpl  implements ManagerService{
             return mapper.toManagerDto(manager.get());
         }
         return null ;
+    }
+
+    @Override
+    public ManagerDto loginManager(ManagerDto dto) throws NotFoundManagerException, InvalidPassword {
+        Optional<Manager> manager = repository.findByUserName(dto.getUserName());
+        Manager correctManager = manager.get();
+        if (manager.isPresent()){
+            if (correctManager.getPassword().equals(dto.getPassword())) {
+                return mapper.toManagerDto(correctManager);
+            }else {
+                throw new InvalidPassword("Password Is Incorrect ! Please Try Again...");
+            }
+        }else {
+            throw  new NotFoundManagerException("This Email Is Not Available ! Please Try Again...");
+        }
     }
 }
 

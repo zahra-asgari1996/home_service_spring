@@ -17,7 +17,7 @@ public class Home {
 
     @GetMapping(value = "/managerPage")
     public ModelAndView goToLoginManagerPage(){
-        return new ModelAndView("loginManagerPage","manager",new ManagerDto());
+        return new ModelAndView("managerLoginPage","manager",new ManagerDto());
     }
 
     @GetMapping(value = "/expert")

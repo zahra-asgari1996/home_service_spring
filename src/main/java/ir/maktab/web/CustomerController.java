@@ -1,25 +1,30 @@
 package ir.maktab.web;
 
+import ir.maktab.configuration.LastViewInterceptor;
 import ir.maktab.dto.CustomerDto;
 import ir.maktab.dto.LoginCustomerDto;
 import ir.maktab.service.CustomerService;
+import ir.maktab.service.exception.DuplicatedEmailAddressException;
 import ir.maktab.service.exception.InvalidPassword;
 import ir.maktab.service.exception.NotFoundCustomerException;
+import ir.maktab.service.validation.ChangePasswordValidation;
+import ir.maktab.service.validation.LoginValidation;
+import ir.maktab.service.validation.RegisterValidation;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+import org.springframework.validation.BindException;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/customer")
-
+@SessionAttributes({"loginCustomer", "customer"})
 public class CustomerController {
     private final CustomerService customerService;
 
@@ -29,56 +34,70 @@ public class CustomerController {
 
     }
 
-    @PostMapping("/registerCustomerPage/register")
-    public String saveNewCustomer(@ModelAttribute("customer") CustomerDto customerDto) {
+    @PostMapping("/register")
+    public String saveNewCustomer(@ModelAttribute("customer") @Validated(RegisterValidation.class) CustomerDto customerDto)
+            throws DuplicatedEmailAddressException {
         customerService.saveNewCustomer(customerDto);
-        return "home";
+        return "customerHomePage";
     }
 
-    @GetMapping("/registerCustomerPage")
+    @GetMapping("/register")
     public ModelAndView goToRegisterPage() {
-        return new ModelAndView("registerCustomerPage", "customer", new CustomerDto());
+        return new ModelAndView("customerRegisterPage", "customer", new CustomerDto());
     }
 
     @GetMapping("/login")
     public ModelAndView goToLoginPage() {
-        return new ModelAndView("customerLoginPage", "loginCustomer", new LoginCustomerDto());
+        return new ModelAndView("customerLoginPage", "loginCustomer", new CustomerDto());
     }
 
     @PostMapping("/login")
-    public String loginCustomer(@ModelAttribute("loginCustomer") @Valid LoginCustomerDto dto,
-                                BindingResult bindingResult,
-                                HttpServletRequest request,
-
-                                Model model) {
-
-        if (bindingResult.hasErrors()) {
-            bindingResult.getFieldErrors().forEach(error -> model.addAttribute(error.getField(), error.getDefaultMessage()));
-            return "customerLoginPage";
-        }
-        boolean b = false;
-        try {
-            b = customerService.loginCustomer(dto);
-        } catch (InvalidPassword invalidPassword) {
-            model.addAttribute("invalidPassword", invalidPassword.getMessage());
-        } catch (NotFoundCustomerException e) {
-            model.addAttribute("notFoundEmail", e.getMessage());
-        }
-        if (b) {
-            HttpSession session = request.getSession(true);
-            session.setAttribute("customer", dto);
-            return "customerHomePage";
-        }
-        return "customerLoginPage";
-
+    public String loginCustomer(@ModelAttribute("loginCustomer") @Validated(LoginValidation.class) CustomerDto dto)
+            throws InvalidPassword, NotFoundCustomerException {
+        System.out.println("customer home page");
+        customerService.loginCustomer(dto);
+        return "customerHomePage";
     }
 
-//    @ExceptionHandler(value = Exception.class)
-//    public ModelAndView errorHandler(Exception e) {
-//        Map<String, Object> model = new HashMap<>();
-//        model.put("error", e.getMessage());
-//        return new ModelAndView("teacher/error", model);
-//    }
+    @GetMapping("/changePassword")
+    public String changePassword(Model model) {
+        model.addAttribute("changePassword", new CustomerDto());
+        return "customerPassChange";
+    }
+
+    @PostMapping("/changePassword")
+    public String changePassword(@ModelAttribute("changePassword") @Validated(ChangePasswordValidation.class) CustomerDto dto,
+                                 HttpServletRequest request) {
+
+        HttpSession session = request.getSession(false);
+        CustomerDto customer = (CustomerDto) session.getAttribute("customer");
+        CustomerDto loginCustomer = (CustomerDto) session.getAttribute("loginCustomer");
+        if (customer != null)
+            dto.setEmail(customer.getEmail());
+            customerService.changePassword(dto);
+        if (loginCustomer != null)
+            dto.setEmail(loginCustomer.getEmail());
+            customerService.changePassword(dto);
+        return "customerHomePage";
+    }
+
+
+    @ExceptionHandler({NotFoundCustomerException.class, InvalidPassword.class, DuplicatedEmailAddressException.class})
+    public ModelAndView errorHandler(Exception e, HttpServletRequest request) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("error", e.getLocalizedMessage());
+        model.put("loginCustomer", new LoginCustomerDto());
+        String lastView = (String) request.getSession().getAttribute(LastViewInterceptor.LAST_VIEW_ATTRIBUTE);
+        System.out.println(lastView);
+        return new ModelAndView(lastView, model);
+    }
+
+    @ExceptionHandler(value = BindException.class)
+    public ModelAndView bindHandler(BindException ex, HttpServletRequest request) {
+        String lastView = (String) request.getSession().getAttribute(LastViewInterceptor.LAST_VIEW_ATTRIBUTE);
+        System.out.println(lastView);
+        return new ModelAndView(lastView, ex.getBindingResult().getModel());
+    }
 
 
 //    @GetMapping("/createOrder")
