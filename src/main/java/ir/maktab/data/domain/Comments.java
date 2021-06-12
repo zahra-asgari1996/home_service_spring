@@ -19,6 +19,9 @@ public class Comments {
     private Double rate;
 
 
+    private Orders order;
+
+
     //order ro biyar
 
     public Integer getId() {
