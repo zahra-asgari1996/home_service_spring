@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PasswordConstraintValidator implements ConstraintValidator<ValidPassword,String> {
+public class PasswordConstraintValidator implements ConstraintValidator<ValidPassword, String> {
     @Override
     public void initialize(ValidPassword constraintAnnotation) {
 
@@ -16,21 +16,21 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
 
     @Override
     public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
-        PasswordValidator  validator=new PasswordValidator(Arrays.asList(
-               new LengthRule(0,30),
-               new CharacterRule(EnglishCharacterData.UpperCase,1),
-               new CharacterRule(EnglishCharacterData.LowerCase,1),
-               new CharacterRule(EnglishCharacterData.Digit,1),
-               new CharacterRule(EnglishCharacterData.Special,1),
-               new WhitespaceRule()
+        PasswordValidator validator = new PasswordValidator(Arrays.asList(
+                new LengthRule(0, 30),
+                new CharacterRule(EnglishCharacterData.UpperCase, 1),
+                new CharacterRule(EnglishCharacterData.LowerCase, 1),
+                new CharacterRule(EnglishCharacterData.Digit, 1),
+                new CharacterRule(EnglishCharacterData.Special, 1),
+                new WhitespaceRule()
 
         ));
-        RuleResult result=validator.validate(new PasswordData(s));
-        if (result.isValid()){
+        RuleResult result = validator.validate(new PasswordData(s));
+        if (result.isValid()) {
             return true;
         }
-        List<String> msg=validator.getMessages(result);
-        String messageTemplate=msg.stream()
+        List<String> msg = validator.getMessages(result);
+        String messageTemplate = msg.stream()
                 .collect(Collectors.joining(","));
         constraintValidatorContext.buildConstraintViolationWithTemplate(messageTemplate)
                 .addConstraintViolation()

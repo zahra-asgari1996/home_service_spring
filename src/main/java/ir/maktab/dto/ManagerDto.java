@@ -11,8 +11,8 @@ import javax.validation.constraints.Size;
 
 public class ManagerDto {
     private Integer id;
-    @NotBlank(message = "User Name Can Not Be Null!" )
-    @Size(min = 2,max = 10,message = "Size Should Be Between 2 And 10!")
+    @NotBlank(message = "User Name Can Not Be Null!")
+    @Size(min = 2, max = 10, message = "Size Should Be Between 2 And 10!")
     private String userName;
     @ValidPassword
     private String password;

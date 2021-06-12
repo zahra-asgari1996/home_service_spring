@@ -28,13 +28,13 @@ public class SubServiceController {
     }
 
     @GetMapping("/addNewSubService")
-    public String addNewSubService(Model model){
-        model.addAttribute("newSubService",new SubServiceDto());
+    public String addNewSubService(Model model) {
+        model.addAttribute("newSubService", new SubServiceDto());
         return "addNewSubService";
     }
 
     @PostMapping("/addNewSubService")
-    public String addNewSubService(@ModelAttribute("newSubService")SubServiceDto dto) throws DuplicatedDataException, NotFoundServiceException {
+    public String addNewSubService(@ModelAttribute("newSubService") SubServiceDto dto) throws DuplicatedDataException, NotFoundServiceException {
         System.out.println(dto.getService().getName());
         subServiceService.saveNewSubService(dto);
         return "managerHomePage";
@@ -43,20 +43,20 @@ public class SubServiceController {
 
     @GetMapping("/getSubService")
     public String getSubServices(@RequestParam("service") String service, Model model,
-                                 @SessionAttribute("serviceList")List<ServiceDto> serviceList
-                                 ,@SessionAttribute("newOrder") OrderDto dto,
+                                 @SessionAttribute("serviceList") List<ServiceDto> serviceList
+            , @SessionAttribute("newOrder") OrderDto dto,
                                  HttpServletRequest request
-    ){
+    ) {
         HttpSession session = request.getSession(false);
-        List<String> subServices=subServiceService.getSubServicesByServiceName(service);
+        List<String> subServices = subServiceService.getSubServicesByServiceName(service);
 //        if (serviceList.contains(service)){
 //
 //        }
-        model.addAttribute("newOrder",dto);
-        model.addAttribute("subServiceList",subServices);
+        model.addAttribute("newOrder", dto);
+        model.addAttribute("subServiceList", subServices);
 //        serviceList.remove(service);
-        model.addAttribute("serviceList",serviceList);
-        model.addAttribute("selectedService",service);
+        model.addAttribute("serviceList", serviceList);
+        model.addAttribute("selectedService", service);
         return "createOrderPage";
     }
 }

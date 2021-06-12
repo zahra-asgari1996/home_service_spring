@@ -4,9 +4,11 @@ import ir.maktab.configuration.LastViewInterceptor;
 import ir.maktab.dto.CustomerDto;
 import ir.maktab.dto.LoginCustomerDto;
 import ir.maktab.service.CustomerService;
+import ir.maktab.service.OrderService;
 import ir.maktab.service.exception.DuplicatedEmailAddressException;
 import ir.maktab.service.exception.InvalidPassword;
 import ir.maktab.service.exception.NotFoundCustomerException;
+import ir.maktab.service.exception.NotFoundOrderException;
 import ir.maktab.service.validation.ChangePasswordValidation;
 import ir.maktab.service.validation.LoginValidation;
 import ir.maktab.service.validation.RegisterValidation;
@@ -27,11 +29,13 @@ import java.util.Map;
 @SessionAttributes({"loginCustomer", "customer"})
 public class CustomerController {
     private final CustomerService customerService;
+    private final OrderService orderService;
 
 
-    public CustomerController(CustomerService customerService) {
+    public CustomerController(CustomerService customerService, OrderService orderService) {
         this.customerService = customerService;
 
+        this.orderService = orderService;
     }
 
     @PostMapping("/register")
@@ -74,15 +78,30 @@ public class CustomerController {
         CustomerDto loginCustomer = (CustomerDto) session.getAttribute("loginCustomer");
         if (customer != null)
             dto.setEmail(customer.getEmail());
-            customerService.changePassword(dto);
+        customerService.changePassword(dto);
         if (loginCustomer != null)
             dto.setEmail(loginCustomer.getEmail());
-            customerService.changePassword(dto);
+        customerService.changePassword(dto);
         return "customerHomePage";
     }
 
+    @GetMapping("/showSuggestions")
+    public String showSuggestions(Model model,HttpServletRequest request) throws NotFoundOrderException, NotFoundCustomerException {
+        HttpSession session = request.getSession(false);
+        CustomerDto customer = (CustomerDto) session.getAttribute("customer");
+        CustomerDto loginCustomer = (CustomerDto) session.getAttribute("loginCustomer");
+        if (customer != null)
+            model.addAttribute("suggestionList",orderService.findByCustomer(customer));
+        if (loginCustomer != null)
+            model.addAttribute("suggestionList",orderService.findByCustomer(loginCustomer));
 
-    @ExceptionHandler({NotFoundCustomerException.class, InvalidPassword.class, DuplicatedEmailAddressException.class})
+        return "showOrdersForCustomerHomePage";
+
+    }
+
+
+    @ExceptionHandler({NotFoundCustomerException.class, InvalidPassword.class,
+            DuplicatedEmailAddressException.class,NotFoundOrderException.class})
     public ModelAndView errorHandler(Exception e, HttpServletRequest request) {
         Map<String, Object> model = new HashMap<>();
         model.put("error", e.getLocalizedMessage());

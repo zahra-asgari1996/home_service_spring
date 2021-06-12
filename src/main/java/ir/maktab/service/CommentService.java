@@ -7,8 +7,11 @@ import java.util.List;
 
 public interface CommentService {
     void saveNewComment(CommentDto dto);
+
     void deleteComment(CommentDto dto);
+
     void updateComment(CommentDto dto);
+
     List<CommentDto> fetchAllComments();
 
 }

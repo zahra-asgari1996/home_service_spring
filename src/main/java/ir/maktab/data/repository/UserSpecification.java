@@ -13,23 +13,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface UserSpecification {
-    static Specification<Users> filterUsers(FilterUsersDto dto){
+    static Specification<Users> filterUsers(FilterUsersDto dto) {
         return (root, criteriaQuery, criteriaBuilder) -> {
             CriteriaQuery<Users> query = criteriaBuilder.createQuery(Users.class);
-            List<Predicate> predicates=new ArrayList<>();
-            Root<Expert> expertRoot= criteriaBuilder.treat(root,Expert.class);
-            if (dto.getName()!=null){
-                predicates.add(criteriaBuilder.equal(root.get("name"),dto.getName()));
-            }if (dto.getLastName()!=null){
-                predicates.add(criteriaBuilder.equal(root.get("lastName"),dto.getLastName()));
-            }if (dto.getEmail()!=null){
-                predicates.add(criteriaBuilder.equal(root.get("email"),dto.getEmail()));
-            }if (dto.getRole()!=null){
-                predicates.add(criteriaBuilder.equal(root.get("role"),dto.getRole()));
-            }if (dto.getRate()!=null){
-                predicates.add(criteriaBuilder.greaterThan(expertRoot.get("rate"),dto.getRate()));
-            }if (dto.getField()!=null){
-                predicates.add(criteriaBuilder.equal(expertRoot.get("field"),dto.getField()));
+            List<Predicate> predicates = new ArrayList<>();
+            Root<Expert> expertRoot = criteriaBuilder.treat(root, Expert.class);
+            if (dto.getName() != null) {
+                predicates.add(criteriaBuilder.equal(root.get("name"), dto.getName()));
+            }
+            if (dto.getLastName() != null) {
+                predicates.add(criteriaBuilder.equal(root.get("lastName"), dto.getLastName()));
+            }
+            if (dto.getEmail() != null) {
+                predicates.add(criteriaBuilder.equal(root.get("email"), dto.getEmail()));
+            }
+            if (dto.getRole() != null) {
+                predicates.add(criteriaBuilder.equal(root.get("role"), dto.getRole()));
+            }
+            if (dto.getRate() != null) {
+                predicates.add(criteriaBuilder.greaterThan(expertRoot.get("rate"), dto.getRate()));
+            }
+            if (dto.getField() != null) {
+                predicates.add(criteriaBuilder.equal(expertRoot.get("field"), dto.getField()));
             }
 //            if (dto.getField()!=null || dto.getRate()!=null){
 //                query.select(expertRoot).where(predicates.toArray(new Predicate[0]));

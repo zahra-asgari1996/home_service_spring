@@ -103,17 +103,17 @@ public class SubServiceServiceImpl implements SubServiceService {
 
     @Override
     public SubServiceDto findByName(String name) throws NotFoundSubServiceException {
-        Optional<SubService> subService=subServiceRepository.findByName(name);
-        if (subService.isPresent()){
+        Optional<SubService> subService = subServiceRepository.findByName(name);
+        if (subService.isPresent()) {
             return subServiceMapper.covertToSubServiceDto(subService.get());
         }
-        throw  new NotFoundSubServiceException("Sub Service Not Found");
+        throw new NotFoundSubServiceException("Sub Service Not Found");
     }
 
     @Override
     //ist of dto beferst
     public List<String> getSubServicesByServiceName(String service) {
-        return subServiceRepository.findByServiceName(service).stream().map(i->i.getName()).collect(Collectors.toList());
+        return subServiceRepository.findByServiceName(service).stream().map(i -> i.getName()).collect(Collectors.toList());
 
     }
 }

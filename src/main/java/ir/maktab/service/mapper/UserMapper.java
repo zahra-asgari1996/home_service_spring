@@ -5,6 +5,7 @@ import ir.maktab.dto.UserDto;
 
 public interface UserMapper {
     Users toUser(UserDto dto);
+
     UserDto toUserDto(Users user);
 }
 

@@ -10,18 +10,29 @@ import javax.persistence.Column;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 public class OfferDto {
     private Integer id;
     private OrderDto orders;
     private Date SubmitOffer;
+    @NotNull(message = "Offer Price Can Not Be Null !")
     private Double offerPrice;
+    @Max(value = 600, message = "Time Of Work Can Not Be More Than 600 Minutes !")
+    @Min(value = 20, message = "Time Of Work Can Not Be Less Than 20 Minutes !")
     private Long durationOfWork;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date startTime;
     private ExpertDto expert;
     private OfferSituation offerSituation;
+
+    public OfferDto() {
+        this.offerSituation=OfferSituation.registered;
+    }
 
     public Integer getId() {
         return id;

@@ -15,16 +15,17 @@
 </head>
 <body>
 <c:if test="${customer ne null}">
-    <p>welcome    ${customer.email}</p>
+    <p>welcome ${customer.email}</p>
 </c:if>
 
 <c:if test="${loginCustomer ne null}">
-    <p>welcome   ${loginCustomer.email}</p>
+    <p>welcome ${loginCustomer.email}</p>
 </c:if>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
     <%--    <a class="navbar-brand" href="#">Navbar</a>--%>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
@@ -35,12 +36,12 @@
             <li class="nav-item">
                 <a class="nav-link" href="/order/createOrder">New Order</a>
             </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/customer/changePassword">Change Password</a>
-                        </li>
-            <%--            <li class="nav-item">--%>
-            <%--                <a class="nav-link" href="expert">Expert Page</a>--%>
-            <%--            </li>--%>
+            <li class="nav-item">
+                <a class="nav-link" href="/customer/changePassword">Change Password</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/customer/showSuggestions">show suggestions</a>
+            </li>
 
         </ul>
     </div>

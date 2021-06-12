@@ -18,6 +18,7 @@ public class Comments {
     @Column
     private Double rate;
 
+
     //order ro biyar
 
     public Integer getId() {

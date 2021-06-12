@@ -18,7 +18,7 @@ public class CustomerMapperImpl implements CustomerMapper {
 
     @Override
     public Customer toCustomer(CustomerDto dto) {
-        Customer customer=new Customer();
+        Customer customer = new Customer();
         customer.setId(dto.getId());
         customer.setName(dto.getName());
         customer.setLastName(dto.getLastName());
@@ -43,7 +43,7 @@ public class CustomerMapperImpl implements CustomerMapper {
 
     @Override
     public CustomerDto toCustomerDto(Customer customer) {
-        CustomerDto dto=new CustomerDto();
+        CustomerDto dto = new CustomerDto();
         dto.setId(customer.getId());
         dto.setName(customer.getName());
         dto.setLastName(customer.getLastName());

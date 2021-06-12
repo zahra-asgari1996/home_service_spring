@@ -6,9 +6,9 @@ import ir.maktab.data.enums.UserSituation;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerDto extends UserDto{
-    private List<OrderDto> orders=new ArrayList<>();
-    private List<CommentDto> comments=new ArrayList<>();
+public class CustomerDto extends UserDto {
+    private List<OrderDto> orders = new ArrayList<>();
+    private List<CommentDto> comments = new ArrayList<>();
 
     public CustomerDto() {
         super.setCredit(0.0);

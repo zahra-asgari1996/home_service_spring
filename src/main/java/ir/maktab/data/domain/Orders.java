@@ -29,10 +29,12 @@ public class Orders {
     @ManyToOne
     private SubService subService;
     @OneToMany(mappedBy = "orders")
-    private List<Offers> offers=new ArrayList<>();
+    private List<Offers> offers = new ArrayList<>();
     @ManyToOne
     private Expert expert;
+    @Column
     private Address address;
+
 
     public Integer getId() {
         return id;

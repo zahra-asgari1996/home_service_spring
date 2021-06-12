@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     private final UserRepository repository;
     private final UserMapper mapper;
 
@@ -24,9 +24,9 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<UserDto> fetchAllUsers() {
-        return  repository.findAll()
+        return repository.findAll()
                 .stream().map
-                        (i->mapper.toUserDto(i))
+                        (i -> mapper.toUserDto(i))
                 .collect(Collectors.toList());
 
     }
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<UserDto> filterUsers(FilterUsersDto dto) {
-        return repository.findAll(UserSpecification.filterUsers(dto)).stream().map(i->mapper.toUserDto(i))
+        return repository.findAll(UserSpecification.filterUsers(dto)).stream().map(i -> mapper.toUserDto(i))
                 .collect(Collectors.toList());
     }
 

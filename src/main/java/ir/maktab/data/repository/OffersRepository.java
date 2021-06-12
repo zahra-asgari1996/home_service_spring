@@ -15,8 +15,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
+
 @Repository
-public interface OffersRepository extends JpaRepository<Offers,Integer>, JpaSpecificationExecutor<Offers> {
+public interface OffersRepository extends JpaRepository<Offers, Integer>, JpaSpecificationExecutor<Offers> {
 
 
 //    void saveNewOffer(Offers offers);

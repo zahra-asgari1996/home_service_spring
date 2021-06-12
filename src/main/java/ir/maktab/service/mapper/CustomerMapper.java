@@ -5,5 +5,6 @@ import ir.maktab.dto.CustomerDto;
 
 public interface CustomerMapper {
     Customer toCustomer(CustomerDto dto);
+
     CustomerDto toCustomerDto(Customer customer);
 }

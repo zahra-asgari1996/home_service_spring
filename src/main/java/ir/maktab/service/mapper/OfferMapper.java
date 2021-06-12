@@ -5,6 +5,7 @@ import ir.maktab.dto.OfferDto;
 
 public interface OfferMapper {
     Offers toOffer(OfferDto dto);
+
     OfferDto toOfferDto(Offers offer);
 
 }

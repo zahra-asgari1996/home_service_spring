@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 import java.util.stream.Collectors;
 
 @Component
-public class SubServiceMapperImpl  implements SubServiceMapper{
+public class SubServiceMapperImpl implements SubServiceMapper {
     private final ServiceMapper serviceMapper;
-   // private final ExpertMapper expertMapper;
+    // private final ExpertMapper expertMapper;
 
     public SubServiceMapperImpl(ServiceMapper serviceMapper) {
         this.serviceMapper = serviceMapper;
@@ -27,19 +27,19 @@ public class SubServiceMapperImpl  implements SubServiceMapper{
 
     @Override
     public SubServiceDto covertToSubServiceDto(SubService subService) {
-        SubServiceDto subServiceDto=new SubServiceDto();
+        SubServiceDto subServiceDto = new SubServiceDto();
         subServiceDto.setId(subService.getId());
         subServiceDto.setName(subService.getName());
         subServiceDto.setBasePrice(subService.getBasePrice());
         subServiceDto.setDescription(subService.getDescription());
         subServiceDto.setService(serviceMapper.convertToServiceDto(subService.getService()));
-       //subServiceDto.setExperts(subService.getExperts().stream().map(i->expertMapper.toExpertDto(i)).collect(Collectors.toList()));
+        //subServiceDto.setExperts(subService.getExperts().stream().map(i->expertMapper.toExpertDto(i)).collect(Collectors.toList()));
         return subServiceDto;
     }
 
     @Override
     public SubService convertToSubService(SubServiceDto subServiceDto) {
-        SubService subService=new SubService();
+        SubService subService = new SubService();
         subService.setId(subServiceDto.getId());
         subService.setName(subServiceDto.getName());
         subService.setBasePrice(subServiceDto.getBasePrice());

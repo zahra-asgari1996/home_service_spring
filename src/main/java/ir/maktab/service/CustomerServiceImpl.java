@@ -3,11 +3,12 @@ package ir.maktab.service;
 import ir.maktab.data.domain.Customer;
 import ir.maktab.data.repository.CustomerRepository;
 import ir.maktab.dto.CustomerDto;
-import ir.maktab.dto.LoginCustomerDto;
+import ir.maktab.dto.OrderDto;
 import ir.maktab.service.exception.DuplicatedEmailAddressException;
 import ir.maktab.service.exception.InvalidPassword;
 import ir.maktab.service.exception.NotFoundCustomerException;
 import ir.maktab.service.mapper.CustomerMapper;
+import ir.maktab.service.mapper.OrderMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,16 +19,18 @@ import java.util.stream.Collectors;
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
+    private final OrderMapper orderMapper;
 
-    public CustomerServiceImpl(CustomerRepository customerRepository, CustomerMapper customerMapper) {
+    public CustomerServiceImpl(CustomerRepository customerRepository, CustomerMapper customerMapper, OrderMapper orderMapper) {
         this.customerRepository = customerRepository;
         this.customerMapper = customerMapper;
+        this.orderMapper = orderMapper;
     }
 
     @Override
     public void saveNewCustomer(CustomerDto dto) throws DuplicatedEmailAddressException {
         Optional<Customer> customer = customerRepository.findByEmail(dto.getEmail());
-        if (customer.isPresent()){
+        if (customer.isPresent()) {
             throw new DuplicatedEmailAddressException("This Email Is Available ! Please Choose Another Email Or Login... ");
         }
         customerRepository.save(customerMapper.toCustomer(dto));
@@ -68,7 +71,7 @@ public class CustomerServiceImpl implements CustomerService {
         if (customer.isPresent()) {
             if (customer.get().getPassword().equals(dto.getPassword())) {
                 return customerMapper.toCustomerDto(customer.get());
-            }else{
+            } else {
                 throw new InvalidPassword("Password Is Incorrect ! Please Try Again");
             }
         } else {
@@ -82,5 +85,11 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer1 = customer.get();
         customer1.setPassword(dto.getPassword());
         customerRepository.save(customer1);
+    }
+
+    @Override
+    public List<OrderDto> showOrders(CustomerDto dto) {
+        Optional<Customer> customer = customerRepository.findByEmail(dto.getEmail());
+        return customer.get().getOrders().stream().map(i->orderMapper.toOrderDto(i)).collect(Collectors.toList());
     }
 }

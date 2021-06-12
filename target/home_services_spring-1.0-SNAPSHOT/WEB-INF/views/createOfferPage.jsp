@@ -12,11 +12,15 @@
     <title>Title</title>
 </head>
 <body>
+<p class="text-danger">${error}</p>
 <form:form modelAttribute="newOffer" method="post" action="/offer/createOffer">
     <form:input path="offerPrice" placeHolder="offer price"/>
+    <form:errors path="offerPrice"/>
     <form:input path="durationOfWork" placeHolder="durationOfWork"/>
+    <form:errors path="durationOfWork"/>
     <form:input path="startTime" type="date" placeHolder="startTime"/>
-    <form:button value="create" >create</form:button>
+    <form:errors path="startTime"/>
+    <form:button value="create">create</form:button>
 </form:form>
 </body>
 </html>

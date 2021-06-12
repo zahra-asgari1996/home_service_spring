@@ -12,14 +12,14 @@ import java.util.Date;
 
 public class UserDto {
     private Integer id;
-    @NotBlank(message = "Name Can Not Be Null!",groups ={RegisterValidation.class} )
-    @Size(min = 2,max = 10,message = "Size Should Be Between 2 And 10",groups ={RegisterValidation.class})
+    @NotBlank(message = "Name Can Not Be Null!", groups = {RegisterValidation.class})
+    @Size(min = 2, max = 10, message = "Size Should Be Between 2 And 10", groups = {RegisterValidation.class})
     private String name;
-    @NotBlank(message = "Last Name Can Not Be Null!",groups ={RegisterValidation.class})
-    @Size(min = 2,max = 15,message = "Size Should Be Between 2 And 15",groups ={RegisterValidation.class})
+    @NotBlank(message = "Last Name Can Not Be Null!", groups = {RegisterValidation.class})
+    @Size(min = 2, max = 15, message = "Size Should Be Between 2 And 15", groups = {RegisterValidation.class})
     private String lastName;
     @Email(groups = {LoginValidation.class, RegisterValidation.class})
-    @NotBlank(message = "Email Can Not Be Null!",groups = {LoginValidation.class, RegisterValidation.class})
+    @NotBlank(message = "Email Can Not Be Null!", groups = {LoginValidation.class, RegisterValidation.class})
     private String email;
     @ValidPassword(groups = {LoginValidation.class, RegisterValidation.class, ChangePasswordValidation.class})
     private String password;
@@ -29,7 +29,7 @@ public class UserDto {
     private Double credit;
 
     public UserDto() {
-        this.credit=0.0;
+        this.credit = 0.0;
         this.userSituation = UserSituation.New;
     }
 
@@ -113,7 +113,6 @@ public class UserDto {
         this.credit = credit;
         return this;
     }
-
 
 
 }

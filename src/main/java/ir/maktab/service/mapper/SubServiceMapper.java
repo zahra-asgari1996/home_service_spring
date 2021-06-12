@@ -7,5 +7,6 @@ import ir.maktab.dto.SubServiceDto;
 public interface SubServiceMapper {
 
     SubServiceDto covertToSubServiceDto(SubService subService);
+
     SubService convertToSubService(SubServiceDto subServiceDto);
 }

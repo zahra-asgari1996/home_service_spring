@@ -23,7 +23,7 @@ public class OrderDto {
     private OrderSituation situation;
     private CustomerDto customer;
     private SubServiceDto subService;
-    private List<OfferDto> offers=new ArrayList<>();
+    private List<OfferDto> offers = new ArrayList<>();
     private ExpertDto expert;
     private Address address;
 

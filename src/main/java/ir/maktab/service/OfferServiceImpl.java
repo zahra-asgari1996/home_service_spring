@@ -3,15 +3,15 @@ package ir.maktab.service;
 import ir.maktab.data.domain.Offers;
 import ir.maktab.data.enums.OrderSituation;
 import ir.maktab.data.repository.OffersRepository;
+import ir.maktab.dto.ExpertDto;
 import ir.maktab.dto.OfferDto;
 import ir.maktab.dto.OrderDto;
 import ir.maktab.service.exception.LessOfferPriceException;
+import ir.maktab.service.exception.NotFoundExpertException;
+import ir.maktab.service.exception.NotFoundOrderException;
 import ir.maktab.service.exception.NotSubServiceInExpertsListException;
 import ir.maktab.service.mapper.OfferMapper;
 import ir.maktab.service.mapper.OrderMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -22,24 +22,32 @@ import java.util.stream.Collectors;
 public class OfferServiceImpl implements OfferService {
     private final OffersRepository repository;
     private final OfferMapper mapper;
+    private final ExpertService expertService;
+    private final OrderService orderService;
 
-    public OfferServiceImpl(OffersRepository repository, OfferMapper mapper, OrderMapper orderMapper) {
+    public OfferServiceImpl(OffersRepository repository, OfferMapper mapper, OrderMapper orderMapper, ExpertService expertService, OrderService orderService) {
         this.repository = repository;
         this.mapper = mapper;
+        this.expertService = expertService;
+        this.orderService = orderService;
     }
 
     @Override
-    public void saveNewOffer(OfferDto dto) throws LessOfferPriceException, NotSubServiceInExpertsListException {
-        //find order then
-        if (dto.getOfferPrice() < dto.getOrders().getSubService().getBasePrice()) {
+    public void
+    saveNewOffer(OfferDto dto) throws LessOfferPriceException, NotSubServiceInExpertsListException, NotFoundExpertException, NotFoundOrderException {
+        ExpertDto expertDto = expertService.findByEmail(dto.getExpert().getEmail());
+        OrderDto orderDto = orderService.findById(dto.getOrders().getId());
+        Double basePrice = orderDto.getSubService().getBasePrice();
+        dto.setExpert(expertDto);
+        dto.setOrders(orderDto);
+        if (dto.getOfferPrice() < basePrice) {
             throw new LessOfferPriceException("Offer Price Is Less Than Sub Service Base Price");
         }
-        if (dto.getOrders().getExpert().getServices().contains(dto.getOrders().getSubService())) {
+        if (!expertDto.getServices().contains(orderDto.getSubService())) {
             throw new NotSubServiceInExpertsListException("Sub Service Is Not In Experts List");
         }
         dto.getOrders().setSituation(OrderSituation.Waiting_for_expert_selection);
         repository.save(mapper.toOffer(dto));
-
     }
 
     @Override
@@ -60,9 +68,10 @@ public class OfferServiceImpl implements OfferService {
                 .stream().map(i -> mapper.toOfferDto(i))
                 .collect(Collectors.toList());
     }
-    public List<OfferDto> getOrderOffersSortByRateAndPrice(OrderDto orderDto,int offset,int limit){
+
+    public List<OfferDto> getOrderOffersSortByRateAndPrice(OrderDto orderDto, int offset, int limit) {
         List<Offers> offerPrice = repository.findAll(Sort.by("expert.rate").and(Sort.by("offerPrice")));
-        return offerPrice.stream().filter(i->i.getOrders().equals(orderDto)).map(i->mapper.toOfferDto(i)).collect(Collectors.toList());
+        return offerPrice.stream().filter(i -> i.getOrders().equals(orderDto)).map(i -> mapper.toOfferDto(i)).collect(Collectors.toList());
 //        Pageable pageable= PageRequest.of(offset,limit,Sort.Direction.ASC,"offerPrice");
 //        Page<Offers> matchedNectarines =
 //                repository.findAll(OffersRepository.findOffersByOrders(orderMapper.toOrder(orderDto)), pageable);

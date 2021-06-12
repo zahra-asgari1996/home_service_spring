@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<form action="/subService/getSubService" method="get" id="serviceForm" >
+<form action="/subService/getSubService" method="get" id="serviceForm">
     <select name="service" onchange="submitForm()">
         <option value="NONE" label="${selectedService}">${selectedService}</option>
         <c:forEach items="${serviceList}" var="list">
@@ -23,7 +23,7 @@
     <form:input path="customer.email" placeHolder="Customer Email"></form:input>
     <form:input path="proposedPrice" placeHolder="Proposed Price"></form:input>
     <form:input path="jobDescription" placeHolder="Job Description"></form:input>
-    <form:input  type="date" path="dateOfWork" placeHolder="dateOfWork"   name="dateOfWork"/>
+    <form:input type="date" path="dateOfWork" placeHolder="dateOfWork" name="dateOfWork"/>
     <form:input path="address.city" placeHolder="city name"></form:input>
     <form:input path="address.street" placeHolder="street name"></form:input>
     <form:input path="address.alley" placeHolder="alley name"></form:input>

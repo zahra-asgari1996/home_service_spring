@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface SubServiceRepository extends JpaRepository<SubService,Integer> {
-//    void saveNewSubService(SubService subService);
+public interface SubServiceRepository extends JpaRepository<SubService, Integer> {
+    //    void saveNewSubService(SubService subService);
 //    void updateSubService(SubService subService);
 //    void deleteSubService(SubService subService);
 //    SubService getSubService(SubService subService);
@@ -21,7 +21,8 @@ public interface SubServiceRepository extends JpaRepository<SubService,Integer> 
 //    void updateExpertInSubService(SubService service,Expert newExpert,Expert oldExpert);
 //    void addExpertToSubService(SubService service,Expert expert);
     Optional<SubService> findByName(String name);
-//    void findAllByExperts();
+
+    //    void findAllByExperts();
     @Query("select s from SubService as s where s.service.name=:name")
     List<SubService> findByServiceName(@Param("name") String name);
 }

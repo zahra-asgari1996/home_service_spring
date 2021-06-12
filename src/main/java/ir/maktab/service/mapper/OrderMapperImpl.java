@@ -7,13 +7,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrderMapperImpl implements OrderMapper {
     private final CustomerMapper customerMapper;
-    private final OfferMapper offerMapper;
+
     private final SubServiceMapper serviceMapper;
     private final ExpertMapper expertMapper;
 
-    public OrderMapperImpl(CustomerMapper customerMapper, OfferMapper offerMapper, SubServiceMapper serviceMapper, ExpertMapper expertMapper) {
+    public OrderMapperImpl(CustomerMapper customerMapper, SubServiceMapper serviceMapper, ExpertMapper expertMapper) {
         this.customerMapper = customerMapper;
-        this.offerMapper = offerMapper;
+
         this.serviceMapper = serviceMapper;
         this.expertMapper = expertMapper;
     }

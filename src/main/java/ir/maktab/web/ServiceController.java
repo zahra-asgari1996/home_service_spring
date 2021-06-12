@@ -26,13 +26,13 @@ public class ServiceController {
     }
 
     @GetMapping(value = "/addNewService")
-    public String addNewService(Model model){
-        model.addAttribute("newService",new ServiceDto());
+    public String addNewService(Model model) {
+        model.addAttribute("newService", new ServiceDto());
         return "addNewService";
     }
 
     @PostMapping(value = "/addNewService")
-    public String addNewService(@ModelAttribute("newService")ServiceDto serviceDto) throws DuplicatedDataException {
+    public String addNewService(@ModelAttribute("newService") ServiceDto serviceDto) throws DuplicatedDataException {
         service.saveNewService(serviceDto);
         return "managerHomePage";
     }

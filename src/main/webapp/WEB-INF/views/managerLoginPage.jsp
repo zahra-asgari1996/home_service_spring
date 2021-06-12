@@ -31,7 +31,7 @@
         </tr>
         <tr>
             <td></td>
-            <form:button name="signin" >Sign In</form:button>
+            <form:button name="signin">Sign In</form:button>
         </tr>
     </table>
 </form:form>

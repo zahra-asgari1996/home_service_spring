@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class ManagerServiceImpl  implements ManagerService{
+public class ManagerServiceImpl implements ManagerService {
     private final ManagerRepository repository;
     private final ManagerMapper mapper;
 
@@ -47,24 +47,24 @@ public class ManagerServiceImpl  implements ManagerService{
     @Override
     public ManagerDto findByUserName(String userName) {
         Optional<Manager> manager = repository.findByUserName(userName);
-        if (manager.isPresent()){
+        if (manager.isPresent()) {
             return mapper.toManagerDto(manager.get());
         }
-        return null ;
+        return null;
     }
 
     @Override
     public ManagerDto loginManager(ManagerDto dto) throws NotFoundManagerException, InvalidPassword {
         Optional<Manager> manager = repository.findByUserName(dto.getUserName());
         Manager correctManager = manager.get();
-        if (manager.isPresent()){
+        if (manager.isPresent()) {
             if (correctManager.getPassword().equals(dto.getPassword())) {
                 return mapper.toManagerDto(correctManager);
-            }else {
+            } else {
                 throw new InvalidPassword("Password Is Incorrect ! Please Try Again...");
             }
-        }else {
-            throw  new NotFoundManagerException("This Email Is Not Available ! Please Try Again...");
+        } else {
+            throw new NotFoundManagerException("This Email Is Not Available ! Please Try Again...");
         }
     }
 }

@@ -13,7 +13,7 @@
 </head>
 <body>
 
-
+<p class="text-danger">${error}</p>
 <form:form modelAttribute="customer" action="/customer/register" method="post">
     <table>
         <tr>

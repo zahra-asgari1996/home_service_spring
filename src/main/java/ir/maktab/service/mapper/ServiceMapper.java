@@ -6,5 +6,6 @@ import ir.maktab.dto.ServiceDto;
 public interface ServiceMapper {
 
     ServiceDto convertToServiceDto(Service service);
+
     Service convertToService(ServiceDto serviceDto);
 }

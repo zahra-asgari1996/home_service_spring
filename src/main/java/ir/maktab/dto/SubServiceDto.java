@@ -7,6 +7,7 @@ import ir.maktab.data.domain.Service;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class SubServiceDto {
@@ -15,8 +16,8 @@ public class SubServiceDto {
     private String description;
     private String name;
     private ServiceDto service;
-    private List<ExpertDto> experts=new ArrayList<>();
-    private List<OrderDto> orders=new ArrayList<>();
+    private List<ExpertDto> experts = new ArrayList<>();
+    private List<OrderDto> orders = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -75,5 +76,18 @@ public class SubServiceDto {
     public SubServiceDto setService(ServiceDto service) {
         this.service = service;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SubServiceDto)) return false;
+        SubServiceDto that = (SubServiceDto) o;
+        return getId().equals(that.getId()) && getBasePrice().equals(that.getBasePrice()) && getDescription().equals(that.getDescription()) && getName().equals(that.getName()) && getService().equals(that.getService());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getBasePrice(), getDescription(), getName(), getService());
     }
 }

@@ -5,5 +5,6 @@ import ir.maktab.dto.CommentDto;
 
 public interface CommentMapper {
     Comments toComment(CommentDto dto);
+
     CommentDto toCommentDto(Comments comments);
 }

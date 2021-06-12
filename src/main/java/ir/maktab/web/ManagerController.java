@@ -36,7 +36,7 @@ public class ManagerController {
 //    }
 
     @PostMapping("/login")
-    public String getSignIn(@ModelAttribute("manager")@Valid ManagerDto managerDto)
+    public String getSignIn(@ModelAttribute("manager") @Valid ManagerDto managerDto)
             throws NotFoundManagerException, InvalidPassword {
         managerService.loginManager(managerDto);
         return "managerHomePage";
@@ -49,7 +49,7 @@ public class ManagerController {
 
     @ExceptionHandler({NotFoundManagerException.class, InvalidPassword.class})
     public ModelAndView errorHandler(Exception e, HttpServletRequest request) {
-        Map<String,Object> model = new HashMap<>();
+        Map<String, Object> model = new HashMap<>();
         model.put("error", e.getLocalizedMessage());
         model.put("manager", new ManagerDto());
         String lastView = (String) request.getSession().getAttribute(LastViewInterceptor.LAST_VIEW_ATTRIBUTE);

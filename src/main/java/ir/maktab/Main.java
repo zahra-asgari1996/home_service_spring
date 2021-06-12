@@ -51,7 +51,7 @@ public class Main {
 //        System.out.println(a.getId());
 //        ServiceDto serviceDto=new ServiceDto();
 //        serviceDto.setName("t");
-       // ServiceService serviceService=context.getBean(ServiceService.class);
+        // ServiceService serviceService=context.getBean(ServiceService.class);
         //serviceService.saveNewService(serviceDto);
 //        SubServiceDto subServiceDto=new SubServiceDto();
 //        subServiceDto.setName("a");
@@ -72,12 +72,12 @@ public class Main {
 //        service.saveNewSubService(subServiceDto);
 
 //
-        OrderRepository orderRepository=context.getBean(OrderRepository.class);
+        OrderRepository orderRepository = context.getBean(OrderRepository.class);
 
 //        List<Orders> list = orderRepository.findOrdersBaseOnExpertSubServicesAndSituation(1);
 //        System.out.println(list.size());
 //        System.out.println();
-        ExpertRepository expertRepository=context.getBean(ExpertRepository.class);
+        ExpertRepository expertRepository = context.getBean(ExpertRepository.class);
         Optional<Expert> byEmail = expertRepository.findByEmail("zahra.asgari1996@yahoo.com");
         System.out.println(byEmail.get().getId());
         System.out.println(orderRepository.findOrdersBaseOnExpertSubServices(byEmail.get()).size());

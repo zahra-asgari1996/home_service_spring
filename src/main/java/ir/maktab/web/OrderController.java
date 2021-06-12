@@ -33,32 +33,31 @@ public class OrderController {
     }
 
     @InitBinder
-    public void initBinder(WebDataBinder binder){
-        binder.registerCustomEditor( Date.class,
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(Date.class,
                 new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true, 10));
     }
 
     @GetMapping("/createOrder")
-    public String createOrder(Model model, HttpServletRequest request){
+    public String createOrder(Model model, HttpServletRequest request) {
         model.addAttribute("newOrder", new OrderDto());
-        model.addAttribute("serviceList",service.fetchAllServices());
-        model.addAttribute("selectedService","select");
+        model.addAttribute("serviceList", service.fetchAllServices());
+        model.addAttribute("selectedService", "select");
         HttpSession session = request.getSession();
-        session.setAttribute("serviceList" ,service.fetchAllServices());
-        session.setAttribute("newOrder" ,model.getAttribute("newOrder"));
+        session.setAttribute("serviceList", service.fetchAllServices());
+        session.setAttribute("newOrder", model.getAttribute("newOrder"));
         return "createOrderPage";
     }
 
     @PostMapping("/createOrder")
-    public String createNewOrder(@ModelAttribute("newOrder")@Valid OrderDto dto, BindingResult bindingResult){
-        if (bindingResult.hasErrors()){
+    public String createNewOrder(@ModelAttribute("newOrder") @Valid OrderDto dto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();
         }
-
 //        dto.setDateOfWork(date);
         orderService.saveNewOrder(dto);
         //model.addAttribute("subServiceList",subServiceService.fetchAllSubServices());
-        return"customerHomePage";
+        return "customerHomePage";
     }
 
 

@@ -5,5 +5,6 @@ import ir.maktab.dto.OrderDto;
 
 public interface OrderMapper {
     Orders toOrder(OrderDto dto);
+
     OrderDto toOrderDto(Orders order);
 }

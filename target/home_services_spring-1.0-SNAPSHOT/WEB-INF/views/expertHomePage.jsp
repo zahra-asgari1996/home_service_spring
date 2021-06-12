@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Home
@@ -13,9 +14,17 @@
           integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 </head>
 <body>
+<c:if test="${expert ne null}">
+    <p>welcome ${expert.email}</p>
+</c:if>
+
+<c:if test="${loginExpert ne null}">
+    <p>welcome ${loginExpert.email}</p>
+</c:if>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <%--    <a class="navbar-brand" href="#">Navbar</a>--%>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
@@ -29,12 +38,18 @@
             <li class="nav-item">
                 <a class="nav-link" href="/expert/showOrders">See Orders </a>
             </li>
-<%--            <li class="nav-item">--%>
-<%--                <a class="nav-link" href="customer">Customer Page</a>--%>
-<%--            </li>--%>
-<%--            <li class="nav-item">--%>
-<%--                <a class="nav-link" href="expert">Expert Page</a>--%>
-<%--            </li>--%>
+            <li class="nav-item">
+                <a class="nav-link" href="/expert/changePassword">change pass </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/expert/showSuggestion">change pass </a>
+            </li>
+            <%--            <li class="nav-item">--%>
+            <%--                <a class="nav-link" href="customer">Customer Page</a>--%>
+            <%--            </li>--%>
+            <%--            <li class="nav-item">--%>
+            <%--                <a class="nav-link" href="expert">Expert Page</a>--%>
+            <%--            </li>--%>
 
         </ul>
     </div>

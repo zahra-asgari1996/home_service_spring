@@ -19,22 +19,21 @@ public class UserController {
     }
 
     @InitBinder
-    public void allowEmptyDateBinding( WebDataBinder binder )
-    {
+    public void allowEmptyDateBinding(WebDataBinder binder) {
         // tell spring to set empty values as null instead of empty string.
-        binder.registerCustomEditor( String.class, new StringTrimmerEditor( true ));
+        binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
     }
 
 
     @PostMapping(value = "/searchUser")
-    public ModelAndView  searchUsers(@ModelAttribute("users") FilterUsersDto dto){
-        return new ModelAndView("searchUsersPage","usersList",userService.filterUsers(dto));
+    public ModelAndView searchUsers(@ModelAttribute("users") FilterUsersDto dto) {
+        return new ModelAndView("searchUsersPage", "usersList", userService.filterUsers(dto));
 
     }
 
     @GetMapping(value = "/searchUser")
-    public String searchUsers(Model model){
-        model.addAttribute("users",new FilterUsersDto());
+    public String searchUsers(Model model) {
+        model.addAttribute("users", new FilterUsersDto());
         return "searchUsersPage";
     }
 }

@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class ExpertMapperImpl implements ExpertMapper {
-//    private final CommentMapper commentMapper;
+    //    private final CommentMapper commentMapper;
 //    private final OfferMapper offerMapper;
     private final SubServiceMapper serviceMapper;
 
@@ -28,7 +28,7 @@ public class ExpertMapperImpl implements ExpertMapper {
 
     @Override
     public Expert toExpert(ExpertDto dto) {
-        Expert expert=new Expert();
+        Expert expert = new Expert();
         expert.setId(dto.getId());
         expert.setName(dto.getName());
         expert.setLastName(dto.getLastName());
@@ -43,14 +43,14 @@ public class ExpertMapperImpl implements ExpertMapper {
         expert.setImage(dto.getImage());
         expert.setRate(dto.getRate());
 //        expert.setOffers(dto.getOffers().stream().map(i->offerMapper.toOffer(i)).collect(Collectors.toList()));
-        expert.setServices(dto.getServices().stream().map(i->serviceMapper.convertToSubService(i)).collect(Collectors.toList()));
+        expert.setServices(dto.getServices().stream().map(i -> serviceMapper.convertToSubService(i)).collect(Collectors.toList()));
 //        expert.setOrders(dto.getOrders().stream().map(i->orderMapper.toOrder(i)).collect(Collectors.toList()));
         return expert;
     }
 
     @Override
     public ExpertDto toExpertDto(Expert expert) {
-        ExpertDto dto=new ExpertDto();
+        ExpertDto dto = new ExpertDto();
         dto.setId(expert.getId());
         dto.setName(expert.getName());
         dto.setLastName(expert.getLastName());
@@ -65,7 +65,7 @@ public class ExpertMapperImpl implements ExpertMapper {
 //        dto.setOffers(expert.getOffers().stream().map(i->offerMapper.toOfferDto(i)).collect(Collectors.toList()));
         dto.setImage(expert.getImage());
         dto.setRate(expert.getRate());
-        dto.setServices(expert.getServices().stream().map(i->serviceMapper.covertToSubServiceDto(i)).collect(Collectors.toList()));
+        dto.setServices(expert.getServices().stream().map(i -> serviceMapper.covertToSubServiceDto(i)).collect(Collectors.toList()));
 //        dto.setOrders(expert.getOrders().stream().map(i->orderMapper.toOrderDto(i)).collect(Collectors.toList()));
         return dto;
     }

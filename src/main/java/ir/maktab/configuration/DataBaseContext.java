@@ -42,7 +42,7 @@ public class DataBaseContext {
         properties.setProperty("hibernate.dialect", env.getRequiredProperty("hibernate.dialect"));
         properties.setProperty("hibernate.show_sql", env.getRequiredProperty("hibernate.show_sql"));
         properties.setProperty("hibernate.hbm2ddl.auto", env.getRequiredProperty("hibernate.hbm2ddl.auto"));
-        properties.setProperty("hibernate.format_sql",env.getRequiredProperty("hibernate.format_sql"));
+        properties.setProperty("hibernate.format_sql", env.getRequiredProperty("hibernate.format_sql"));
         return properties;
     }
 

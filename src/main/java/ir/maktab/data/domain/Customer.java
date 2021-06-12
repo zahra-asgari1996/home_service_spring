@@ -11,14 +11,13 @@ import java.util.List;
 public class Customer extends Users {
 
     @OneToMany(mappedBy = "customer")
-    private List<Orders> orders=new ArrayList<>();
+    private List<Orders> orders = new ArrayList<>();
     @OneToMany(mappedBy = "customer")
-    private List<Comments> comments=new ArrayList<>();
+    private List<Comments> comments = new ArrayList<>();
 
     public Customer() {
         this.setRole(UserRole.Customer);
     }
-
 
 
     public List<Orders> getOrders() {

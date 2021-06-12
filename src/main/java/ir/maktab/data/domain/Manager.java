@@ -3,7 +3,7 @@ package ir.maktab.data.domain;
 import javax.persistence.*;
 
 @Entity
-public class Manager  {
+public class Manager {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

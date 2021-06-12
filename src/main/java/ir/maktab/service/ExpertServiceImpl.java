@@ -20,9 +20,9 @@ import java.util.stream.Collectors;
 @Service
 
 public class ExpertServiceImpl implements ExpertService {
-private final ExpertRepository expertRepository;
-private final ExpertMapper expertMapper;
-private final SubServiceRepository subServiceRepository;
+    private final ExpertRepository expertRepository;
+    private final ExpertMapper expertMapper;
+    private final SubServiceRepository subServiceRepository;
 
     public ExpertServiceImpl(ExpertRepository expertRepository, ExpertMapper expertMapper, SubServiceRepository subServiceRepository) {
         this.expertRepository = expertRepository;
@@ -33,7 +33,7 @@ private final SubServiceRepository subServiceRepository;
     @Override
     public void saveNewExpert(ExpertDto expert) throws DuplicatedEmailAddressException {
         Optional<Expert> optionalExpert = expertRepository.findByEmail(expert.getEmail());
-        if (optionalExpert.isPresent()){
+        if (optionalExpert.isPresent()) {
             throw new DuplicatedEmailAddressException("This Email Is Available ! Please Choose Another Email Or Login... ");
         }
         expertRepository.save(expertMapper.toExpert(expert));
@@ -60,7 +60,7 @@ private final SubServiceRepository subServiceRepository;
     @Override
     public ExpertDto findByEmail(String email) throws NotFoundExpertException {
         Optional<Expert> expert = expertRepository.findByEmail(email);
-        if (expert.isPresent()){
+        if (expert.isPresent()) {
             return expertMapper.toExpertDto(expert.get());
         }
         throw new NotFoundExpertException("Expert Is Not Available");
@@ -89,13 +89,13 @@ private final SubServiceRepository subServiceRepository;
     @Override
     public ExpertDto loginExpert(ExpertDto dto) throws NotFoundExpertException, InvalidPassword {
         Optional<Expert> expert = expertRepository.findByEmail(dto.getEmail());
-        if (expert.isPresent()){
-            if (!expert.get().getPassword().equals(dto.getPassword())){
-                throw  new InvalidPassword("Password Is Incorrect ! Please Try Again...");
-            }else {
+        if (expert.isPresent()) {
+            if (!expert.get().getPassword().equals(dto.getPassword())) {
+                throw new InvalidPassword("Password Is Incorrect ! Please Try Again...");
+            } else {
                 return expertMapper.toExpertDto(expert.get());
             }
-        }else{
+        } else {
             throw new NotFoundExpertException("This Email Is Not Available ! Please Try Again... ");
         }
     }
@@ -105,7 +105,7 @@ private final SubServiceRepository subServiceRepository;
     public void changePassword(ExpertDto dto) {
         Optional<Expert> expert = expertRepository.findByEmail(dto.getEmail());
         Expert expert1 = expert.get();
-        expert1.setEmail(dto.getEmail());
+        expert1.setPassword(dto.getPassword());
         expertRepository.save(expert1);
     }
 }

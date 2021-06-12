@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Home
@@ -36,6 +37,12 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/expert/showOrders">See Orders </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/expert/changePassword">change pass </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/expert/showSuggestion">change pass </a>
             </li>
             <%--            <li class="nav-item">--%>
             <%--                <a class="nav-link" href="customer">Customer Page</a>--%>

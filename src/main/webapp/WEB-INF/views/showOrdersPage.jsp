@@ -18,11 +18,11 @@
     <table class="table table-striped table-success table-hover">
         <tr>
             <td>id</td>
-            <td >date of work</td>
+            <td>date of work</td>
             <td colspan="2">subservice</td>
             <td colspan="2">customer</td>
             <td colspan="2">address</td>
-            <td colspan="2" >send offer</td>
+            <td colspan="2">send offer</td>
 
         </tr>
 
@@ -39,7 +39,7 @@
                 <td>${list.address.city}</td>
                 <c:if test="${list.situation eq 'Waiting_for_expert_suggestions'}">
                     <td rowspan="4">
-                       <a onclick="sendOffer(${list.id});" href="#" id="link" >click</a>
+                        <a onclick="sendOffer(${list.id});" href="#" id="link">click</a>
                     </td>
 
                 </c:if>
@@ -68,13 +68,11 @@
 </form>
 <link href="/" title="home">
 <script>
-    function sendOffer(id){
+    function sendOffer(id) {
         // document.getElementById("link").href="/offer/sendOffer/ "+id;
-       //document.getElementById("link").setAttribute("onclick", "location.href='http://localhost:8739'");
-        console.log("hello"+id)
-
-
-        window.location.href="http://localhost:8739/offer/sendOffer/"+id;
+        //document.getElementById("link").setAttribute("onclick", "location.href='http://localhost:8739'");
+        console.log("hello" + id)
+        window.location.href = "http://localhost:8739/offer/sendOffer/" + id;
     }
 </script>
 </body>

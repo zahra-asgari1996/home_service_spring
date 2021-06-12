@@ -12,7 +12,7 @@ public class Expert extends Users {
     //double begir
     private Integer rate;
     @Lob
-    @Column(columnDefinition="BLOB",length =300000)
+    @Column(columnDefinition = "BLOB", length = 300000)
     private byte[] image;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(name = "expert_services",
@@ -22,13 +22,13 @@ public class Expert extends Users {
             inverseJoinColumns = {
                     @JoinColumn(name = "service_id", referencedColumnName = "id",
                             nullable = false, updatable = false)})
-    private List<SubService> services=new ArrayList<>();
+    private List<SubService> services = new ArrayList<>();
     @OneToMany(mappedBy = "expert")
-    private List<Offers> offers=new ArrayList<>();
+    private List<Offers> offers = new ArrayList<>();
     @OneToMany(mappedBy = "expert")
-    private List<Comments> comments=new ArrayList<>();
+    private List<Comments> comments = new ArrayList<>();
     @OneToMany
-    private List<Orders> orders=new ArrayList<>();
+    private List<Orders> orders = new ArrayList<>();
     @Column
     private String field;
 

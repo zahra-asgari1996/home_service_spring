@@ -7,15 +7,15 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExpertDto extends UserDto{
+public class ExpertDto extends UserDto {
     private Integer rate;
     @NotNull(message = "You Should Upload Image!")
     private byte[] image;
     private String field;
-    private List<SubServiceDto> services=new ArrayList<>();
-    private List<OfferDto> offers=new ArrayList<>();
-    private List<CommentDto> comments=new ArrayList<>();
-    private List<OrderDto> orders=new ArrayList<>();
+    private List<SubServiceDto> services = new ArrayList<>();
+    private List<OfferDto> offers = new ArrayList<>();
+    private List<CommentDto> comments = new ArrayList<>();
+    private List<OrderDto> orders = new ArrayList<>();
 
     public ExpertDto() {
         super.setCredit(0.0);

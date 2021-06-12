@@ -16,7 +16,7 @@ public class CommentMapperImpl implements CommentMapper {
 
     @Override
     public Comments toComment(CommentDto dto) {
-        Comments comments=new Comments();
+        Comments comments = new Comments();
         comments.setId(dto.getId());
         comments.setRate(dto.getRate());
         comments.setComment(dto.getComment());
@@ -27,7 +27,7 @@ public class CommentMapperImpl implements CommentMapper {
 
     @Override
     public CommentDto toCommentDto(Comments comments) {
-        CommentDto dto=new CommentDto();
+        CommentDto dto = new CommentDto();
         dto.setId(comments.getId());
         dto.setComment(comments.getComment());
         dto.setRate(comments.getRate());

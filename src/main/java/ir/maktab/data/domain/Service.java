@@ -17,7 +17,7 @@ public class Service {
     @Column
     private String name;
     @OneToMany(mappedBy = "service")
-    private List<SubService> subServices=new ArrayList<>();
+    private List<SubService> subServices = new ArrayList<>();
 
 
     public Integer getId() {
