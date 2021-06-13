@@ -17,12 +17,9 @@ public class Comments {
     private String comment;
     @Column
     private Double rate;
-
-
+    @OneToOne
     private Orders order;
 
-
-    //order ro biyar
 
     public Integer getId() {
         return id;
@@ -66,6 +63,15 @@ public class Comments {
 
     public Comments setRate(Double rate) {
         this.rate = rate;
+        return this;
+    }
+
+    public Orders getOrder() {
+        return order;
+    }
+
+    public Comments setOrder(Orders order) {
+        this.order = order;
         return this;
     }
 }

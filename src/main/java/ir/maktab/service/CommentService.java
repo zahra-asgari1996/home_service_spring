@@ -2,11 +2,12 @@ package ir.maktab.service;
 
 import ir.maktab.data.domain.Comments;
 import ir.maktab.dto.CommentDto;
+import ir.maktab.service.exception.NotFoundOrderException;
 
 import java.util.List;
 
 public interface CommentService {
-    void saveNewComment(CommentDto dto);
+    void saveNewComment(CommentDto dto) throws NotFoundOrderException;
 
     void deleteComment(CommentDto dto);
 

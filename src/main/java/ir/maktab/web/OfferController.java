@@ -44,7 +44,6 @@ public class OfferController {
         ExpertDto expert = (ExpertDto) session.getAttribute("expert");
         ExpertDto loginExpert = (ExpertDto) session.getAttribute("loginExpert");
         OfferDto offerDto = new OfferDto();
-        offerDto.setOrders(new OrderDto());
         offerDto.getOrders().setId(id);
         if (expert != null) {
             offerDto.setExpert(expert);

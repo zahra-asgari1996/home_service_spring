@@ -27,6 +27,7 @@
             <td colspan="2">address</td>
             <td colspan="2">expert</td>
             <td colspan="2">customer</td>
+            <td colspan="2">add comment</td>
         </tr>
         <c:forEach items="${suggestionList}" var="list">
            <tr>
@@ -44,7 +45,7 @@
                <td>${list.customer.id}</td>
                <c:if test="${list.situation eq 'DONE'}">
                    <td rowspan="4">
-                       <a onclick="sendOffer(${list.id});" href="#" id="link">click</a>
+                       <a onclick="sendOffer(${list.id});" href="#" id="link">Add a comment To order</a>
                    </td>
 
                </c:if>
@@ -81,7 +82,7 @@
 <script>
     function sendOffer(id) {
         console.log("hello" + id)
-        window.location.href = "http://localhost:8739/offer/sendOffer/" + id;
+        window.location.href = "http://localhost:8739/comment/addComment/" + id;
     }
 </script>
 </body>
