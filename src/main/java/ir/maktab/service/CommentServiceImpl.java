@@ -1,10 +1,14 @@
 package ir.maktab.service;
 
+import ir.maktab.data.domain.Comments;
 import ir.maktab.data.repository.CommentsRepository;
 import ir.maktab.dto.CommentDto;
+import ir.maktab.dto.ExpertDto;
 import ir.maktab.dto.OrderDto;
+import ir.maktab.service.exception.NotFoundExpertException;
 import ir.maktab.service.exception.NotFoundOrderException;
 import ir.maktab.service.mapper.CommentMapper;
+import ir.maktab.service.mapper.ExpertMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,13 +21,15 @@ public class CommentServiceImpl implements CommentService {
     private final CustomerService customerService;
     private final ExpertService expertService;
     private final OrderService orderService;
+    private final ExpertMapper expertMapper;
 
-    public CommentServiceImpl(CommentsRepository commentsRepository, CommentMapper commentMapper, CustomerService customerService, ExpertService expertService, OrderService orderService) {
+    public CommentServiceImpl(CommentsRepository commentsRepository, CommentMapper commentMapper, CustomerService customerService, ExpertService expertService, OrderService orderService, ExpertMapper expertMapper) {
         this.commentsRepository = commentsRepository;
         this.commentMapper = commentMapper;
         this.customerService = customerService;
         this.expertService = expertService;
         this.orderService = orderService;
+        this.expertMapper = expertMapper;
     }
 
     @Override
@@ -53,5 +59,12 @@ public class CommentServiceImpl implements CommentService {
                 commentsRepository.findAll()
                         .stream()
                         .map(commentMapper::toCommentDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CommentDto> findByExpert(ExpertDto expertDto) throws NotFoundExpertException {
+        ExpertDto byEmail = expertService.findByEmail(expertDto.getEmail());
+        List<Comments> comments = commentsRepository.findByExpert(expertMapper.toExpert(byEmail));
+        return comments.stream().map(commentMapper::toCommentDto).collect(Collectors.toList());
     }
 }

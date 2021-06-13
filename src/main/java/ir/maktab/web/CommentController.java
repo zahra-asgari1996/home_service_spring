@@ -6,10 +6,7 @@ import ir.maktab.dto.ExpertDto;
 import ir.maktab.dto.LoginCustomerDto;
 import ir.maktab.dto.OrderDto;
 import ir.maktab.service.CommentService;
-import ir.maktab.service.exception.DuplicatedEmailAddressException;
-import ir.maktab.service.exception.InvalidPassword;
-import ir.maktab.service.exception.NotFoundCustomerException;
-import ir.maktab.service.exception.NotFoundOrderException;
+import ir.maktab.service.exception.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindException;
@@ -48,16 +45,20 @@ public class CommentController {
     }
 
     @GetMapping("/showRate")
-    public ModelAndView showRate(HttpServletRequest request) {
+    public String showRate(HttpServletRequest request, Model model) throws NotFoundExpertException {
         HttpSession session = request.getSession(false);
         ExpertDto expert = (ExpertDto) session.getAttribute("expert");
         ExpertDto loginExpert = (ExpertDto) session.getAttribute("loginExpert");
-        if (expert!=null){
-            commentService.saveNewComment();
+        if (expert != null) {
+            model.addAttribute("commentList", commentService.findByExpert(expert));
         }
+        if (loginExpert != null) {
+            model.addAttribute("commentList", commentService.findByExpert(loginExpert));
+        }
+        return "expertShowRate";
     }
 
-    @ExceptionHandler({NotFoundOrderException.class})
+    @ExceptionHandler({NotFoundOrderException.class, NotFoundExpertException.class})
     public ModelAndView errorHandler(Exception e, HttpServletRequest request) {
         Map<String, Object> model = new HashMap<>();
         model.put("error", e.getLocalizedMessage());

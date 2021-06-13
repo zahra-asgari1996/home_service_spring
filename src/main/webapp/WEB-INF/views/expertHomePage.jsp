@@ -45,10 +45,10 @@
                 <a class="nav-link" href="/expert/showSuggestion">change pass </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/comment/showRate">change pass </a>
+                <a class="nav-link" href="/comment/showRate">show rate</a>
             </li>
             <%--            <li class="nav-item">--%>
-            <%--                <a class="nav-link" href="customer">Customer Page</a>--%>
+            <%--                <a class="nav-link" href=customer">Customer Page</a>--%>
             <%--            </li>--%>
             <%--            <li class="nav-item">--%>
             <%--                <a class="nav-link" href="expert">Expert Page</a>--%>
