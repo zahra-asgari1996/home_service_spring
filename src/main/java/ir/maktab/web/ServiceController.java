@@ -5,9 +5,7 @@ import ir.maktab.dto.OfferDto;
 import ir.maktab.dto.ServiceDto;
 import ir.maktab.service.ServiceService;
 import ir.maktab.service.exception.DuplicatedDataException;
-import ir.maktab.service.exception.NotFoundCustomerException;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +30,7 @@ public class ServiceController {
     @GetMapping(value = "/addNewService")
     public String addNewService(Model model) {
         model.addAttribute("newService", new ServiceDto());
-        return "addNewService";
+        return "createNewServicePage";
     }
 
     @PostMapping(value = "/addNewService")

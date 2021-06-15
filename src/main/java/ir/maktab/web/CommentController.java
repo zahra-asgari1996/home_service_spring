@@ -39,7 +39,7 @@ public class CommentController {
         OrderDto orderDto = new OrderDto();
         orderDto.setId(id);
         commentDto.setOrderDto(orderDto);
-        return new ModelAndView("createCommentPage", "comment", commentDto);
+        return new ModelAndView("createNewCommentPage", "comment", commentDto);
     }
 
 

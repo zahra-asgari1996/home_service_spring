@@ -41,7 +41,7 @@ public class SubServiceController {
     public String addNewSubService(Model model) {
         model.addAttribute("newSubService", new SubServiceDto());
         model.addAttribute("serviceList", service.fetchAllServices());
-        return "addNewSubService";
+        return "createNewSubServicePage";
     }
 
     @PostMapping("/addNewSubService")
@@ -64,7 +64,7 @@ public class SubServiceController {
         model.addAttribute("subServiceList", subServices);
         model.addAttribute("serviceList", serviceList);
         model.addAttribute("selectedService", service);
-        return "createOrderPage";
+        return "createNewOrderPage";
     }
 
     @ExceptionHandler({DuplicatedDataException.class, NotFoundServiceException.class})

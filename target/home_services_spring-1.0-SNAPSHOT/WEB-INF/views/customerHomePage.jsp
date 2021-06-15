@@ -16,10 +16,12 @@
 <body>
 <c:if test="${customer ne null}">
     <p>welcome ${customer.email}</p>
+    <p>credit ::  ${customer.credit}</p>
 </c:if>
 
 <c:if test="${loginCustomer ne null}">
     <p>welcome ${loginCustomer.email}</p>
+    <p>credit ::  ${loginCustomer.credit}</p>
 </c:if>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
@@ -40,7 +42,10 @@
                 <a class="nav-link" href="/customer/changePassword">Change Password</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/customer/showSuggestions">show suggestions</a>
+                <a class="nav-link" href="/customer/showOrders">show orders</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/customer/showOffers">show offers</a>
             </li>
 
         </ul>

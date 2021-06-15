@@ -29,7 +29,7 @@
             <td colspan="2">customer</td>
             <td colspan="2">add comment</td>
         </tr>
-        <c:forEach items="${suggestionList}" var="list">
+        <c:forEach items="${ordersList}" var="list">
            <tr>
                <td rowspan="4">${list.id}</td>
                <td rowspan="4">${list.jobDescription}</td>
@@ -43,7 +43,7 @@
                <td>${list.expert.id}</td>
                <td>id</td>
                <td>${list.customer.id}</td>
-               <c:if test="${list.situation eq 'DONE'}">
+               <c:if test="${list.situation eq 'FINISHED'}">
                    <td rowspan="4">
                        <a onclick="sendOffer(${list.id});" href="#" id="link">Add a comment To order</a>
                    </td>

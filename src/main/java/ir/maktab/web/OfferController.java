@@ -1,24 +1,19 @@
 package ir.maktab.web;
 
 import ir.maktab.configuration.LastViewInterceptor;
-import ir.maktab.dto.CommentDto;
 import ir.maktab.dto.ExpertDto;
 import ir.maktab.dto.OfferDto;
 import ir.maktab.dto.OrderDto;
 import ir.maktab.service.OfferService;
 import ir.maktab.service.exception.*;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindException;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,7 +43,7 @@ public class OfferController {
         if (loginExpert != null) {
             offerDto.setExpert(loginExpert);
         }
-        return new ModelAndView("createOfferPage", "newOffer", offerDto);
+        return new ModelAndView("createNewOfferPage", "newOffer", offerDto);
     }
 
     @PostMapping("/createOffer")

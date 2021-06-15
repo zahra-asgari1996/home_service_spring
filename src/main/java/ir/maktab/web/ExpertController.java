@@ -2,7 +2,6 @@ package ir.maktab.web;
 
 import ir.maktab.configuration.LastViewInterceptor;
 import ir.maktab.dto.ExpertDto;
-import ir.maktab.dto.SelectFieldForExpertDto;
 import ir.maktab.dto.SubServiceDto;
 import ir.maktab.service.ExpertService;
 import ir.maktab.service.OrderService;
@@ -122,7 +121,7 @@ public class ExpertController {
         if (loginExpert != null) {
             model.addAttribute("ordersList", orderService.findOrdersBaseOnExpertSubServicesAndSituation(loginExpert));
         }
-        return "showOrdersPage";
+        return "showOrdersForExpertToSendOffer";
     }
 
     @GetMapping("/showSuggestion")

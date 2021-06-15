@@ -18,7 +18,7 @@
     <form:errors path="offerPrice"/>
     <form:input path="durationOfWork" placeHolder="durationOfWork"/>
     <form:errors path="durationOfWork"/>
-    <form:input path="startTime" type="date" placeHolder="startTime"/>
+    <form:input path="startTime" type="time" placeHolder="startTime"/>
     <form:errors path="startTime"/>
     <form:button value="create">create</form:button>
 </form:form>
