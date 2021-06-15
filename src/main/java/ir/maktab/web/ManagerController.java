@@ -28,24 +28,15 @@ public class ManagerController {
         this.managerService = managerService;
     }
 
-//    @GetMapping("/login")
-//    public String loginManager(Model model){
-//        model.addAttribute("correctManager",new ManagerDto());
-//        return "managerLoginPage";
-//        return new ModelAndView("managerLoginPage","correctManager",new ManagerDto());
-//    }
 
     @PostMapping("/login")
     public String getSignIn(@ModelAttribute("manager") @Valid ManagerDto managerDto)
             throws NotFoundManagerException, InvalidPassword {
+
         managerService.loginManager(managerDto);
         return "managerHomePage";
     }
 
-//    @GetMapping(value = "/searchUsers")
-//    public ModelAndView searchUser(){
-//        return new ModelAndView("searchUsersPage","searchUser",new FilterUsersDto());
-//    }
 
     @ExceptionHandler({NotFoundManagerException.class, InvalidPassword.class})
     public ModelAndView errorHandler(Exception e, HttpServletRequest request) {

@@ -34,8 +34,6 @@ public class Orders {
     private Expert expert;
     @Column
     private Address address;
-    @OneToOne
-    private Comments comment;
 
 
     public Integer getId() {
@@ -137,12 +135,4 @@ public class Orders {
         return this;
     }
 
-    public Comments getComment() {
-        return comment;
-    }
-
-    public Orders setComment(Comments comment) {
-        this.comment = comment;
-        return this;
-    }
 }

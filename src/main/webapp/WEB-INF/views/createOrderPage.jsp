@@ -20,15 +20,15 @@
     </select>
 </form>
 <form:form modelAttribute="newOrder" method="post" action="/order/createOrder">
-    <form:input path="customer.email" placeHolder="Customer Email"></form:input>
     <form:input path="proposedPrice" placeHolder="Proposed Price"></form:input>
+    <form:errors path="proposedPrice"/>
     <form:input path="jobDescription" placeHolder="Job Description"></form:input>
+    <form:errors path="jobDescription"/>
     <form:input type="date" path="dateOfWork" placeHolder="dateOfWork" name="dateOfWork"/>
     <form:input path="address.city" placeHolder="city name"></form:input>
     <form:input path="address.street" placeHolder="street name"></form:input>
     <form:input path="address.alley" placeHolder="alley name"></form:input>
     <form:input path="address.plaque" placeHolder="plaque"></form:input>
-
     <form:select path="subService.name">
         <form:option value="NONE" label="Select"/>
         <form:options items="${subServiceList}"/>

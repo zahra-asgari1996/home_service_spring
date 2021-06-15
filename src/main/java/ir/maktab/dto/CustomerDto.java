@@ -33,4 +33,5 @@ public class CustomerDto extends UserDto {
         this.comments = comments;
         return this;
     }
+
 }

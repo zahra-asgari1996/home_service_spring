@@ -1,6 +1,7 @@
 package ir.maktab.data.domain;
 
 import ir.maktab.data.enums.OfferSituation;
+import org.hibernate.annotations.CreationTimestamp;
 
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ public class Offers {
     private Integer id;
     @ManyToOne
     private Orders orders;
+    @CreationTimestamp
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date SubmitOffer;
     @Column

@@ -7,6 +7,7 @@ import ir.maktab.dto.SubServiceDto;
 import ir.maktab.service.exception.DuplicatedEmailAddressException;
 import ir.maktab.service.exception.InvalidPassword;
 import ir.maktab.service.exception.NotFoundExpertException;
+import ir.maktab.service.exception.NotFoundSubServiceException;
 
 import java.util.List;
 
@@ -21,11 +22,13 @@ public interface ExpertService {
 
     ExpertDto findByEmail(String email) throws NotFoundExpertException;
 
-    public void addExpertToSubService(SubServiceDto service, ExpertDto expert);
+     void addExpertToSubService(SubServiceDto service, ExpertDto expert) throws NotFoundSubServiceException, NotFoundExpertException;
 
-    public void addExpertToSubService(SelectFieldForExpertDto dto);
+     void addExpertToSubService(SelectFieldForExpertDto dto);
 
     ExpertDto loginExpert(ExpertDto dto) throws NotFoundExpertException, InvalidPassword;
 
     void changePassword(ExpertDto dto);
+
+    Double showAvgRate(ExpertDto dto) throws NotFoundExpertException;
 }

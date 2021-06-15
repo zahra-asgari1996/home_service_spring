@@ -5,6 +5,7 @@ import ir.maktab.data.domain.Orders;
 import ir.maktab.data.domain.Service;
 
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -13,7 +14,9 @@ import java.util.Objects;
 public class SubServiceDto {
     private Integer id;
     private Double basePrice;
+    @NotBlank(message = "Description Can Not Be Null !")
     private String description;
+    @NotBlank(message = "Name Can Not Be Null !")
     private String name;
     private ServiceDto service;
     private List<ExpertDto> experts = new ArrayList<>();

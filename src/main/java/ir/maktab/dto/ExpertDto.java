@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ExpertDto extends UserDto {
-    private Integer rate;
+    private Double rate;
     @NotNull(message = "You Should Upload Image!")
     private byte[] image;
     private String field;
@@ -17,10 +17,13 @@ public class ExpertDto extends UserDto {
     private List<CommentDto> comments = new ArrayList<>();
     private List<OrderDto> orders = new ArrayList<>();
 
+
+
     public ExpertDto() {
         super.setCredit(0.0);
         super.setRole(UserRole.Expert);
         super.setSituation(UserSituation.New);
+        this.rate=0.0;
     }
 
     public String getField() {
@@ -41,11 +44,11 @@ public class ExpertDto extends UserDto {
         return this;
     }
 
-    public Integer getRate() {
+    public Double getRate() {
         return rate;
     }
 
-    public ExpertDto setRate(Integer rate) {
+    public ExpertDto setRate(Double rate) {
         this.rate = rate;
         return this;
     }

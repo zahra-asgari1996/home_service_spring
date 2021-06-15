@@ -9,6 +9,7 @@ import ir.maktab.service.validation.ValidPassword;
 
 import javax.validation.constraints.*;
 import java.util.Date;
+import java.util.Objects;
 
 public class UserDto {
     private Integer id;
@@ -114,5 +115,16 @@ public class UserDto {
         return this;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserDto)) return false;
+        UserDto dto = (UserDto) o;
+        return getId().equals(dto.getId()) && getName().equals(dto.getName()) && getLastName().equals(dto.getLastName()) && getEmail().equals(dto.getEmail()) && getPassword().equals(dto.getPassword()) && userRole == dto.userRole;
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getLastName(), getEmail(), getPassword(), userRole);
+    }
 }

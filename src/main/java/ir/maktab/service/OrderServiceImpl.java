@@ -55,7 +55,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void saveNewOrder(OrderDto dto) {
+    public void saveNewOrder(OrderDto dto) throws NotFoundCustomerException {
         Optional<SubService> subService = subServiceRepository.findByName(dto.getSubService().getName());
         if (subService.isPresent()) {
             dto.setSubService(serviceMapper.covertToSubServiceDto(subService.get()));

@@ -6,12 +6,14 @@ import ir.maktab.data.enums.TypeOfService;
 import javax.persistence.Column;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class ServiceDto {
     private Integer id;
+    @NotBlank(message = "Name Can Not Be Null !")
     private String name;
     private List<SubServiceDto> subServices = new ArrayList<>();
 

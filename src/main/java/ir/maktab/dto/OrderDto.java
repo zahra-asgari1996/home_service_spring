@@ -8,14 +8,16 @@ import ir.maktab.data.enums.OrderSituation;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class OrderDto {
     private Integer id;
     private Double proposedPrice;
-    @NotBlank
+    @NotBlank(message = "Job Description Can Not Be Null !")
     private String jobDescription;
     private Date dateOfOrderRegistration;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
@@ -125,4 +127,6 @@ public class OrderDto {
         this.offers = offers;
         return this;
     }
+
+
 }

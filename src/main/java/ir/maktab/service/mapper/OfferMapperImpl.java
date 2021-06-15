@@ -3,6 +3,7 @@ package ir.maktab.service.mapper;
 import ir.maktab.data.domain.Offers;
 import ir.maktab.dto.OfferDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -22,7 +23,9 @@ public class OfferMapperImpl implements OfferMapper {
         return orderMapper;
     }
 
-    public void setOrderMapper(OrderMapper orderMapper) {
+
+    @Autowired
+    public void setOrderMapper( OrderMapper orderMapper) {
         this.orderMapper = orderMapper;
     }
 

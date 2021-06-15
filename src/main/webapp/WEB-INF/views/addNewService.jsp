@@ -14,6 +14,7 @@
 <body>
 <form:form modelAttribute="newService" action="addNewService" method="post">
     <form:input path="name" name="name" placeHolder="name"></form:input>
+    <form:errors path="name"/>
     <form:button name="add">Add</form:button>
 </form:form>
 </body>

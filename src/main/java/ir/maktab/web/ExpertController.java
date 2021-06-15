@@ -3,6 +3,7 @@ package ir.maktab.web;
 import ir.maktab.configuration.LastViewInterceptor;
 import ir.maktab.dto.ExpertDto;
 import ir.maktab.dto.SelectFieldForExpertDto;
+import ir.maktab.dto.SubServiceDto;
 import ir.maktab.service.ExpertService;
 import ir.maktab.service.OrderService;
 import ir.maktab.service.SubServiceService;
@@ -83,24 +84,30 @@ public class ExpertController {
         return "expertHomePage";
     }
 
+
     @GetMapping("/selectField")
-    public String selectField(Model model, @SessionAttribute("expert") ExpertDto expertDto) {
-        model.addAttribute("selectFieldForExpert", new SelectFieldForExpertDto());
-        //HttpSession session = request.getSession(false);
+    public String selectField(Model model) {
+        model.addAttribute("listOfFields", subServiceService.fetchAllSubServices());
         return "selectFieldForExpert";
     }
 
-    @PostMapping("/selectField")
-    public String selectField(@ModelAttribute("selectFieldForExpert") SelectFieldForExpertDto dto,
-                              //@ModelAttribute ("email") String email,
-                              @SessionAttribute("expert") ExpertDto expert
-    ) throws NotFoundExpertException, NotFoundSubServiceException {
-//        ExpertDto expertDto= expertService.findByEmail(expert.getEmail());
-//        SubServiceDto subServiceDto=subServiceService.findByName(dto.getSubServiceDto().getName());
-//        String email = (String) model.getAttribute("email");
-        dto.setExpertDto(expert);
-        expertService.addExpertToSubService(dto);
-        //subServiceService.addExpertToSubService(subServiceDto,expertDto);
+
+    @GetMapping("/selectField/{id}")
+    public String selectField(HttpServletRequest request, @PathVariable("id") Integer id)
+            throws NotFoundExpertException,
+            NotFoundSubServiceException {
+
+        HttpSession session = request.getSession(false);
+        ExpertDto expert = (ExpertDto) session.getAttribute("expert");
+        ExpertDto loginExpert = (ExpertDto) session.getAttribute("loginExpert");
+        SubServiceDto subServiceDto = new SubServiceDto();
+        subServiceDto.setId(id);
+        if (expert != null) {
+            expertService.addExpertToSubService(subServiceDto, expert);
+        }
+        if (loginExpert != null) {
+            expertService.addExpertToSubService(subServiceDto, loginExpert);
+        }
         return "expertHomePage";
     }
 
@@ -119,22 +126,24 @@ public class ExpertController {
     }
 
     @GetMapping("/showSuggestion")
-    public String showSuggestion(Model model,HttpServletRequest request) throws NotFoundOrderException {
+    public String showSuggestion(Model model, HttpServletRequest request)
+            throws NotFoundOrderException {
+
         HttpSession session = request.getSession(false);
         ExpertDto expert = (ExpertDto) session.getAttribute("expert");
         ExpertDto loginExpert = (ExpertDto) session.getAttribute("loginExpert");
         if (expert != null) {
-            model.addAttribute("suggestionList",orderService.findByExpert(expert));
+            model.addAttribute("suggestionList", orderService.findByExpert(expert));
         }
         if (loginExpert != null) {
-            model.addAttribute("ordersList", orderService.findOrdersBaseOnExpertSubServicesAndSituation(loginExpert));
+            model.addAttribute("ordersList", orderService.findByExpert(loginExpert));
         }
         return "showOrdersForExpertHomePage";
     }
 
 
-
-    @ExceptionHandler({NotFoundExpertException.class, InvalidPassword.class, DuplicatedEmailAddressException.class
+    @ExceptionHandler({NotFoundExpertException.class, InvalidPassword.class, DuplicatedEmailAddressException.class,
+            NotFoundSubServiceException.class
     })
     public ModelAndView errorHandler(Exception e, HttpServletRequest request) {
         Map<String, Object> model = new HashMap<>();

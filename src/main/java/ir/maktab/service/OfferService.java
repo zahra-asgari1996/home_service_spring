@@ -1,11 +1,10 @@
 package ir.maktab.service;
 
 import ir.maktab.data.domain.Offers;
+import ir.maktab.dto.CustomerDto;
 import ir.maktab.dto.OfferDto;
-import ir.maktab.service.exception.LessOfferPriceException;
-import ir.maktab.service.exception.NotFoundExpertException;
-import ir.maktab.service.exception.NotFoundOrderException;
-import ir.maktab.service.exception.NotSubServiceInExpertsListException;
+import ir.maktab.dto.OrderDto;
+import ir.maktab.service.exception.*;
 
 import java.util.List;
 
@@ -17,4 +16,7 @@ public interface OfferService {
     void updateOffer(OfferDto dto);
 
     List<OfferDto> fetchAllOffers();
+
+    List<OfferDto> getOrderOffersSortByRateAndPrice(CustomerDto dto ) throws NotFoundCustomerException, NotFoundOrderException;
+    void changeSituation(Integer id) throws NotFoundOrderException;
 }

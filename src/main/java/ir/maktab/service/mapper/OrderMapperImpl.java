@@ -33,7 +33,7 @@ public class OrderMapperImpl implements OrderMapper {
 //        order.setOffers(dto.getOffers().stream().map(i->offerMapper.toOffer(i)).collect(Collectors.toList()));
         order.setJobDescription(dto.getJobDescription());
         order.setDateOfWork(dto.getDateOfWork());
-        order.setProposedPrice(order.getProposedPrice());
+        order.setProposedPrice(dto.getProposedPrice());
         order.setSituation(dto.getSituation());
         order.setSubService(serviceMapper.convertToSubService(dto.getSubService()));
         order.setAddress(dto.getAddress());

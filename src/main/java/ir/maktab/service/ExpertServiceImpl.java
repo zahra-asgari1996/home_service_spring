@@ -10,6 +10,7 @@ import ir.maktab.dto.SubServiceDto;
 import ir.maktab.service.exception.DuplicatedEmailAddressException;
 import ir.maktab.service.exception.InvalidPassword;
 import ir.maktab.service.exception.NotFoundExpertException;
+import ir.maktab.service.exception.NotFoundSubServiceException;
 import ir.maktab.service.mapper.ExpertMapper;
 import org.springframework.stereotype.Service;
 
@@ -23,11 +24,13 @@ public class ExpertServiceImpl implements ExpertService {
     private final ExpertRepository expertRepository;
     private final ExpertMapper expertMapper;
     private final SubServiceRepository subServiceRepository;
+    private final SubServiceService subServiceService;
 
-    public ExpertServiceImpl(ExpertRepository expertRepository, ExpertMapper expertMapper, SubServiceRepository subServiceRepository) {
+    public ExpertServiceImpl(ExpertRepository expertRepository, ExpertMapper expertMapper, SubServiceRepository subServiceRepository, SubServiceService subServiceService) {
         this.expertRepository = expertRepository;
         this.expertMapper = expertMapper;
         this.subServiceRepository = subServiceRepository;
+        this.subServiceService = subServiceService;
     }
 
     @Override
@@ -68,9 +71,17 @@ public class ExpertServiceImpl implements ExpertService {
     }
 
     @Override
-    public void addExpertToSubService(SubServiceDto service, ExpertDto expert) {
-        expert.getServices().add(service);
-        expertRepository.save(expertMapper.toExpert(expert));
+    public void addExpertToSubService(SubServiceDto service, ExpertDto expert) throws NotFoundSubServiceException, NotFoundExpertException {
+        Optional<SubService> subService = subServiceRepository.findById(service.getId());
+        Optional<Expert> expertOptional = expertRepository.findByEmail(expert.getEmail());
+        if (!subService.isPresent()){
+            throw new NotFoundSubServiceException("This SubService Is Not Available !");
+        }if (!expertOptional.isPresent()){
+            throw  new NotFoundExpertException("This Expert Is Not Available !");
+        }
+        expertOptional.get().getServices().add(subService.get());
+        expertRepository.save(expertOptional.get());
+
 //        System.out.println(service.getExperts().size());
 //        service.getExperts().add(expert);
 //        System.out.println(service.getExperts().size());
@@ -107,5 +118,14 @@ public class ExpertServiceImpl implements ExpertService {
         Expert expert1 = expert.get();
         expert1.setPassword(dto.getPassword());
         expertRepository.save(expert1);
+    }
+
+    @Override
+    public Double showAvgRate(ExpertDto dto) throws NotFoundExpertException {
+        Optional<Expert> byEmail = expertRepository.findByEmail(dto.getEmail());
+        if (!byEmail.isPresent()){
+            throw new NotFoundExpertException("This Expert Is Not Available !");
+        }
+        return byEmail.get().getRate();
     }
 }

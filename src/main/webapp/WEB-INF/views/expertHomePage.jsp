@@ -16,11 +16,15 @@
 <body>
 <c:if test="${expert ne null}">
     <p>welcome ${expert.email}</p>
+    <p>credit ::  ${expert.credit}</p>
 </c:if>
 
 <c:if test="${loginExpert ne null}">
     <p>welcome ${loginExpert.email}</p>
+    <p>credit ::  ${loginExpert.credit}</p>
 </c:if>
+
+<p>credit ::  </p>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <%--    <a class="navbar-brand" href="#">Navbar</a>--%>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -41,9 +45,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="/expert/changePassword">change pass </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/expert/showSuggestion">change pass </a>
-            </li>
+<%--            <li class="nav-item">--%>
+<%--                <a class="nav-link" href="/expert/showSuggestion">change pass </a>--%>
+<%--            </li>--%>
             <li class="nav-item">
                 <a class="nav-link" href="/comment/showRate">show rate</a>
             </li>

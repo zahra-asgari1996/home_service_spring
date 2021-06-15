@@ -20,7 +20,6 @@ public class UserController {
 
     @InitBinder
     public void allowEmptyDateBinding(WebDataBinder binder) {
-        // tell spring to set empty values as null instead of empty string.
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
     }
 

@@ -1,6 +1,7 @@
 package ir.maktab.web;
 
 import ir.maktab.configuration.LastViewInterceptor;
+import ir.maktab.dto.CommentDto;
 import ir.maktab.dto.ExpertDto;
 import ir.maktab.dto.OfferDto;
 import ir.maktab.dto.OrderDto;
@@ -31,12 +32,6 @@ public class OfferController {
         this.offerService = offerService;
     }
 
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(Date.class,
-                new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true, 10));
-    }
-
 
     @GetMapping("/sendOffer/{id}")
     public ModelAndView sendOffer(@PathVariable("id") Integer id, HttpServletRequest request) {
@@ -44,7 +39,9 @@ public class OfferController {
         ExpertDto expert = (ExpertDto) session.getAttribute("expert");
         ExpertDto loginExpert = (ExpertDto) session.getAttribute("loginExpert");
         OfferDto offerDto = new OfferDto();
-        offerDto.getOrders().setId(id);
+        OrderDto dto = new OrderDto();
+        dto.setId(id);
+        offerDto.setOrders(dto);
         if (expert != null) {
             offerDto.setExpert(expert);
         }
@@ -56,15 +53,28 @@ public class OfferController {
 
     @PostMapping("/createOffer")
     public String createOffer(@ModelAttribute("newOffer") @Valid OfferDto dto, HttpServletRequest request)
-            throws LessOfferPriceException, NotSubServiceInExpertsListException, NotFoundExpertException, NotFoundOrderException {
+            throws LessOfferPriceException,
+            NotSubServiceInExpertsListException,
+            NotFoundExpertException,
+            NotFoundOrderException {
+
         HttpSession session = request.getSession(false);
         OfferDto newOffer = (OfferDto) session.getAttribute("newOffer");
-        //session.getAttribute("loginExpert");
         dto.setExpert(newOffer.getExpert());
         dto.getOrders().setId(newOffer.getOrders().getId());
         offerService.saveNewOffer(dto);
         return "expertHomePage";
     }
+
+
+    @GetMapping("/selectOffer/{id}")
+    public String changeSituation(@PathVariable("id") Integer id)
+            throws NotFoundOrderException {
+        offerService.changeSituation(id);
+        return "customerHomePage";
+
+    }
+
 
     @ExceptionHandler({LessOfferPriceException.class, NotSubServiceInExpertsListException.class
             , NotFoundExpertException.class, NotFoundOrderException.class})

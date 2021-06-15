@@ -5,6 +5,7 @@ import ir.maktab.data.repository.CommentsRepository;
 import ir.maktab.dto.CommentDto;
 import ir.maktab.dto.ExpertDto;
 import ir.maktab.dto.OrderDto;
+import ir.maktab.service.exception.DuplicatedEmailAddressException;
 import ir.maktab.service.exception.NotFoundExpertException;
 import ir.maktab.service.exception.NotFoundOrderException;
 import ir.maktab.service.mapper.CommentMapper;
@@ -35,7 +36,11 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void saveNewComment(CommentDto dto) throws NotFoundOrderException {
         OrderDto orderDto = orderService.findById(dto.getOrderDto().getId());
-        dto.setExpert(orderDto.getExpert());
+        ExpertDto expert = orderDto.getExpert();
+        double v = (expert.getRate() + dto.getRate()) / 2;
+        expert.setRate(v);
+        dto.setExpert(expert);
+        expertService.updateExpert(expert);
         dto.setCustomer(orderDto.getCustomer());
         dto.setOrderDto(orderDto);
         commentsRepository.save(commentMapper.toComment(dto));

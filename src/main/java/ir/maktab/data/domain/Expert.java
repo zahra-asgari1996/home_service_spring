@@ -10,7 +10,7 @@ import java.util.List;
 public class Expert extends Users {
     @Column
     //double begir
-    private Integer rate;
+    private Double rate;
     @Lob
     @Column(columnDefinition = "BLOB", length = 300000)
     private byte[] image;
@@ -46,11 +46,11 @@ public class Expert extends Users {
     }
 
 
-    public Integer getRate() {
+    public Double getRate() {
         return rate;
     }
 
-    public Expert setRate(Integer rate) {
+    public Expert setRate(Double rate) {
         this.rate = rate;
         return this;
     }

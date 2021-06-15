@@ -25,7 +25,7 @@ public class OfferDto {
     @Max(value = 600, message = "Time Of Work Can Not Be More Than 600 Minutes !")
     @Min(value = 20, message = "Time Of Work Can Not Be Less Than 20 Minutes !")
     private Long durationOfWork;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @DateTimeFormat(pattern = "HH:mm")
     private Date startTime;
     private ExpertDto expert;
     private OfferSituation offerSituation;

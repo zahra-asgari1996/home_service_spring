@@ -4,6 +4,7 @@ import ir.maktab.configuration.LastViewInterceptor;
 import ir.maktab.dto.CustomerDto;
 import ir.maktab.dto.LoginCustomerDto;
 import ir.maktab.service.CustomerService;
+import ir.maktab.service.OfferService;
 import ir.maktab.service.OrderService;
 import ir.maktab.service.exception.DuplicatedEmailAddressException;
 import ir.maktab.service.exception.InvalidPassword;
@@ -30,17 +31,19 @@ import java.util.Map;
 public class CustomerController {
     private final CustomerService customerService;
     private final OrderService orderService;
+    private final OfferService offerService;
 
 
-    public CustomerController(CustomerService customerService, OrderService orderService) {
+    public CustomerController(CustomerService customerService, OrderService orderService, OfferService offerService) {
         this.customerService = customerService;
-
         this.orderService = orderService;
+        this.offerService = offerService;
     }
 
     @PostMapping("/register")
     public String saveNewCustomer(@ModelAttribute("customer") @Validated(RegisterValidation.class) CustomerDto customerDto)
             throws DuplicatedEmailAddressException {
+
         customerService.saveNewCustomer(customerDto);
         return "customerHomePage";
     }
@@ -50,24 +53,29 @@ public class CustomerController {
         return new ModelAndView("customerRegisterPage", "customer", new CustomerDto());
     }
 
+
     @GetMapping("/login")
     public ModelAndView goToLoginPage() {
         return new ModelAndView("customerLoginPage", "loginCustomer", new CustomerDto());
     }
 
+
     @PostMapping("/login")
     public String loginCustomer(@ModelAttribute("loginCustomer") @Validated(LoginValidation.class) CustomerDto dto)
             throws InvalidPassword, NotFoundCustomerException {
+
         System.out.println("customer home page");
         customerService.loginCustomer(dto);
         return "customerHomePage";
     }
+
 
     @GetMapping("/changePassword")
     public String changePassword(Model model) {
         model.addAttribute("changePassword", new CustomerDto());
         return "customerPassChange";
     }
+
 
     @PostMapping("/changePassword")
     public String changePassword(@ModelAttribute("changePassword") @Validated(ChangePasswordValidation.class) CustomerDto dto,
@@ -85,23 +93,39 @@ public class CustomerController {
         return "customerHomePage";
     }
 
-    @GetMapping("/showSuggestions")
-    public String showSuggestions(Model model,HttpServletRequest request) throws NotFoundOrderException, NotFoundCustomerException {
+    @GetMapping("/showOrders")
+    public String showOrders(Model model, HttpServletRequest request)
+            throws NotFoundOrderException, NotFoundCustomerException {
+
         HttpSession session = request.getSession(false);
         CustomerDto customer = (CustomerDto) session.getAttribute("customer");
         CustomerDto loginCustomer = (CustomerDto) session.getAttribute("loginCustomer");
         if (customer != null)
-            model.addAttribute("suggestionList",orderService.findByCustomer(customer));
+            model.addAttribute("ordersList", orderService.findByCustomer(customer));
         if (loginCustomer != null)
-            model.addAttribute("suggestionList",orderService.findByCustomer(loginCustomer));
-
+            model.addAttribute("ordersList", orderService.findByCustomer(loginCustomer));
         return "showOrdersForCustomerHomePage";
+    }
 
+
+    @GetMapping("/showOffers")
+    public String showOffers(HttpServletRequest request, Model model)
+            throws NotFoundCustomerException,
+            NotFoundOrderException {
+
+        HttpSession session = request.getSession(false);
+        CustomerDto customer = (CustomerDto) session.getAttribute("customer");
+        CustomerDto loginCustomer = (CustomerDto) session.getAttribute("loginCustomer");
+        if (customer != null)
+            model.addAttribute("offersList", offerService.getOrderOffersSortByRateAndPrice(customer));
+        if (loginCustomer != null)
+            model.addAttribute("offersList", offerService.getOrderOffersSortByRateAndPrice(loginCustomer));
+        return "showOffersForCustomerHomePage";
     }
 
 
     @ExceptionHandler({NotFoundCustomerException.class, InvalidPassword.class,
-            DuplicatedEmailAddressException.class,NotFoundOrderException.class})
+            DuplicatedEmailAddressException.class, NotFoundOrderException.class, NotFoundCustomerException.class})
     public ModelAndView errorHandler(Exception e, HttpServletRequest request) {
         Map<String, Object> model = new HashMap<>();
         model.put("error", e.getLocalizedMessage());
@@ -118,20 +142,4 @@ public class CustomerController {
         return new ModelAndView(lastView, ex.getBindingResult().getModel());
     }
 
-
-//    @GetMapping("/createOrder")
-//    public String createOrder(Model model, HttpServletRequest request){
-//        model.addAttribute("newOrder", new OrderDto());
-//        model.addAttribute("serviceList",service.fetchAllServices());
-//        model.addAttribute("selectedService","select");
-//        HttpSession session = request.getSession();
-//        session.setAttribute("serviceList" ,service.fetchAllServices());
-//        return "createOrderPage";
-//    }
-
-//    @PostMapping("/createOrder")
-//    public String createNewOrder(@ModelAttribute("newOrder") OrderDto dto,Model model){
-//        //model.addAttribute("subServiceList",subServiceService.fetchAllSubServices());
-//        return"createOrderPage";
-//    }
 }
