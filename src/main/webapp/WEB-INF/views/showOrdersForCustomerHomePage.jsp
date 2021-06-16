@@ -16,40 +16,48 @@
 </head>
 <body>
 <form:form action="/customer/showSuggestions" method="get">
-    <table  class="table table-striped table-success table-hover">
+    <table class="table table-striped table-success table-hover">
         <tr>
-            <td >id</td>
-            <td >job description</td>
-            <td >proposed price</td>
-            <td >situation</td>
-            <td >date of work</td>
-            <td >date of create order</td>
+            <td>id</td>
+            <td>job description</td>
+            <td>proposed price</td>
+            <td>situation</td>
+            <td>date of work</td>
+            <td>date of create order</td>
             <td colspan="2">address</td>
             <td colspan="2">expert</td>
             <td colspan="2">customer</td>
             <td colspan="2">add comment</td>
+            <td colspan="2">pay</td>
         </tr>
         <c:forEach items="${ordersList}" var="list">
-           <tr>
-               <td rowspan="4">${list.id}</td>
-               <td rowspan="4">${list.jobDescription}</td>
-               <td rowspan="4">${list.proposedPrice}</td>
-               <td rowspan="4">${list.situation}</td>
-               <td rowspan="4">${list.dateOfWork}</td>
-               <td rowspan="4">${list.dateOfOrderRegistration}</td>
-               <td>city</td>
-               <td>${list.address.city}</td>
-               <td>id</td>
-               <td>${list.expert.id}</td>
-               <td>id</td>
-               <td>${list.customer.id}</td>
-               <c:if test="${list.situation eq 'FINISHED'}">
-                   <td rowspan="4">
-                       <a onclick="sendOffer(${list.id});" href="#" id="link">Add a comment To order</a>
-                   </td>
+            <tr>
+                <td rowspan="4">${list.id}</td>
+                <td rowspan="4">${list.jobDescription}</td>
+                <td rowspan="4">${list.proposedPrice}</td>
+                <td rowspan="4">${list.situation}</td>
+                <td rowspan="4">${list.dateOfWork}</td>
+                <td rowspan="4">${list.dateOfOrderRegistration}</td>
+                <td>city</td>
+                <td>${list.address.city}</td>
+                <td>id</td>
+                <td>${list.expert.id}</td>
+                <td>id</td>
+                <td>${list.customer.id}</td>
+                <td rowspan="4">
+                    <c:if test="${list.situation eq 'FINISHED'}">
+                        <a onclick="sendOffer(${list.id});" href="#" id="link">Add a comment To order</a>
+                    </c:if>
+                </td>
+                <td rowspan="4">
+                    <c:if test="${list.situation eq 'DONE'}">
+                        <a onclick="paymentFromAccountCredit(${list.id});" href="#" id="paymentLink">pay from account balance</a>
+                        <a onclick="onlinePayment(${list.id});" href="#" id="onlinePayment">online payment</a>
 
-               </c:if>
-           </tr>
+                    </c:if>
+                </td>
+<%--                اینجا باید چرداخت انلاین رو اضافه کنم--%>
+            </tr>
             <tr>
                 <td>street</td>
                 <td>${list.address.street}</td>
@@ -83,6 +91,13 @@
     function sendOffer(id) {
         console.log("hello" + id)
         window.location.href = "http://localhost:8739/comment/addComment/" + id;
+    }
+
+    function paymentFromAccountCredit(id) {
+        window.location.href = "http://localhost:8739/customer/paymentFromAccountCredit/" + id;
+    }
+    function onlinePayment(id) {
+        window.location.href = "http://localhost:8739/customer/onlinePayment/" + id;
     }
 </script>
 </body>

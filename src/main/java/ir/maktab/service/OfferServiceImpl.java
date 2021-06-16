@@ -1,5 +1,6 @@
 package ir.maktab.service;
 
+import ir.maktab.data.domain.Expert;
 import ir.maktab.data.domain.Offers;
 import ir.maktab.data.enums.OfferSituation;
 import ir.maktab.data.enums.OrderSituation;
@@ -9,6 +10,7 @@ import ir.maktab.dto.ExpertDto;
 import ir.maktab.dto.OfferDto;
 import ir.maktab.dto.OrderDto;
 import ir.maktab.service.exception.*;
+import ir.maktab.service.mapper.ExpertMapper;
 import ir.maktab.service.mapper.OfferMapper;
 import ir.maktab.service.mapper.OrderMapper;
 import org.springframework.data.domain.Sort;
@@ -26,13 +28,17 @@ public class OfferServiceImpl implements OfferService {
     private final ExpertService expertService;
     private final OrderService orderService;
     private final CustomerService customerService;
+    private final OrderMapper orderMapper;
+    private final ExpertMapper expertMapper;
 
-    public OfferServiceImpl(OffersRepository repository, OfferMapper mapper, OrderMapper orderMapper, ExpertService expertService, OrderService orderService, CustomerService customerService) {
+    public OfferServiceImpl(OffersRepository repository, OfferMapper mapper, OrderMapper orderMapper, ExpertService expertService, OrderService orderService, CustomerService customerService, OrderMapper orderMapper1, ExpertMapper expertMapper) {
         this.repository = repository;
         this.mapper = mapper;
         this.expertService = expertService;
         this.orderService = orderService;
         this.customerService = customerService;
+        this.orderMapper = orderMapper1;
+        this.expertMapper = expertMapper;
     }
 
     @Override
@@ -91,7 +97,7 @@ public class OfferServiceImpl implements OfferService {
 //            collect = offers.stream().filter(i -> i.getOrders().equals(order)).
 //                    filter(i -> i.getOfferSituation().equals(OfferSituation.registered)).collect(Collectors.toList());
 //        }
-        return collect;
+        return collect.stream().filter(i->i.getOfferSituation().equals(OfferSituation.registered)).collect(Collectors.toList());
     }
 
     @Override
@@ -99,10 +105,52 @@ public class OfferServiceImpl implements OfferService {
         Optional<Offers> offer = repository.findById(id);
         offer.get().setOfferSituation(OfferSituation.accepted);
         OrderDto dto = orderService.findById(offer.get().getOrders().getId());
+        dto.setExpert(expertMapper.toExpertDto(offer.get().getExpert()));
         dto.setSituation(OrderSituation.Waiting_for_expert_to_come);
         orderService.updateOrder(dto);
-        repository.save(offer.get());
+        updateOffer(mapper.toOfferDto(offer.get()));
+        //repository.save(offer.get());
     }
+
+
+    @Override
+    public OfferDto paymentFromAccountCredit(Integer id, CustomerDto dto)
+            throws NotFoundOrderException, NotFoundCustomerException, NotEnoughAccountBalance {
+
+        OrderDto byId = orderService.findById(id);
+        CustomerDto customerDto = customerService.findByEmail(dto.getEmail());
+        Optional<Offers> offer = repository.findByOrders(orderMapper.toOrder(byId));
+        Expert expert = offer.get().getExpert();
+        if (offer.get().getOfferPrice()>customerDto.getCredit()){
+            throw new NotEnoughAccountBalance("Your Credit Is Less Than Offer Price !");
+        }
+        offer.get().setOfferSituation(OfferSituation.DONE);
+        repository.save(offer.get());
+        byId.setSituation(OrderSituation.DONE);
+        orderService.updateOrder(byId);
+        customerDto.setCredit(customerDto.getCredit()-offer.get().getOfferPrice());
+        customerService.updateCustomer(customerDto);
+        expert.setCredit(expert.getCredit()+offer.get().getOfferPrice()*0.7);
+        expertService.updateExpert(expertMapper.toExpertDto(expert));
+        return null;
+    }
+
+    @Override
+    public void onlinePayment(OrderDto orderDto) throws NotFoundCustomerException {
+        //CustomerDto customerDto = customerService.findByEmail(customer.getEmail());
+        Optional<Offers> offer = repository.findByOrders(orderMapper.toOrder(orderDto));
+        Expert expert=offer.get().getExpert();
+        offer.get().setOfferSituation(OfferSituation.DONE);
+        repository.save(offer.get());
+        orderDto.setSituation(OrderSituation.DONE);
+        orderService.updateOrder(orderDto);
+        expert.setCredit(expert.getCredit()+offer.get().getOfferPrice()*0.7);
+        expertService.updateExpert(expertMapper.toExpertDto(expert));
+
+
+    }
+
+
     //return offerPrice.stream().filter(i -> i.getOrders().equals(orderDto)).map(i -> mapper.toOfferDto(i)).collect(Collectors.toList());
 //        Pageable pageable= PageRequest.of(offset,limit,Sort.Direction.ASC,"offerPrice");
 //        Page<Offers> matchedNectarines =

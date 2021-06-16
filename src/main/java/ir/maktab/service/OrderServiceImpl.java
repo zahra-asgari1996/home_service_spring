@@ -104,7 +104,8 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderDto> findOrdersBaseOnExpertSubServicesAndSituation(ExpertDto expertDto) {
         Optional<Expert> expert = expertRepository.findByEmail(expertDto.getEmail());
         List<Orders> orders = repository.findOrdersBaseOnExpertSubServices(expert.get());
-        return orders.stream().filter(i -> i.getSituation().equals(OrderSituation.Waiting_for_expert_suggestions)).map(i -> mapper.toOrderDto(i)).collect(Collectors.toList());
+        return orders.stream().filter(i -> i.getSituation().equals(OrderSituation.Waiting_for_expert_suggestions))
+                .map(i -> mapper.toOrderDto(i)).collect(Collectors.toList());
     }
 
     @Override
@@ -135,6 +136,16 @@ public class OrderServiceImpl implements OrderService {
             throw new NotFoundOrderException("The Customer Has No Order History ! ");
         }
         return orders.stream().map(i -> mapper.toOrderDto(i)).collect(Collectors.toList());
+    }
+
+    @Override
+    public void endOfWork(Integer id) throws NotFoundOrderException {
+        Optional<Orders> byId = repository.findById(id);
+        if (!byId.isPresent()){
+            throw new NotFoundOrderException("This Order Is Not Available !");
+        }
+        byId.get().setSituation(OrderSituation.DONE);
+        updateOrder(mapper.toOrderDto(byId.get()));
     }
 
 }

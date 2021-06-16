@@ -12,7 +12,7 @@ import ir.maktab.service.exception.NotFoundSubServiceException;
 import java.util.List;
 
 public interface ExpertService {
-    void saveNewExpert(ExpertDto expert) throws DuplicatedEmailAddressException;
+    ExpertDto saveNewExpert(ExpertDto expert) throws DuplicatedEmailAddressException;
 
     void deleteExpert(ExpertDto expert);
 

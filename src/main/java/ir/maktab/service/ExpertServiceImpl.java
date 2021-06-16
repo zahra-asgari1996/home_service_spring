@@ -34,12 +34,13 @@ public class ExpertServiceImpl implements ExpertService {
     }
 
     @Override
-    public void saveNewExpert(ExpertDto expert) throws DuplicatedEmailAddressException {
+    public ExpertDto saveNewExpert(ExpertDto expert) throws DuplicatedEmailAddressException {
         Optional<Expert> optionalExpert = expertRepository.findByEmail(expert.getEmail());
         if (optionalExpert.isPresent()) {
             throw new DuplicatedEmailAddressException("This Email Is Available ! Please Choose Another Email Or Login... ");
         }
         expertRepository.save(expertMapper.toExpert(expert));
+        return expert;
     }
 
     @Override

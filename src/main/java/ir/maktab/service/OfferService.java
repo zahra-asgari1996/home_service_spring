@@ -1,6 +1,5 @@
 package ir.maktab.service;
 
-import ir.maktab.data.domain.Offers;
 import ir.maktab.dto.CustomerDto;
 import ir.maktab.dto.OfferDto;
 import ir.maktab.dto.OrderDto;
@@ -19,4 +18,7 @@ public interface OfferService {
 
     List<OfferDto> getOrderOffersSortByRateAndPrice(CustomerDto dto ) throws NotFoundCustomerException, NotFoundOrderException;
     void changeSituation(Integer id) throws NotFoundOrderException;
+    OfferDto paymentFromAccountCredit(Integer id,CustomerDto dto) throws NotFoundOrderException, NotFoundCustomerException, NotEnoughAccountBalance;
+
+    void onlinePayment(OrderDto orderDto) throws NotFoundCustomerException;
 }

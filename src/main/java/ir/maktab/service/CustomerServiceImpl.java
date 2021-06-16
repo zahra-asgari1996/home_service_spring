@@ -28,12 +28,13 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void saveNewCustomer(CustomerDto dto) throws DuplicatedEmailAddressException {
+    public CustomerDto saveNewCustomer(CustomerDto dto) throws DuplicatedEmailAddressException {
         Optional<Customer> customer = customerRepository.findByEmail(dto.getEmail());
         if (customer.isPresent()) {
             throw new DuplicatedEmailAddressException("This Email Is Available ! Please Choose Another Email Or Login... ");
         }
         customerRepository.save(customerMapper.toCustomer(dto));
+        return dto;
     }
 
     @Override

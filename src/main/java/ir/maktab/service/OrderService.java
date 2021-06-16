@@ -28,4 +28,6 @@ public interface OrderService {
 
     List<OrderDto> findByExpert(ExpertDto dto) throws NotFoundOrderException;
     List<OrderDto> findByCustomer(CustomerDto dto) throws NotFoundOrderException, NotFoundCustomerException;
+
+    void endOfWork(Integer id) throws NotFoundOrderException;
 }

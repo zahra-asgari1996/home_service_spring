@@ -11,7 +11,7 @@ import ir.maktab.service.exception.NotFoundCustomerException;
 import java.util.List;
 
 public interface CustomerService {
-    void saveNewCustomer(CustomerDto dto) throws DuplicatedEmailAddressException;
+    CustomerDto saveNewCustomer(CustomerDto dto) throws DuplicatedEmailAddressException;
 
     void updateCustomer(CustomerDto dto);
 

@@ -69,7 +69,13 @@ public class OrderController {
         return "customerHomePage";
     }
 
-    @ExceptionHandler({NotFoundCustomerException.class})
+    @GetMapping("/endOfWork/{id}")
+    public String endOfWork(@PathVariable("id")Integer id) throws NotFoundOrderException {
+        orderService.endOfWork(id);
+        return "expertHomePage";
+    }
+
+    @ExceptionHandler({NotFoundCustomerException.class,NotFoundOrderException.class})
     public ModelAndView errorHandler(Exception e, HttpServletRequest request) {
         Map<String, Object> model = new HashMap<>();
         model.put("error", e.getLocalizedMessage());

@@ -16,13 +16,14 @@
 <body>
 <c:if test="${customer ne null}">
     <p>welcome ${customer.email}</p>
-    <p>credit ::  ${customer.credit}</p>
+    <p>credit ::  ${credit}</p>
 </c:if>
 
 <c:if test="${loginCustomer ne null}">
     <p>welcome ${loginCustomer.email}</p>
-    <p>credit ::  ${loginCustomer.credit}</p>
+    <p>credit ::  ${credit}</p>
 </c:if>
+<p class="text-danger">${error}</p>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
     <%--    <a class="navbar-brand" href="#">Navbar</a>--%>

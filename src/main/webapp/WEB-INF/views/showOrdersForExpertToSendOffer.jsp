@@ -19,10 +19,12 @@
         <tr>
             <td>id</td>
             <td>date of work</td>
+            <td>situation</td>
             <td colspan="2">subservice</td>
             <td colspan="2">customer</td>
             <td colspan="2">address</td>
             <td colspan="2">send offer</td>
+<%--            <td colspan="2">end of work button</td>--%>
 
         </tr>
 
@@ -31,6 +33,7 @@
             <tr>
                 <td rowspan="4">${list.id}</td>
                 <td rowspan="4">${list.dateOfWork}</td>
+                <td rowspan="4">${list.situation}</td>
                 <td rowspan="2">name</td>
                 <td rowspan="2">${list.subService.name}</td>
                 <td rowspan="2">name</td>
@@ -43,6 +46,12 @@
                     </td>
 
                 </c:if>
+<%--                <c:if test="${list.situation eq 'STARTED'}">--%>
+<%--                    <td rowspan="4">--%>
+<%--                        <a onclick="endOfWork(${list.id});" href="#" id="endOfWorkLink">click</a>--%>
+<%--                    </td>--%>
+
+<%--                </c:if>--%>
             </tr>
             <tr>
                 <td>street</td>
@@ -74,6 +83,13 @@
         console.log("hello" + id)
         window.location.href = "http://localhost:8739/offer/sendOffer/" + id;
     }
+
+    // function endOfWork(id) {
+    //     // document.getElementById("link").href="/offer/sendOffer/ "+id;
+    //     //document.getElementById("link").setAttribute("onclick", "location.href='http://localhost:8739'");
+    //     console.log("hello" + id)
+    //     window.location.href = "http://localhost:8739/order/endOfWork/" + id;
+    // }
 </script>
 </body>
 </html>
