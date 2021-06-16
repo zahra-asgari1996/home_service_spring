@@ -3,7 +3,9 @@ package ir.maktab.data.repository;
 import ir.maktab.data.domain.Customer;
 import ir.maktab.data.domain.Expert;
 import ir.maktab.data.domain.Orders;
+import ir.maktab.data.domain.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -12,7 +14,7 @@ import javax.persistence.criteria.Order;
 import java.util.List;
 
 @Repository
-public interface OrderRepository extends JpaRepository<Orders, Integer> {
+public interface OrderRepository extends JpaRepository<Orders, Integer>, JpaSpecificationExecutor<Orders> {
 
 
     @Query("select o from Orders as o where o.subService in (select s from SubService s where :expert member s.experts)")

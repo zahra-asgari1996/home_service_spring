@@ -75,6 +75,19 @@ public class OrderController {
         return "expertHomePage";
     }
 
+    @GetMapping("/confirmPay/{id}")
+    public String ConfirmPay(@PathVariable("id")Integer id) throws NotFoundOrderException {
+        orderService.confirmPay(id);
+        return "expertHomePage";
+    }
+
+    @GetMapping("/startWork/{id}")
+    public String startWork(@PathVariable("id")Integer id) throws NotFoundOrderException {
+        orderService.startWork(id);
+        return "expertHomePage";
+    }
+
+
     @ExceptionHandler({NotFoundCustomerException.class,NotFoundOrderException.class})
     public ModelAndView errorHandler(Exception e, HttpServletRequest request) {
         Map<String, Object> model = new HashMap<>();

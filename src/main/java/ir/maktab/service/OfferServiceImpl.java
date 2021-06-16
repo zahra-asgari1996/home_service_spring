@@ -4,16 +4,15 @@ import ir.maktab.data.domain.Expert;
 import ir.maktab.data.domain.Offers;
 import ir.maktab.data.enums.OfferSituation;
 import ir.maktab.data.enums.OrderSituation;
+import ir.maktab.data.repository.OfferSpecification;
 import ir.maktab.data.repository.OffersRepository;
-import ir.maktab.dto.CustomerDto;
-import ir.maktab.dto.ExpertDto;
-import ir.maktab.dto.OfferDto;
-import ir.maktab.dto.OrderDto;
+import ir.maktab.dto.*;
 import ir.maktab.service.exception.*;
 import ir.maktab.service.mapper.ExpertMapper;
 import ir.maktab.service.mapper.OfferMapper;
 import ir.maktab.service.mapper.OrderMapper;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,8 +29,9 @@ public class OfferServiceImpl implements OfferService {
     private final CustomerService customerService;
     private final OrderMapper orderMapper;
     private final ExpertMapper expertMapper;
+    private final OrderHistoryService orderHistoryService;
 
-    public OfferServiceImpl(OffersRepository repository, OfferMapper mapper, OrderMapper orderMapper, ExpertService expertService, OrderService orderService, CustomerService customerService, OrderMapper orderMapper1, ExpertMapper expertMapper) {
+    public OfferServiceImpl(OffersRepository repository, OfferMapper mapper, OrderMapper orderMapper, ExpertService expertService, OrderService orderService, CustomerService customerService, OrderMapper orderMapper1, ExpertMapper expertMapper, OrderHistoryService orderHistoryService) {
         this.repository = repository;
         this.mapper = mapper;
         this.expertService = expertService;
@@ -39,12 +39,14 @@ public class OfferServiceImpl implements OfferService {
         this.customerService = customerService;
         this.orderMapper = orderMapper1;
         this.expertMapper = expertMapper;
+        this.orderHistoryService = orderHistoryService;
     }
 
     @Override
     public void
     saveNewOffer(OfferDto dto) throws LessOfferPriceException, NotSubServiceInExpertsListException, NotFoundExpertException, NotFoundOrderException {
         ExpertDto expertDto = expertService.findByEmail(dto.getExpert().getEmail());
+        OrderHistoryDto orderHistoryDto = new OrderHistoryDto();
         OrderDto orderDto = orderService.findById(dto.getOrders().getId());
         Double basePrice = orderDto.getSubService().getBasePrice();
         dto.setExpert(expertDto);
@@ -56,6 +58,10 @@ public class OfferServiceImpl implements OfferService {
             throw new NotSubServiceInExpertsListException("Sub Service Is Not In Experts List");
         }
         dto.getOrders().setSituation(OrderSituation.Waiting_for_expert_selection);
+        OrderDto order = orderService.updateOrder(dto.getOrders());
+        orderHistoryDto.setOrderDto(order);
+        orderHistoryDto.setOrderSituation(OrderSituation.Waiting_for_expert_selection);
+        orderHistoryService.save(orderHistoryDto);
         repository.save(mapper.toOffer(dto));
     }
 
@@ -102,11 +108,15 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public void changeSituation(Integer id) throws NotFoundOrderException {
+        OrderHistoryDto orderHistoryDto = new OrderHistoryDto();
         Optional<Offers> offer = repository.findById(id);
         offer.get().setOfferSituation(OfferSituation.accepted);
         OrderDto dto = orderService.findById(offer.get().getOrders().getId());
+        orderHistoryDto.setOrderDto(dto);
         dto.setExpert(expertMapper.toExpertDto(offer.get().getExpert()));
         dto.setSituation(OrderSituation.Waiting_for_expert_to_come);
+        orderHistoryDto.setOrderSituation(OrderSituation.Waiting_for_expert_to_come);
+        orderHistoryService.save(orderHistoryDto);
         orderService.updateOrder(dto);
         updateOffer(mapper.toOfferDto(offer.get()));
         //repository.save(offer.get());
@@ -116,7 +126,7 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public OfferDto paymentFromAccountCredit(Integer id, CustomerDto dto)
             throws NotFoundOrderException, NotFoundCustomerException, NotEnoughAccountBalance {
-
+        OrderHistoryDto orderHistoryDto = new OrderHistoryDto();
         OrderDto byId = orderService.findById(id);
         CustomerDto customerDto = customerService.findByEmail(dto.getEmail());
         Optional<Offers> offer = repository.findByOrders(orderMapper.toOrder(byId));
@@ -126,7 +136,10 @@ public class OfferServiceImpl implements OfferService {
         }
         offer.get().setOfferSituation(OfferSituation.DONE);
         repository.save(offer.get());
-        byId.setSituation(OrderSituation.DONE);
+        byId.setSituation(OrderSituation.paid);
+        orderHistoryDto.setOrderDto(byId);
+        orderHistoryDto.setOrderSituation(OrderSituation.paid);
+        orderHistoryService.save(orderHistoryDto);
         orderService.updateOrder(byId);
         customerDto.setCredit(customerDto.getCredit()-offer.get().getOfferPrice());
         customerService.updateCustomer(customerDto);
@@ -138,16 +151,24 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public void onlinePayment(OrderDto orderDto) throws NotFoundCustomerException {
         //CustomerDto customerDto = customerService.findByEmail(customer.getEmail());
+        OrderHistoryDto orderHistoryDto = new OrderHistoryDto();
         Optional<Offers> offer = repository.findByOrders(orderMapper.toOrder(orderDto));
         Expert expert=offer.get().getExpert();
         offer.get().setOfferSituation(OfferSituation.DONE);
         repository.save(offer.get());
-        orderDto.setSituation(OrderSituation.DONE);
+        orderDto.setSituation(OrderSituation.paid);
+        orderHistoryDto.setOrderDto(orderDto);
+        orderHistoryDto.setOrderSituation(OrderSituation.paid);
+        orderHistoryService.save(orderHistoryDto);
         orderService.updateOrder(orderDto);
         expert.setCredit(expert.getCredit()+offer.get().getOfferPrice()*0.7);
         expertService.updateExpert(expertMapper.toExpertDto(expert));
+    }
 
-
+    @Override
+    public List<OfferDto> filterOffers(OfferHistoryDto dto) {
+        List<Offers> all = repository.findAll(Specification.where(OfferSpecification.filterOffers(dto)));
+        return all.stream().map(i->mapper.toOfferDto(i)).collect(Collectors.toList());
     }
 
 

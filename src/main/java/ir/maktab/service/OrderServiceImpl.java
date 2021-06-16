@@ -7,14 +7,12 @@ import ir.maktab.data.domain.SubService;
 import ir.maktab.data.enums.OfferSituation;
 import ir.maktab.data.enums.OrderSituation;
 import ir.maktab.data.repository.*;
-import ir.maktab.dto.CustomerDto;
-import ir.maktab.dto.ExpertDto;
-import ir.maktab.dto.OfferDto;
-import ir.maktab.dto.OrderDto;
+import ir.maktab.dto.*;
 import ir.maktab.service.exception.NotFoundCustomerException;
 import ir.maktab.service.exception.NotFoundOfferForOrder;
 import ir.maktab.service.exception.NotFoundOrderException;
 import ir.maktab.service.mapper.*;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,6 +30,7 @@ public class OrderServiceImpl implements OrderService {
     private final ExpertMapper expertMapper;
     private final ExpertRepository expertRepository;
     private final CustomerService customerService;
+    private final OrderHistoryService orderHistoryService;
 
 
 
@@ -41,7 +40,7 @@ public class OrderServiceImpl implements OrderService {
                             CustomerRepository customerRepository,
                             CustomerMapper customerMapper,
                             ExpertMapper expertMapper,
-                            ExpertRepository expertRepository, CustomerService customerService) {
+                            ExpertRepository expertRepository, CustomerService customerService, OrderHistoryService orderHistoryService) {
         this.repository = repository;
         this.mapper = mapper;
         this.subServiceRepository = subServiceRepository;
@@ -52,6 +51,7 @@ public class OrderServiceImpl implements OrderService {
         this.expertRepository = expertRepository;
 
         this.customerService = customerService;
+        this.orderHistoryService = orderHistoryService;
     }
 
     @Override
@@ -65,7 +65,11 @@ public class OrderServiceImpl implements OrderService {
             dto.setCustomer(customerMapper.toCustomerDto(customer.get()));
         }
         dto.setSituation(OrderSituation.Waiting_for_expert_suggestions);
-        repository.save(mapper.toOrder(dto));
+        Orders save = repository.save(mapper.toOrder(dto));
+        OrderHistoryDto orderHistoryDto = new OrderHistoryDto();
+        orderHistoryDto.setOrderDto(mapper.toOrderDto(save));
+        orderHistoryDto.setOrderSituation(OrderSituation.Waiting_for_expert_suggestions);
+        orderHistoryService.save(orderHistoryDto);
 
     }
 
@@ -76,8 +80,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void updateOrder(OrderDto dto) {
-        repository.save(mapper.toOrder(dto));
+    public OrderDto updateOrder(OrderDto dto) {
+        Orders save = repository.save(mapper.toOrder(dto));
+        return mapper.toOrderDto(save);
 
     }
 
@@ -146,6 +151,44 @@ public class OrderServiceImpl implements OrderService {
         }
         byId.get().setSituation(OrderSituation.DONE);
         updateOrder(mapper.toOrderDto(byId.get()));
+        OrderHistoryDto orderHistoryDto = new OrderHistoryDto();
+        orderHistoryDto.setOrderDto(mapper.toOrderDto(byId.get()));
+        orderHistoryDto.setOrderSituation(OrderSituation.DONE);
+        orderHistoryService.save(orderHistoryDto);
+    }
+
+    @Override
+    public void confirmPay(Integer id) throws NotFoundOrderException {
+        Optional<Orders> byId = repository.findById(id);
+        if (!byId.isPresent()){
+            throw new NotFoundOrderException("This Order Is Not Available !");
+        }
+        byId.get().setSituation(OrderSituation.FINISHED);
+        OrderDto dto = updateOrder(mapper.toOrderDto(byId.get()));
+        OrderHistoryDto orderHistoryDto = new OrderHistoryDto();
+        orderHistoryDto.setOrderDto(dto);
+        orderHistoryDto.setOrderSituation(OrderSituation.FINISHED);
+        orderHistoryService.save(orderHistoryDto);
+    }
+
+    @Override
+    public void startWork(Integer id) throws NotFoundOrderException {
+        Optional<Orders> byId = repository.findById(id);
+        if (!byId.isPresent()){
+            throw new NotFoundOrderException("This Order Is Not Available !");
+        }
+        byId.get().setSituation(OrderSituation.STARTED);
+        OrderDto dto = updateOrder(mapper.toOrderDto(byId.get()));
+        OrderHistoryDto orderHistoryDto = new OrderHistoryDto();
+        orderHistoryDto.setOrderDto(dto);
+        orderHistoryDto.setOrderSituation(OrderSituation.STARTED);
+        orderHistoryService.save(orderHistoryDto);
+    }
+
+    @Override
+    public List<OrderDto> filterOrders(OrderHistoryFilterDto dto) {
+        List<Orders> all = repository.findAll(Specification.where(OrderSpecification.filterOrders(dto)));
+        return all.stream().map(i->mapper.toOrderDto(i)).collect(Collectors.toList());
     }
 
 }

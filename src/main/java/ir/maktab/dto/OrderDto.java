@@ -1,18 +1,13 @@
 package ir.maktab.dto;
 
 import ir.maktab.data.domain.Address;
-import ir.maktab.data.domain.Customer;
-import ir.maktab.data.domain.Offers;
-import ir.maktab.data.domain.SubService;
 import ir.maktab.data.enums.OrderSituation;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 public class OrderDto {
     private Integer id;

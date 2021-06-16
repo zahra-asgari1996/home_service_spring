@@ -23,7 +23,9 @@
             <td colspan="2">subservice</td>
             <td colspan="2">customer</td>
             <td colspan="2">address</td>
+            <td colspan="2">start work</td>
             <td colspan="2">end of Work</td>
+            <td colspan="2">confirm payment</td>
 
         </tr>
 
@@ -39,17 +41,20 @@
                 <td rowspan="2">${list.customer.name}</td>
                 <td>city</td>
                 <td>${list.address.city}</td>
-<%--                <c:if test="${list.situation eq 'Waiting_for_expert_suggestions'}">--%>
-<%--                    <td rowspan="4">--%>
-<%--                        <a onclick="sendOffer(${list.id});" href="#" id="link">click</a>--%>
-<%--                    </td>--%>
-
-<%--                </c:if>--%>
+                <c:if test="${list.situation eq 'Waiting_for_expert_to_come'}">
+                    <td rowspan="4">
+                        <a onclick="startWork(${list.id});" href="#" id="link">click</a>
+                    </td>
+                </c:if>
                 <c:if test="${list.situation eq 'STARTED'}">
                     <td rowspan="4">
                         <a onclick="endOfWork(${list.id});" href="#" id="endOfWorkLink">click</a>
                     </td>
-
+                </c:if>
+                <c:if test="${list.situation eq 'paid'}">
+                    <td rowspan="4">
+                        <a onclick="confirmPay(${list.id});" href="#" id="confirmPay">click</a>
+                    </td>
                 </c:if>
             </tr>
             <tr>
@@ -76,18 +81,24 @@
 </form>
 <link href="/" title="home">
 <script>
-    // function sendOffer(id) {
-    //     // document.getElementById("link").href="/offer/sendOffer/ "+id;
-    //     //document.getElementById("link").setAttribute("onclick", "location.href='http://localhost:8739'");
-    //     console.log("hello" + id)
-    //     window.location.href = "http://localhost:8739/offer/sendOffer/" + id;
-    // }
+    function startWork(id) {
+        // document.getElementById("link").href="/offer/sendOffer/ "+id;
+        //document.getElementById("link").setAttribute("onclick", "location.href='http://localhost:8739'");
+        console.log("hello" + id)
+        window.location.href = "http://localhost:8739/order/startWork/" + id;
+    }
 
     function endOfWork(id) {
         // document.getElementById("link").href="/offer/sendOffer/ "+id;
         //document.getElementById("link").setAttribute("onclick", "location.href='http://localhost:8739'");
         console.log("hello" + id)
         window.location.href = "http://localhost:8739/order/endOfWork/" + id;
+    }
+    function confirmPay(id) {
+        // document.getElementById("link").href="/offer/sendOffer/ "+id;
+        //document.getElementById("link").setAttribute("onclick", "location.href='http://localhost:8739'");
+        console.log("hello" + id)
+        window.location.href = "http://localhost:8739/order/confirmPay/" + id;
     }
 </script>
 </body>

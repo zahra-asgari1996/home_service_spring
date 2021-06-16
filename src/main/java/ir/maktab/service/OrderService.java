@@ -1,10 +1,7 @@
 package ir.maktab.service;
 
 import ir.maktab.data.domain.Orders;
-import ir.maktab.dto.CustomerDto;
-import ir.maktab.dto.ExpertDto;
-import ir.maktab.dto.OfferDto;
-import ir.maktab.dto.OrderDto;
+import ir.maktab.dto.*;
 import ir.maktab.service.exception.NotFoundCustomerException;
 import ir.maktab.service.exception.NotFoundOfferForOrder;
 import ir.maktab.service.exception.NotFoundOrderException;
@@ -16,7 +13,7 @@ public interface OrderService {
 
     void deleteOrder(OrderDto dto);
 
-    void updateOrder(OrderDto dto);
+    OrderDto updateOrder(OrderDto dto);
 
     List<OrderDto> fetchAllOrders();
 
@@ -30,4 +27,10 @@ public interface OrderService {
     List<OrderDto> findByCustomer(CustomerDto dto) throws NotFoundOrderException, NotFoundCustomerException;
 
     void endOfWork(Integer id) throws NotFoundOrderException;
+
+    void confirmPay(Integer id) throws NotFoundOrderException;
+
+    void startWork(Integer id) throws NotFoundOrderException;
+
+    List<OrderDto> filterOrders(OrderHistoryFilterDto dto);
 }
