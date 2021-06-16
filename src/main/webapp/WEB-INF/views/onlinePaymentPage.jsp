@@ -13,11 +13,22 @@
     <title>Title</title>
 </head>
 <body>
-<form action="/customer/onlinePayment" method="post">
-    <input type="number" placeholder="card number">
-    <input type="date" placeholder="expire date">
-    <input type="number" placeholder="cvv2">
-    <button type="submit">pay</button>
-</form>
+<form:form modelAttribute="onlinePayment" method="post" action="/customer/onlinePayment">
+    <form:input path="creditNumber" placeHolder="credit number"/>
+    <form:errors path="creditNumber"/>
+    <form:input path="password" placeHolder="password"/>
+    <form:errors path="password"/>
+    <form:input path="cvv2" placeHolder="cvv2"/>
+    <form:errors path="cvv2"/>
+    <form:input path="expireDate" placeHolder="expire date"/>
+    <form:errors path="expireDate"/>
+    <img src="${pageContext.request.contextPath }/captcha">
+    <br>
+    <form:input type="text" name="captcha"  style="margin-top: 5px;" path="captcha" />
+    <form:errors path="captcha"/>
+    ${error}
+    <br>
+    <form:button name="pay" value="pay">pay</form:button>
+</form:form>
 </body>
 </html>

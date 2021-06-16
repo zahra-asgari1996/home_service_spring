@@ -65,12 +65,10 @@ public class WebConfiguration implements WebMvcConfigurer {
         return messageConverter;
     }
 
-    @Bean
-    public void configureMessageConverter(List<HttpMessageConverter<?>> converters){
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         converters.add(converter(objectMapper()));
     }
-
-
 
 //    @Override
 //    public void addViewControllers(ViewControllerRegistry registry) {

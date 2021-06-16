@@ -1,6 +1,7 @@
 package ir.maktab.web;
 
 import ir.maktab.configuration.LastViewInterceptor;
+import ir.maktab.dto.CreditCardInfo;
 import ir.maktab.dto.CustomerDto;
 import ir.maktab.dto.LoginCustomerDto;
 import ir.maktab.dto.OrderDto;
@@ -20,12 +21,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/customer")
-@SessionAttributes({"loginCustomer", "customer","order"})
+@SessionAttributes({"loginCustomer", "customer", "order"})
 public class CustomerController {
     private final CustomerService customerService;
     private final OrderService orderService;
@@ -39,11 +41,11 @@ public class CustomerController {
     }
 
     @PostMapping("/register")
-    public String saveNewCustomer(@ModelAttribute("customer") @Validated(RegisterValidation.class) CustomerDto customerDto,Model model)
+    public String saveNewCustomer(@ModelAttribute("customer") @Validated(RegisterValidation.class) CustomerDto customerDto, Model model)
             throws DuplicatedEmailAddressException {
 
         CustomerDto customer = customerService.saveNewCustomer(customerDto);
-        model.addAttribute("credit",customer.getCredit());
+        model.addAttribute("credit", customer.getCredit());
         return "customerHomePage";
     }
 
@@ -60,12 +62,12 @@ public class CustomerController {
 
 
     @PostMapping("/login")
-    public String loginCustomer(@ModelAttribute("loginCustomer") @Validated(LoginValidation.class) CustomerDto dto,Model model)
+    public String loginCustomer(@ModelAttribute("loginCustomer") @Validated(LoginValidation.class) CustomerDto dto, Model model)
             throws InvalidPassword, NotFoundCustomerException {
 
         System.out.println("customer home page");
         CustomerDto customer = customerService.loginCustomer(dto);
-        model.addAttribute("credit",customer.getCredit());
+        model.addAttribute("credit", customer.getCredit());
         return "customerHomePage";
     }
 
@@ -124,42 +126,53 @@ public class CustomerController {
     }
 
     @GetMapping("/paymentFromAccountCredit/{id}")
-    public String paymentFromAccountCredit(@PathVariable("id") Integer id,HttpServletRequest request) throws
+    public String paymentFromAccountCredit(@PathVariable("id") Integer id, HttpServletRequest request) throws
             NotFoundCustomerException, NotEnoughAccountBalance, NotFoundOrderException {
         HttpSession session = request.getSession(false);
         CustomerDto customer = (CustomerDto) session.getAttribute("customer");
         CustomerDto loginCustomer = (CustomerDto) session.getAttribute("loginCustomer");
         if (customer != null)
-            offerService.paymentFromAccountCredit(id,customer);
+            offerService.paymentFromAccountCredit(id, customer);
         if (loginCustomer != null)
-            offerService.paymentFromAccountCredit(id,loginCustomer);
+            offerService.paymentFromAccountCredit(id, loginCustomer);
         return "customerHomePage";
     }
 
     @GetMapping("/onlinePayment/{id}")
-    public String onlinePayment(@PathVariable("id") Integer id,Model model) throws NotFoundOrderException {
+    public ModelAndView onlinePayment(@PathVariable("id") Integer id, Model model
+    ) throws NotFoundOrderException {
+
         OrderDto orderDto = orderService.findById(id);
-        model.addAttribute("order",orderDto);
-        return "onlinePaymentPage";
+        model.addAttribute("order", orderDto);
+        return new ModelAndView("onlinePaymentPage", "onlinePayment", new CreditCardInfo());
     }
 
     @PostMapping("/onlinePayment")
-    public String onlinePayment(HttpServletRequest request) throws NotFoundCustomerException {
+    public String onlinePayment(HttpServletRequest request,
+                                @ModelAttribute("onlinePayment") @Valid CreditCardInfo info, Model model) throws NotFoundCustomerException {
         HttpSession session = request.getSession(false);
         CustomerDto customer = (CustomerDto) session.getAttribute("customer");
         CustomerDto loginCustomer = (CustomerDto) session.getAttribute("loginCustomer");
-        OrderDto orderDto= (OrderDto) session.getAttribute("order");
-        if (customer != null)
+        OrderDto orderDto = (OrderDto) session.getAttribute("order");
+        String captcha = session.getAttribute("captcha_security").toString();
+        String verifyCaptcha = request.getParameter("captcha");
+        if (customer != null && captcha.equals(verifyCaptcha)) {
+            model.addAttribute("onlinePayment", info);
             offerService.onlinePayment(orderDto);
-        if (loginCustomer != null)
+        } else if (loginCustomer != null && captcha.equals(verifyCaptcha)) {
+            model.addAttribute("onlinePayment", info);
             offerService.onlinePayment(orderDto);
+        } else {
+            model.addAttribute("error", "Captcha Invalid");
+            return "onlinePaymentPage";
+        }
         return "customerHomePage";
     }
 
 
     @ExceptionHandler({NotFoundCustomerException.class, InvalidPassword.class,
             DuplicatedEmailAddressException.class, NotFoundOrderException.class
-            , NotFoundCustomerException.class,NotEnoughAccountBalance.class})
+            , NotFoundCustomerException.class, NotEnoughAccountBalance.class})
     public ModelAndView errorHandler(Exception e, HttpServletRequest request) {
         Map<String, Object> model = new HashMap<>();
         model.put("error", e.getLocalizedMessage());
