@@ -17,17 +17,20 @@ public class Home {
 
     @GetMapping(value = "/managerPage")
     public ModelAndView goToLoginManagerPage() {
+        //return "managerLoginPage";
         return new ModelAndView("managerLoginPage", "manager", new ManagerDto());
     }
 
     @GetMapping(value = "/expert")
-    public ModelAndView goToRegisterExpertPage() {
-        return new ModelAndView("expertPage", "expert", new ExpertDto());
+    public String goToRegisterExpertPage() {
+        return "expertPage";
+        //return new ModelAndView("expertPage", "expert", new ExpertDto());
     }
 
     @GetMapping(value = "/customer")
-    public ModelAndView goToRegisterCustomerPage() {
-        return new ModelAndView("customerPage", "customer", new CustomerDto());
+    public String goToRegisterCustomerPage() {
+        return "customerPage";
+        //return new ModelAndView("customerPage", "customer", new CustomerDto());
     }
 
 }

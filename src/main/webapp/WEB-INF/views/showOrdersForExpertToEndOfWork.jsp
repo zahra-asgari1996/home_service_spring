@@ -14,18 +14,23 @@
           integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 </head>
 <body>
+<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+    <a href="#" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><span class="fs-4">Show Orders</span></svg>
+    </a>
+</header>
 <form action="/expert/showOrdersToClickEndOfWork" method="get" id="serviceForm">
-    <table class="table table-striped table-success table-hover">
+    <table class="table table-striped">
         <tr>
-            <td>id</td>
-            <td>date of work</td>
-            <td>order situation</td>
-            <td colspan="2">subservice</td>
-            <td colspan="2">customer</td>
-            <td colspan="2">address</td>
-            <td colspan="2">start work</td>
-            <td colspan="2">end of Work</td>
-            <td colspan="2">confirm payment</td>
+            <td>Id</td>
+            <td>Date Of Work</td>
+            <td>Situation</td>
+            <td colspan="2">Sub Service</td>
+            <td colspan="2">Customer Info</td>
+            <td colspan="2">Address</td>
+            <td colspan="2">Start Work</td>
+            <td colspan="2">End Of Work</td>
+            <td colspan="2">Confirm Payment</td>
 
         </tr>
 
@@ -35,11 +40,11 @@
                 <td rowspan="4">${list.id}</td>
                 <td rowspan="4">${list.dateOfWork}</td>
                 <td rowspan="4">${list.situation}</td>
-                <td rowspan="2">name</td>
+                <td rowspan="2">Name</td>
                 <td rowspan="2">${list.subService.name}</td>
-                <td rowspan="2">name</td>
+                <td rowspan="2">Name</td>
                 <td rowspan="2">${list.customer.name}</td>
-                <td>city</td>
+                <td>City</td>
                 <td>${list.address.city}</td>
                 <c:if test="${list.situation eq 'Waiting_for_expert_to_come'}">
                     <td rowspan="4">
@@ -63,22 +68,28 @@
 
             </tr>
             <tr>
-                <td rowspan="2">base price</td>
+                <td rowspan="2">Base Price</td>
                 <td rowspan="2">${list.subService.basePrice}</td>
-                <td rowspan="2">last name</td>
+                <td rowspan="2">Last Name</td>
                 <td rowspan="2">${list.customer.lastName}</td>
-                <td>alley</td>
+                <td>Alley</td>
                 <td>${list.address.alley}</td>
             </tr>
             <tr>
-                <td>plaque</td>
+                <td>Plaque</td>
                 <td>${list.address.plaque}</td>
-
             </tr>
         </c:forEach>
 
     </table>
 </form>
+<footer class="footer mt-auto py-3 bg-light">
+    <div class="container">
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="/expert" class="nav-link px-2 link-secondary">Expert Home Page</a></li>
+        </ul>
+    </div>
+</footer>
 <link href="/" title="home">
 <script>
     function startWork(id) {
