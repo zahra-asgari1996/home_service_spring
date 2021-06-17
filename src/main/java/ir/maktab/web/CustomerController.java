@@ -169,19 +169,6 @@ public class CustomerController {
         return "customerHomePage";
     }
 
-
-    @ExceptionHandler({NotFoundCustomerException.class, InvalidPassword.class,
-            DuplicatedEmailAddressException.class, NotFoundOrderException.class
-            , NotFoundCustomerException.class, NotEnoughAccountBalance.class})
-    public ModelAndView errorHandler(Exception e, HttpServletRequest request) {
-        Map<String, Object> model = new HashMap<>();
-        model.put("error", e.getLocalizedMessage());
-        model.put("loginCustomer", new LoginCustomerDto());
-        String lastView = (String) request.getSession().getAttribute(LastViewInterceptor.LAST_VIEW_ATTRIBUTE);
-        System.out.println(lastView);
-        return new ModelAndView(lastView, model);
-    }
-
     @ExceptionHandler(value = BindException.class)
     public ModelAndView bindHandler(BindException ex, HttpServletRequest request) {
         String lastView = (String) request.getSession().getAttribute(LastViewInterceptor.LAST_VIEW_ATTRIBUTE);
