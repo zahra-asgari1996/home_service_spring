@@ -15,14 +15,19 @@
 
 </head>
 <body>
+<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+    <a href="#" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><span class="fs-4">Select Field For Expert</span></svg>
+    </a>
+</header>
 <form:form action="/expert/selectField" method="get">
-    <table>
+    <table class="table table-striped">
         <tr>
-            <td>id</td>
-            <td>name</td>
-            <td>base price</td>
-            <td>service name</td>
-            <td>select field</td>
+            <td>Id</td>
+            <td>Name</td>
+            <td>Base Price</td>
+            <td>Service Name</td>
+            <td>Select Field</td>
         </tr>
         <c:forEach items="${listOfFields}" var="list">
             <tr>
@@ -37,6 +42,13 @@
         </c:forEach>
     </table>
 </form:form>
+<footer class="footer mt-auto py-3 bg-light">
+    <div class="container">
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="/expert" class="nav-link px-2 link-secondary">Expert Home Page</a></li>
+        </ul>
+    </div>
+</footer>
 <script>
     function selectField(id) {
         console.log("hello" + id)

@@ -6,9 +6,11 @@ import ir.maktab.dto.ManagerDto;
 import ir.maktab.service.exception.InvalidPassword;
 import ir.maktab.service.exception.NotFoundManagerException;
 import ir.maktab.service.mapper.ManagerMapper;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -16,10 +18,12 @@ import java.util.stream.Collectors;
 public class ManagerServiceImpl implements ManagerService {
     private final ManagerRepository repository;
     private final ManagerMapper mapper;
+    private final MessageSource messageSource;
 
-    public ManagerServiceImpl(ManagerRepository repository, ManagerMapper mapper) {
+    public ManagerServiceImpl(ManagerRepository repository, ManagerMapper mapper, MessageSource messageSource) {
         this.repository = repository;
         this.mapper = mapper;
+        this.messageSource = messageSource;
     }
 
     @Override
@@ -56,15 +60,15 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public ManagerDto loginManager(ManagerDto dto) throws NotFoundManagerException, InvalidPassword {
         Optional<Manager> manager = repository.findByUserName(dto.getUserName());
-        Manager correctManager = manager.get();
         if (manager.isPresent()) {
+            Manager correctManager = manager.get();
             if (correctManager.getPassword().equals(dto.getPassword())) {
                 return mapper.toManagerDto(correctManager);
             } else {
-                throw new InvalidPassword("Password Is Incorrect ! Please Try Again...");
+                throw new InvalidPassword(messageSource.getMessage("invalid.password",null,new Locale("fa_ir")));
             }
         } else {
-            throw new NotFoundManagerException("This Email Is Not Available ! Please Try Again...");
+            throw new NotFoundManagerException(messageSource.getMessage("not.found.manager",null,new Locale("fa_ir")));
         }
     }
 }

@@ -3,9 +3,9 @@ package ir.maktab.data.repository;
 import ir.maktab.data.domain.Expert;
 import ir.maktab.data.domain.Users;
 import ir.maktab.dto.FilterUsersDto;
+import ir.maktab.dto.UserHistoryDto;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -49,6 +49,23 @@ public interface UserSpecification {
 
         };
     }
+
+//    static Specification<Users> userHistory(UserHistoryDto dto){
+//        return (root, criteriaQuery, criteriaBuilder) ->{
+//            CriteriaQuery<Users> query = criteriaBuilder.createQuery(Users.class);
+//            List<Predicate> predicates=new ArrayList<>();
+//            if (dto.getStartDate()!=null){
+//                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("date"),dto.getStartDate()));
+//            }
+//            if (dto.getEndDate()!=null){
+//                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("date"),dto.getEndDate()));
+//            }
+//            if (dto.getMaxNumberOfOrders()!=null){
+//                predicates.add(criteriaBuilder.count(root.get("")))
+//            }
+//
+//        };
+//    }
 
 
 }

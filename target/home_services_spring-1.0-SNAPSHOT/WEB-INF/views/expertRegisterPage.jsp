@@ -66,7 +66,7 @@
         </div>
         <div class="form-floating">
             <form:label path="image">Image</form:label><br><br>
-            <form:input path="image" name="image" type="file" id="image"/>
+            <form:input path="image" name="image"  class="form-control-file" type="file" id="image"/>
             <form:errors path="image"/>
         </div>
 

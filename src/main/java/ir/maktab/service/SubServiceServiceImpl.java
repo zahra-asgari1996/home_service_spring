@@ -10,9 +10,11 @@ import ir.maktab.service.exception.NotFoundServiceException;
 import ir.maktab.service.exception.NotFoundSubServiceException;
 import ir.maktab.service.mapper.ServiceMapper;
 import ir.maktab.service.mapper.SubServiceMapper;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -22,22 +24,24 @@ public class SubServiceServiceImpl implements SubServiceService {
     private final SubServiceMapper subServiceMapper;
     private final ServiceRepository service;
     private final ServiceMapper serviceMapper;
+    private final MessageSource messageSource;
 
-    public SubServiceServiceImpl(SubServiceRepository subServiceRepository, SubServiceMapper subServiceMapper, ServiceRepository service, ServiceMapper serviceMapper) {
+    public SubServiceServiceImpl(SubServiceRepository subServiceRepository, SubServiceMapper subServiceMapper, ServiceRepository service, ServiceMapper serviceMapper, MessageSource messageSource) {
         this.subServiceRepository = subServiceRepository;
         this.subServiceMapper = subServiceMapper;
         this.service = service;
         this.serviceMapper = serviceMapper;
+        this.messageSource = messageSource;
     }
 
 
     @Override
     public void saveNewSubService(SubServiceDto subServiceDto) throws DuplicatedDataException, NotFoundServiceException {
         if (subServiceRepository.findByName(subServiceDto.getName()).isPresent()) {
-            throw new DuplicatedDataException("This Sub Service Available In DB");
+            throw new DuplicatedDataException(messageSource.getMessage("duplicated.data",null,new Locale("fa_ir")));
         }
         if (service.findByName(subServiceDto.getService().getName()) == null) {
-            throw new NotFoundServiceException("This Service Is Not Available!");
+            throw new NotFoundServiceException(messageSource.getMessage("not.found.service",null,new Locale("fa_ir")));
         }
         subServiceDto.setService(serviceMapper.convertToServiceDto(service.findByName(subServiceDto.getService().getName())));
         subServiceRepository.save(
@@ -107,7 +111,7 @@ public class SubServiceServiceImpl implements SubServiceService {
         if (subService.isPresent()) {
             return subServiceMapper.covertToSubServiceDto(subService.get());
         }
-        throw new NotFoundSubServiceException("Sub Service Not Found");
+        throw new NotFoundSubServiceException(messageSource.getMessage("not.found.sub.service",null,new Locale("fa_ir")));
     }
 
     @Override

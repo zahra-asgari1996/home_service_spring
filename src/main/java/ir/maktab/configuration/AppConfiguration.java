@@ -19,7 +19,7 @@ public class AppConfiguration {
     @Bean("messageSource")
     public MessageSource getMessageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasename("messages");
+        messageSource.setBasename("messageSource");
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
     }

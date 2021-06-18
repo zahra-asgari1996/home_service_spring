@@ -9,9 +9,11 @@ import ir.maktab.service.exception.InvalidPassword;
 import ir.maktab.service.exception.NotFoundCustomerException;
 import ir.maktab.service.mapper.CustomerMapper;
 import ir.maktab.service.mapper.OrderMapper;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -20,18 +22,20 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
     private final OrderMapper orderMapper;
+    private final MessageSource messageSource;
 
-    public CustomerServiceImpl(CustomerRepository customerRepository, CustomerMapper customerMapper, OrderMapper orderMapper) {
+    public CustomerServiceImpl(CustomerRepository customerRepository, CustomerMapper customerMapper, OrderMapper orderMapper, MessageSource messageSource) {
         this.customerRepository = customerRepository;
         this.customerMapper = customerMapper;
         this.orderMapper = orderMapper;
+        this.messageSource = messageSource;
     }
 
     @Override
     public CustomerDto saveNewCustomer(CustomerDto dto) throws DuplicatedEmailAddressException {
         Optional<Customer> customer = customerRepository.findByEmail(dto.getEmail());
         if (customer.isPresent()) {
-            throw new DuplicatedEmailAddressException("This Email Is Available ! Please Choose Another Email Or Login... ");
+            throw new DuplicatedEmailAddressException(messageSource.getMessage("duplicated.email.address",null,new Locale("fa_ir")));
         }
         customerRepository.save(customerMapper.toCustomer(dto));
         return dto;
@@ -63,7 +67,7 @@ public class CustomerServiceImpl implements CustomerService {
         if (customer.isPresent()) {
             return customerMapper.toCustomerDto(customer.get());
         }
-        throw new NotFoundCustomerException("Customer Is Not Available");
+        throw new NotFoundCustomerException(messageSource.getMessage("not.found.customer",null,new Locale("fa_ir")));
     }
 
     @Override
@@ -73,10 +77,10 @@ public class CustomerServiceImpl implements CustomerService {
             if (customer.get().getPassword().equals(dto.getPassword())) {
                 return customerMapper.toCustomerDto(customer.get());
             } else {
-                throw new InvalidPassword("Password Is Incorrect ! Please Try Again");
+                throw new InvalidPassword(messageSource.getMessage("invalid.password",null,new Locale("fa_ir")));
             }
         } else {
-            throw new NotFoundCustomerException("This Email Is Not Available ! Please Try Again...");
+            throw new NotFoundCustomerException(messageSource.getMessage("not.found.customer",null,new Locale("fa_ir")));
         }
     }
 

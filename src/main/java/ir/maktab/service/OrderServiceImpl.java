@@ -12,10 +12,12 @@ import ir.maktab.service.exception.NotFoundCustomerException;
 import ir.maktab.service.exception.NotFoundOfferForOrder;
 import ir.maktab.service.exception.NotFoundOrderException;
 import ir.maktab.service.mapper.*;
+import org.springframework.context.MessageSource;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -27,10 +29,9 @@ public class OrderServiceImpl implements OrderService {
     private final SubServiceMapper serviceMapper;
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
-    private final ExpertMapper expertMapper;
     private final ExpertRepository expertRepository;
-    private final CustomerService customerService;
     private final OrderHistoryService orderHistoryService;
+    private final MessageSource messageSource;
 
 
 
@@ -39,23 +40,21 @@ public class OrderServiceImpl implements OrderService {
                             SubServiceMapper serviceMapper,
                             CustomerRepository customerRepository,
                             CustomerMapper customerMapper,
-                            ExpertMapper expertMapper,
-                            ExpertRepository expertRepository, CustomerService customerService, OrderHistoryService orderHistoryService) {
+                            ExpertRepository expertRepository,
+                            OrderHistoryService orderHistoryService, MessageSource messageSource) {
         this.repository = repository;
         this.mapper = mapper;
         this.subServiceRepository = subServiceRepository;
         this.serviceMapper = serviceMapper;
         this.customerRepository = customerRepository;
         this.customerMapper = customerMapper;
-        this.expertMapper = expertMapper;
         this.expertRepository = expertRepository;
-
-        this.customerService = customerService;
         this.orderHistoryService = orderHistoryService;
+        this.messageSource = messageSource;
     }
 
     @Override
-    public void saveNewOrder(OrderDto dto) throws NotFoundCustomerException {
+    public void saveNewOrder(OrderDto dto) {
         Optional<SubService> subService = subServiceRepository.findByName(dto.getSubService().getName());
         if (subService.isPresent()) {
             dto.setSubService(serviceMapper.covertToSubServiceDto(subService.get()));
@@ -101,7 +100,7 @@ public class OrderServiceImpl implements OrderService {
             orderDto.setSituation(OrderSituation.Waiting_for_expert_to_come);
 
         } else {
-            throw new NotFoundOfferForOrder("NotFoundOfferForOrder");
+            throw new NotFoundOfferForOrder(messageSource.getMessage("not.found.offer.for.order",null,new Locale("fa_ir")));
         }
     }
 
@@ -119,7 +118,7 @@ public class OrderServiceImpl implements OrderService {
         if (order.isPresent()) {
             return mapper.toOrderDto(order.get());
         } else {
-            throw new NotFoundOrderException("This Order Is Not Available !");
+            throw new NotFoundOrderException(messageSource.getMessage("not.found.order",null,new Locale("fa_ir")));
         }
     }
 
@@ -128,17 +127,17 @@ public class OrderServiceImpl implements OrderService {
         Optional<Expert> expert= expertRepository.findByEmail(dto.getEmail());
         List<Orders> orders = repository.findByExpert(expert.get());
         if (orders.size() == 0) {
-            throw new NotFoundOrderException("The Expert Has No Order History ! ");
+            throw new NotFoundOrderException(messageSource.getMessage("not.found.order",null,new Locale("fa_ir")));
         }
         return orders.stream().map(i -> mapper.toOrderDto(i)).collect(Collectors.toList());
     }
 
     @Override
-    public List<OrderDto> findByCustomer(CustomerDto dto) throws NotFoundOrderException, NotFoundCustomerException {
+    public List<OrderDto> findByCustomer(CustomerDto dto) throws NotFoundOrderException{
         Optional<Customer> customerDto = customerRepository.findByEmail(dto.getEmail());
         List<Orders> orders = repository.findByCustomer(customerDto.get());
         if (orders.size() == 0) {
-            throw new NotFoundOrderException("The Customer Has No Order History ! ");
+            throw new NotFoundOrderException(messageSource.getMessage("not.found.order",null,new Locale("fa_ir")));
         }
         return orders.stream().map(i -> mapper.toOrderDto(i)).collect(Collectors.toList());
     }
@@ -147,7 +146,7 @@ public class OrderServiceImpl implements OrderService {
     public void endOfWork(Integer id) throws NotFoundOrderException {
         Optional<Orders> byId = repository.findById(id);
         if (!byId.isPresent()){
-            throw new NotFoundOrderException("This Order Is Not Available !");
+            throw new NotFoundOrderException(messageSource.getMessage("not.found.order",null,new Locale("fa_ir")));
         }
         byId.get().setSituation(OrderSituation.DONE);
         updateOrder(mapper.toOrderDto(byId.get()));
@@ -161,7 +160,7 @@ public class OrderServiceImpl implements OrderService {
     public void confirmPay(Integer id) throws NotFoundOrderException {
         Optional<Orders> byId = repository.findById(id);
         if (!byId.isPresent()){
-            throw new NotFoundOrderException("This Order Is Not Available !");
+            throw new NotFoundOrderException(messageSource.getMessage("not.found.order",null,new Locale("fa_ir")));
         }
         byId.get().setSituation(OrderSituation.FINISHED);
         OrderDto dto = updateOrder(mapper.toOrderDto(byId.get()));
@@ -175,7 +174,7 @@ public class OrderServiceImpl implements OrderService {
     public void startWork(Integer id) throws NotFoundOrderException {
         Optional<Orders> byId = repository.findById(id);
         if (!byId.isPresent()){
-            throw new NotFoundOrderException("This Order Is Not Available !");
+            throw new NotFoundOrderException(messageSource.getMessage("not.found.order",null,new Locale("fa_ir")));
         }
         byId.get().setSituation(OrderSituation.STARTED);
         OrderDto dto = updateOrder(mapper.toOrderDto(byId.get()));
