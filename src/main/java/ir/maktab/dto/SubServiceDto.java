@@ -14,9 +14,9 @@ import java.util.Objects;
 public class SubServiceDto {
     private Integer id;
     private Double basePrice;
-    @NotBlank(message = "Description Can Not Be Null !")
+    @NotBlank(message = "description")
     private String description;
-    @NotBlank(message = "Name Can Not Be Null !")
+    @NotBlank(message = "name")
     private String name;
     private ServiceDto service;
     private List<ExpertDto> experts = new ArrayList<>();

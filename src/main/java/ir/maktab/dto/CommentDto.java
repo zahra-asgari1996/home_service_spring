@@ -14,8 +14,8 @@ public class CommentDto {
     private CustomerDto customer;
     private ExpertDto expert;
     private String comment;
-    @Max(value = 5,message = "Rate Most Be Less Than 5 !")
-    @Min(value = 0,message = "Rate Most Be More Than 0 !")
+    @Max(value = 5,message = "max.rate")
+    @Min(value = 0,message = "min.rate")
     private Double rate;
     private OrderDto orderDto;
 

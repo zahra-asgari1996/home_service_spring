@@ -20,10 +20,10 @@ public class OfferDto {
     private Integer id;
     private OrderDto orders;
     private Date SubmitOffer;
-    @NotNull(message = "Offer Price Can Not Be Null !")
+    @NotNull(message = "offer.price")
     private Double offerPrice;
-    @Max(value = 600, message = "Time Of Work Can Not Be More Than 600 Minutes !")
-    @Min(value = 20, message = "Time Of Work Can Not Be Less Than 20 Minutes !")
+    @Max(value = 600, message = "duration.of.work")
+    @Min(value = 20, message = "duration.of.work")
     private Long durationOfWork;
     @DateTimeFormat(pattern = "HH:mm")
     private Date startTime;

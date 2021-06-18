@@ -13,7 +13,7 @@ import java.util.Objects;
 
 public class ServiceDto {
     private Integer id;
-    @NotBlank(message = "Name Can Not Be Null !")
+    @NotBlank(message = "name")
     private String name;
     private List<SubServiceDto> subServices = new ArrayList<>();
 

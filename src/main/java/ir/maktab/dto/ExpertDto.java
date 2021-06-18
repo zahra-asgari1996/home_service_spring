@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ExpertDto extends UserDto {
     private Double rate;
-    @NotNull(message = "You Should Upload Image!")
+    @NotNull(message = "image")
     private byte[] image;
     private String field;
     private List<SubServiceDto> services = new ArrayList<>();

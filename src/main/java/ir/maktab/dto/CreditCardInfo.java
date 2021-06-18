@@ -4,19 +4,19 @@ import javax.validation.constraints.*;
 import java.util.Date;
 
 public class CreditCardInfo {
-    @NotBlank(message = "Card Number Can Not Be Null !")
-    @Pattern(regexp = "[1-9][0-9]{15}")
+    @NotBlank(message = "creditNumber")
+    @Pattern(regexp = "[1-9][0-9]{15}",message = "creditNumber")
     private String creditNumber;
-    @NotBlank(message = "Password Can Not Be Null !")
-    @Pattern(regexp = "[0-9]{5}")
+    @NotBlank(message = "card.pass")
+    @Pattern(regexp = "[0-9]{5}",message = "card.pass")
     private String password;
-    @NotBlank(message = "Expire Date Can Not Be Null !")
-    @Pattern(regexp ="^(0[1-9]|1[0-2])/?([0-9]{2})$")
+    @NotBlank(message = "expireDate")
+    @Pattern(regexp ="^(0[1-9]|1[0-2])/?([0-9]{2})$",message = "expireDate")
     private String expireDate;
-    @NotBlank(message = "CVV2 Can Not Be Null !")
-    @Pattern(regexp = "[0-9]{4}")
+    @NotBlank(message = "cvv2")
+    @Pattern(regexp = "[0-9]{4}",message = "cvv2")
     private String cvv2;
-    @NotBlank(message = "Captcha CAn Not Be Null !")
+    @NotBlank(message = "captcha")
     private String captcha;
 
     public String getCreditNumber() {

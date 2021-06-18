@@ -13,14 +13,14 @@ import java.util.Objects;
 
 public class UserDto {
     private Integer id;
-    @NotBlank(message = "Name Can Not Be Null!", groups = {RegisterValidation.class})
-    @Size(min = 2, max = 10, message = "Size Should Be Between 2 And 10", groups = {RegisterValidation.class})
+    @NotBlank(message = "name", groups = {RegisterValidation.class})
+    @Size(min = 2, max = 10, message = "name.size", groups = {RegisterValidation.class})
     private String name;
-    @NotBlank(message = "Last Name Can Not Be Null!", groups = {RegisterValidation.class})
-    @Size(min = 2, max = 15, message = "Size Should Be Between 2 And 15", groups = {RegisterValidation.class})
+    @NotBlank(message = "last.name", groups = {RegisterValidation.class})
+    @Size(min = 2, max = 15, message = "last.name.size", groups = {RegisterValidation.class})
     private String lastName;
     @Email(groups = {LoginValidation.class, RegisterValidation.class})
-    @NotBlank(message = "Email Can Not Be Null!", groups = {LoginValidation.class, RegisterValidation.class})
+    @NotBlank(message = "email", groups = {LoginValidation.class, RegisterValidation.class})
     private String email;
     @ValidPassword(groups = {LoginValidation.class, RegisterValidation.class, ChangePasswordValidation.class})
     private String password;

@@ -12,7 +12,7 @@ import java.util.List;
 public class OrderDto {
     private Integer id;
     private Double proposedPrice;
-    @NotBlank(message = "Job Description Can Not Be Null !")
+    @NotBlank(message = "jobDescription")
     private String jobDescription;
     private Date dateOfOrderRegistration;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

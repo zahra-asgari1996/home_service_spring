@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class LoginCustomerDto {
-    @NotBlank(message = "Email Could Not Be Empty ")
+    @NotBlank(message = "email")
     private String email;
     @ValidPassword
     private String password;
