@@ -46,12 +46,12 @@
         <div class="form-floating">
             <form:input type="number" class="form-control" id="floatingInput" path="rate" name="rate"/>
             <form:label for="floatingInput" path="rate">Rate</form:label>
-            <form:errors path="rate"/>
+            <p class="text-danger">${rate}</p>
         </div>
         <div class="form-floating">
             <form:input type="text" class="form-control" id="floatingPassword" path="comment" name="comment"/>
             <form:label for="floatingPassword" path="comment">Comment</form:label>
-            <form:errors path="comment"/>
+            <p class="text-danger">${comment}</p>
         </div>
         <p class="text-danger">${error}</p>
         <form:button class="w-100 btn btn-lg btn-primary" type="submit">Add Comment</form:button>

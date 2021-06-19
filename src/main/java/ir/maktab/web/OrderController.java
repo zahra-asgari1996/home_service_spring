@@ -8,6 +8,7 @@ import ir.maktab.service.OrderService;
 import ir.maktab.service.ServiceService;
 import ir.maktab.service.exception.*;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindException;
@@ -19,9 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/order")
@@ -29,11 +28,13 @@ import java.util.Map;
 public class OrderController {
     private final ServiceService service;
     private final OrderService orderService;
+    private final MessageSource messageSource;
 
 
-    public OrderController(ServiceService service, OrderService orderService) {
+    public OrderController(ServiceService service, OrderService orderService, MessageSource messageSource) {
         this.service = service;
         this.orderService = orderService;
+        this.messageSource = messageSource;
     }
 
     @InitBinder
@@ -70,25 +71,25 @@ public class OrderController {
     }
 
     @GetMapping("/endOfWork/{id}")
-    public String endOfWork(@PathVariable("id")Integer id) throws NotFoundOrderException {
+    public String endOfWork(@PathVariable("id") Integer id) throws NotFoundOrderException {
         orderService.endOfWork(id);
         return "expertHomePage";
     }
 
     @GetMapping("/confirmPay/{id}")
-    public String ConfirmPay(@PathVariable("id")Integer id) throws NotFoundOrderException {
+    public String ConfirmPay(@PathVariable("id") Integer id) throws NotFoundOrderException {
         orderService.confirmPay(id);
         return "expertHomePage";
     }
 
     @GetMapping("/startWork/{id}")
-    public String startWork(@PathVariable("id")Integer id) throws NotFoundOrderException {
+    public String startWork(@PathVariable("id") Integer id) throws NotFoundOrderException {
         orderService.startWork(id);
         return "expertHomePage";
     }
 
 
-    @ExceptionHandler({NotFoundCustomerException.class,NotFoundOrderException.class})
+    @ExceptionHandler({NotFoundCustomerException.class, NotFoundOrderException.class})
     public ModelAndView errorHandler(Exception e, HttpServletRequest request) {
         Map<String, Object> model = new HashMap<>();
         model.put("error", e.getLocalizedMessage());
@@ -97,15 +98,5 @@ public class OrderController {
         System.out.println(lastView);
         return new ModelAndView(lastView, model);
     }
-
-
-    @ExceptionHandler(value = BindException.class)
-    public ModelAndView bindHandler(BindException ex, HttpServletRequest request) {
-        String lastView = (String) request.getSession().getAttribute(LastViewInterceptor.LAST_VIEW_ATTRIBUTE);
-        System.out.println(lastView);
-        return new ModelAndView(lastView, ex.getBindingResult().getModel());
-
-    }
-
 
 }

@@ -22,16 +22,9 @@ public class OrderDto {
     private SubServiceDto subService;
     private List<OfferDto> offers = new ArrayList<>();
     private ExpertDto expert;
-    private Address address;
+    private AddressDto address;
 
-    public Address getAddress() {
-        return address;
-    }
 
-    public OrderDto setAddress(Address address) {
-        this.address = address;
-        return this;
-    }
 
     public Integer getId() {
         return id;
@@ -123,5 +116,12 @@ public class OrderDto {
         return this;
     }
 
+    public AddressDto getAddress() {
+        return address;
+    }
 
+    public OrderDto setAddress(AddressDto address) {
+        this.address = address;
+        return this;
+    }
 }

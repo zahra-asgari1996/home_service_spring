@@ -46,7 +46,7 @@
         <div class="form-floating">
             <form:input type="pssword" class="form-control" id="floatingInput" path="password" name="password"/>
             <form:label for="floatingInput" path="password">Password</form:label>
-            <form:errors path="password"/>
+            <p class="text-danger">${password}</p>
         </div>
         <p class="text-danger">${error}</p>
         <form:button class="w-100 btn btn-lg btn-primary" type="submit">Change</form:button>

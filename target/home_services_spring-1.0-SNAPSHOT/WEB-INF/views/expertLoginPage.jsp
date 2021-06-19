@@ -1,7 +1,7 @@
 <!doctype html>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://www.springframework.org/tags/form" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -47,12 +47,12 @@
         <div class="form-floating">
             <form:input type="email" class="form-control" id="floatingInput" path="email" name="email"/>
             <form:label for="floatingInput" path="email">Email</form:label>
-            <form:errors path="email"/>
+            <p class="text-danger">${email}</p>
         </div>
         <div class="form-floating">
             <form:input type="password" class="form-control" id="floatingPassword" path="password" name="password"/>
             <form:label for="floatingPassword" path="password">Password</form:label>
-            <form:errors path="password"/>
+            <p class="text-danger">${password}</p>
         </div>
         <p class="text-danger">${error}</p>
         <form:button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</form:button>

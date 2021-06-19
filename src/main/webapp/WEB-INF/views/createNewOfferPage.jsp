@@ -46,17 +46,17 @@
         <div class="form-floating">
             <form:input type="number" class="form-control" id="floatingInput" path="offerPrice" name="offerPrice"/>
             <form:label for="floatingInput" path="offerPrice">Offer Price</form:label>
-            <form:errors path="offerPrice"/>
+            <p class="text-danger">${offerPrice}</p>
         </div>
         <div class="form-floating">
             <form:input type="number" class="form-control" id="floatingInput" path="durationOfWork" name="durationOfWork"/>
             <form:label for="floatingInput" path="durationOfWork">Duration Of Work</form:label>
-            <form:errors path="durationOfWork"/>
+            <p class="text-danger">${durationOfWork}</p>
         </div>
         <div class="form-floating">
             <form:input type="time" class="form-control" id="floatingPassword" path="startTime" name="startTime"/>
             <form:label for="floatingPassword" path="startTime">Start Time</form:label>
-            <form:errors path="startTime"/>
+            <p class="text-danger">${startTime}</p>
         </div>
         <p class="text-danger">${error}</p>
         <form:button class="w-100 btn btn-lg btn-primary" type="submit">Create</form:button>

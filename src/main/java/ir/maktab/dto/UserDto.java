@@ -22,7 +22,7 @@ public class UserDto {
     @Email(groups = {LoginValidation.class, RegisterValidation.class})
     @NotBlank(message = "email", groups = {LoginValidation.class, RegisterValidation.class})
     private String email;
-    @ValidPassword(groups = {LoginValidation.class, RegisterValidation.class, ChangePasswordValidation.class})
+    @ValidPassword(message = "password",groups = {LoginValidation.class, RegisterValidation.class, ChangePasswordValidation.class})
     private String password;
     private UserSituation userSituation;
     private Date date;

@@ -48,12 +48,12 @@
         <div class="form-floating">
             <form:input type="text" class="form-control" id="floatingInput" path="userName" name="userName"/>
             <form:label for="floatingInput" path="userName">User Name</form:label>
-            <form:errors path="userName"/>
+            <p class="text-danger">${userName}</p>
         </div>
         <div class="form-floating">
             <form:input type="password" class="form-control" id="floatingPassword" path="password" name="password" />
             <form:label for="floatingPassword" path="password">Password</form:label>
-            <form:errors path="password"/>
+            <p class="text-danger">${password}</p>
         </div>
         <p class="text-danger">${error}</p>
         <form:button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</form:button>

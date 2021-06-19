@@ -5,6 +5,7 @@ import ir.maktab.data.repository.UserSpecification;
 import ir.maktab.dto.FilterUsersDto;
 import ir.maktab.dto.SearchCustomerDto;
 import ir.maktab.dto.UserDto;
+import ir.maktab.dto.UserHistoryDto;
 import ir.maktab.service.mapper.UserMapper;
 import org.hibernate.Session;
 import org.springframework.stereotype.Service;
@@ -41,6 +42,11 @@ public class UserServiceImpl implements UserService {
     public List<UserDto> filterUsers(FilterUsersDto dto) {
         return repository.findAll(UserSpecification.filterUsers(dto)).stream().map(i -> mapper.toUserDto(i))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserDto> userHistory(UserHistoryDto dto) {
+        return repository.findAll(UserSpecification.userHistory(dto)).stream().map(i->mapper.toUserDto(i)).collect(Collectors.toList());
     }
 
 //    @Override

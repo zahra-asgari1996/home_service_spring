@@ -9,6 +9,7 @@ import ir.maktab.service.SubServiceService;
 import ir.maktab.service.exception.*;
 import ir.maktab.service.validation.LoginValidation;
 import ir.maktab.service.validation.RegisterValidation;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindException;
@@ -19,7 +20,9 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 @Controller
 @RequestMapping(value = "/expert")
@@ -28,11 +31,13 @@ public class ExpertController {
     private final ExpertService expertService;
     private final SubServiceService subServiceService;
     private final OrderService orderService;
+    private final MessageSource messageSource;
 
-    public ExpertController(ExpertService expertService, SubServiceService subServiceService, OrderService orderService) {
+    public ExpertController(ExpertService expertService, SubServiceService subServiceService, OrderService orderService, MessageSource messageSource) {
         this.expertService = expertService;
         this.subServiceService = subServiceService;
         this.orderService = orderService;
+        this.messageSource = messageSource;
     }
 
     @GetMapping("/register")
@@ -141,27 +146,4 @@ public class ExpertController {
         }
         return "showOrdersForExpertToEndOfWork";
     }
-
-
-    @ExceptionHandler({NotFoundExpertException.class, InvalidPassword.class, DuplicatedEmailAddressException.class,
-            NotFoundSubServiceException.class,NotFoundOrderException.class
-    })
-    public ModelAndView errorHandler(Exception e, HttpServletRequest request) {
-        Map<String, Object> model = new HashMap<>();
-        model.put("error", e.getLocalizedMessage());
-        model.put("loginExpert", new ExpertDto());
-        String lastView = (String) request.getSession().getAttribute(LastViewInterceptor.LAST_VIEW_ATTRIBUTE);
-        System.out.println(lastView);
-        return new ModelAndView(lastView, model);
-    }
-
-    @ExceptionHandler(value = BindException.class)
-    public ModelAndView bindHandler(BindException ex, HttpServletRequest request) {
-        String lastView = (String) request.getSession().getAttribute(LastViewInterceptor.LAST_VIEW_ATTRIBUTE);
-        System.out.println(lastView);
-        return new ModelAndView(lastView, ex.getBindingResult().getModel());
-
-    }
-
-
 }

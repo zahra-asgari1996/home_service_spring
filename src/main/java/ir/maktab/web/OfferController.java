@@ -6,6 +6,7 @@ import ir.maktab.dto.OfferDto;
 import ir.maktab.dto.OrderDto;
 import ir.maktab.service.OfferService;
 import ir.maktab.service.exception.*;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.*;
@@ -15,16 +16,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("offer")
 @SessionAttributes({"newOffer"})
 public class OfferController {
     private final OfferService offerService;
+    private final MessageSource messageSource;
 
-    public OfferController(OfferService offerService) {
+    public OfferController(OfferService offerService, MessageSource messageSource) {
         this.offerService = offerService;
+        this.messageSource = messageSource;
     }
 
 
@@ -81,13 +86,4 @@ public class OfferController {
         System.out.println(lastView);
         return new ModelAndView(lastView, model);
     }
-
-    @ExceptionHandler(value = BindException.class)
-    public ModelAndView bindHandler(BindException ex, HttpServletRequest request) {
-        String lastView = (String) request.getSession().getAttribute(LastViewInterceptor.LAST_VIEW_ATTRIBUTE);
-        System.out.println(lastView);
-        return new ModelAndView(lastView, ex.getBindingResult().getModel());
-
-    }
-
 }

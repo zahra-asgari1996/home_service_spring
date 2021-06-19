@@ -3,7 +3,6 @@ package ir.maktab.web;
 import ir.maktab.configuration.LastViewInterceptor;
 import ir.maktab.dto.CreditCardInfo;
 import ir.maktab.dto.CustomerDto;
-import ir.maktab.dto.LoginCustomerDto;
 import ir.maktab.dto.OrderDto;
 import ir.maktab.service.CustomerService;
 import ir.maktab.service.OfferService;
@@ -12,6 +11,7 @@ import ir.maktab.service.exception.*;
 import ir.maktab.service.validation.ChangePasswordValidation;
 import ir.maktab.service.validation.LoginValidation;
 import ir.maktab.service.validation.RegisterValidation;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindException;
@@ -23,7 +23,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 @Controller
 @RequestMapping(value = "/customer")
@@ -32,12 +34,14 @@ public class CustomerController {
     private final CustomerService customerService;
     private final OrderService orderService;
     private final OfferService offerService;
+    private final MessageSource messageSource;
 
 
-    public CustomerController(CustomerService customerService, OrderService orderService, OfferService offerService) {
+    public CustomerController(CustomerService customerService, OrderService orderService, OfferService offerService, MessageSource messageSource) {
         this.customerService = customerService;
         this.orderService = orderService;
         this.offerService = offerService;
+        this.messageSource = messageSource;
     }
 
     @PostMapping("/register")
@@ -168,12 +172,4 @@ public class CustomerController {
         }
         return "customerHomePage";
     }
-
-    @ExceptionHandler(value = BindException.class)
-    public ModelAndView bindHandler(BindException ex, HttpServletRequest request) {
-        String lastView = (String) request.getSession().getAttribute(LastViewInterceptor.LAST_VIEW_ATTRIBUTE);
-        System.out.println(lastView);
-        return new ModelAndView(lastView, ex.getBindingResult().getModel());
-    }
-
 }

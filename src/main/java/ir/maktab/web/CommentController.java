@@ -80,15 +80,5 @@ public class CommentController {
         System.out.println(lastView);
         return new ModelAndView(lastView, model);
     }
-
-
-    @ExceptionHandler(value = BindException.class)
-    public ModelAndView bindHandler(BindException ex, HttpServletRequest request) {
-        String lastView = (String) request.getSession().getAttribute(LastViewInterceptor.LAST_VIEW_ATTRIBUTE);
-        System.out.println(lastView);
-        return new ModelAndView(lastView, ex.getBindingResult().getModel());
-    }
-
-
 }
 
