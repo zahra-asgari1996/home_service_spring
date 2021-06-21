@@ -118,7 +118,7 @@ public class ExpertController {
     }
 
     @GetMapping("/showOrders")
-    public String showOrders(HttpServletRequest request, Model model) throws NotFoundOrderException {
+    public String showOrders(HttpServletRequest request, Model model) throws NotFoundOrderException, NotFoundOrderForExpertException {
         HttpSession session = request.getSession(false);
         ExpertDto expert = (ExpertDto) session.getAttribute("expert");
         ExpertDto loginExpert = (ExpertDto) session.getAttribute("loginExpert");
@@ -145,5 +145,11 @@ public class ExpertController {
             model.addAttribute("ordersList", orderService.findByExpert(loginExpert));
         }
         return "showOrdersForExpertToEndOfWork";
+    }
+
+    @ExceptionHandler(value = {NotFoundOrderForExpertException.class})
+    public String notFoundOrderForExpertException(Exception e,Model model){
+        model.addAttribute("notFoundOrder",e.getLocalizedMessage());
+        return "expertHomePage";
     }
 }

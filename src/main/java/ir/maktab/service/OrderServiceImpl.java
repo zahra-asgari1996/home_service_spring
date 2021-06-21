@@ -11,6 +11,7 @@ import ir.maktab.dto.*;
 import ir.maktab.service.exception.NotFoundCustomerException;
 import ir.maktab.service.exception.NotFoundOfferForOrder;
 import ir.maktab.service.exception.NotFoundOrderException;
+import ir.maktab.service.exception.NotFoundOrderForExpertException;
 import ir.maktab.service.mapper.*;
 import org.springframework.context.MessageSource;
 import org.springframework.data.jpa.domain.Specification;
@@ -105,9 +106,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDto> findOrdersBaseOnExpertSubServicesAndSituation(ExpertDto expertDto) {
+    public List<OrderDto> findOrdersBaseOnExpertSubServicesAndSituation(ExpertDto expertDto) throws NotFoundOrderForExpertException {
         Optional<Expert> expert = expertRepository.findByEmail(expertDto.getEmail());
         List<Orders> orders = repository.findOrdersBaseOnExpertSubServices(expert.get());
+        if (orders.size()==0){
+            throw new NotFoundOrderForExpertException(
+                    messageSource.getMessage("not.found.order.for.expert",null,new Locale("fa_ir")));
+        }
         return orders.stream().filter(i -> i.getSituation().equals(OrderSituation.Waiting_for_expert_suggestions))
                 .map(i -> mapper.toOrderDto(i)).collect(Collectors.toList());
     }
