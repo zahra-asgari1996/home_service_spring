@@ -182,6 +182,11 @@
     </div>
 
     <div class="b-example-divider"></div>
+    <div>
+        <c:if test="${notFoundOrder ne null}">
+            <p class="d">${notFoundOrder}</p>
+        </c:if>
+    </div>
 </main>
 <script src="/static/bootstrap.bundle.min.js"></script>
 
