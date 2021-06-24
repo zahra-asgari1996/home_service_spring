@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -137,14 +138,6 @@
                     Show Orders
                 </a>
             </li>
-            <li>
-                <a href="/customer/showOffers" class="nav-link link-dark">
-                    <svg class="bi me-2" width="16" height="16">
-                        <use xlink:href="#table"/>
-                    </svg>
-                    Show Offers
-                </a>
-            </li>
         </ul>
         <hr>
         <div class="dropdown">
@@ -174,7 +167,9 @@
 
     <div class="b-example-divider"></div>
     <span class="fs-4">${error}</span>
-
+    <c:if test="${notFoundOffer ne null}" >
+        <span class="fs-4">${notFoundOffer}</span>
+    </c:if>
 </main>
 <script src="/static/bootstrap.bundle.min.js"></script>
 

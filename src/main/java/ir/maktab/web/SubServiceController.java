@@ -46,9 +46,11 @@ public class SubServiceController {
     }
 
     @PostMapping("/addNewSubService")
-    public String addNewSubService(@ModelAttribute("newSubService") @Valid SubServiceDto dto) throws DuplicatedDataException,
+    public String addNewSubService(@ModelAttribute("newSubService") @Valid SubServiceDto dto,Model model) throws DuplicatedDataException,
             NotFoundServiceException {
         subServiceService.saveNewSubService(dto);
+        model.addAttribute("addNewSubService",
+                messageSource.getMessage("new.sub.service.added",null,new Locale("fa_ir")));
         return "managerHomePage";
 
     }

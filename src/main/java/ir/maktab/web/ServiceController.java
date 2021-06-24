@@ -39,8 +39,10 @@ public class ServiceController {
     }
 
     @PostMapping(value = "/addNewService")
-    public String addNewService(@ModelAttribute("newService") @Valid ServiceDto serviceDto) throws DuplicatedDataException {
+    public String addNewService(@ModelAttribute("newService") @Valid ServiceDto serviceDto,Model model) throws DuplicatedDataException {
         service.saveNewService(serviceDto);
+        model.addAttribute("addNewService",
+                messageSource.getMessage("new.service.added",null,new Locale("fa_ir")));
         return "managerHomePage";
     }
 

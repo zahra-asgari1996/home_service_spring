@@ -101,11 +101,11 @@ public class CustomerController {
     }
 
 
-    @GetMapping("/showOffers")
-    public String showOffers(HttpServletRequest request, Model model)
+    @GetMapping("/showOffers/{id}")
+    public String showOffers(HttpServletRequest request, Model model,@PathVariable("id") Integer id)
             throws NotFoundCustomerException,
-            NotFoundOrderException {
-        model.addAttribute("offersList", offerService.getOrderOffersSortByRateAndPrice(returnCustomer(request)));
+            NotFoundOrderException, NotFoundOfferForOrder {
+        model.addAttribute("offersList", offerService.getOrderOffersSortByRateAndPrice(returnCustomer(request),id));
         return "showOffersForCustomerHomePage";
     }
 
@@ -158,5 +158,10 @@ public class CustomerController {
         if (loginCustomer != null)
             return loginCustomer;
         return null;
+    }
+
+    @ExceptionHandler (value = NotFoundOfferForOrder.class)
+    public ModelAndView notFoundOfferForOrderException(Model model,Exception e){
+        return new ModelAndView("customerHomePage","notFoundOffer",e.getLocalizedMessage());
     }
 }

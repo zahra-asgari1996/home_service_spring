@@ -87,7 +87,7 @@ public class OfferServiceImpl implements OfferService {
                 .collect(Collectors.toList());
     }
 
-    public List<OfferDto> getOrderOffersSortByRateAndPrice(CustomerDto dto) throws NotFoundCustomerException, NotFoundOrderException {
+    public List<OfferDto> getOrderOffersSortByRateAndPrice(CustomerDto dto,Integer id) throws NotFoundCustomerException, NotFoundOrderException, NotFoundOfferForOrder {
         CustomerDto customerDto = customerService.findByEmail(dto.getEmail());
         List<OrderDto> orders = orderService.findByCustomer(customerDto).stream().filter(i->i.getSituation().equals(
                 OrderSituation.Waiting_for_expert_selection)).collect(Collectors.toList());
@@ -101,7 +101,15 @@ public class OfferServiceImpl implements OfferService {
                 }
             }
         }
-        return collect.stream().filter(i->i.getOfferSituation().equals(OfferSituation.registered)).collect(Collectors.toList());
+
+        List<OfferDto> offerDtos =
+                collect.stream().filter(i -> i.getOfferSituation().equals(OfferSituation.registered)).
+                        filter(i -> i.getOrders().getId().equals(id)).collect(Collectors.toList());
+        if (offerDtos.size()==0){
+            throw new NotFoundOfferForOrder(
+                    messageSource.getMessage("not.found.offer.for.order",null,new Locale("fa_ir")));
+        }
+        return offerDtos;
     }
 
     @Override

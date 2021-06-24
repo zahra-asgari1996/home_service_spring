@@ -1,6 +1,7 @@
 package ir.maktab.service;
 
 import ir.maktab.data.domain.Expert;
+import ir.maktab.dto.AddSubServiceToExpertDto;
 import ir.maktab.dto.ExpertDto;
 import ir.maktab.dto.SelectFieldForExpertDto;
 import ir.maktab.dto.SubServiceDto;
@@ -31,4 +32,6 @@ public interface ExpertService {
     void changePassword(ExpertDto dto);
 
     Double showAvgRate(ExpertDto dto) throws NotFoundExpertException;
+
+    void addSubServiceToExpertList(AddSubServiceToExpertDto dto);
 }

@@ -4,6 +4,7 @@ import ir.maktab.data.domain.Expert;
 import ir.maktab.data.domain.SubService;
 import ir.maktab.data.repository.ExpertRepository;
 import ir.maktab.data.repository.SubServiceRepository;
+import ir.maktab.dto.AddSubServiceToExpertDto;
 import ir.maktab.dto.ExpertDto;
 import ir.maktab.dto.SelectFieldForExpertDto;
 import ir.maktab.dto.SubServiceDto;
@@ -128,5 +129,13 @@ public class ExpertServiceImpl implements ExpertService {
             throw new NotFoundExpertException(messageSource.getMessage("not.found.expert",null,new Locale("fa_ir")));
         }
         return byEmail.get().getRate();
+    }
+
+    @Override
+    public void addSubServiceToExpertList(AddSubServiceToExpertDto dto) {
+        Optional<Expert> expert = expertRepository.findById(dto.getExpertId());
+        Optional<SubService> subService = subServiceRepository.findById(dto.getSubServiceId());
+        expert.get().getServices().add(subService.get());
+        expertRepository.save(expert.get());
     }
 }

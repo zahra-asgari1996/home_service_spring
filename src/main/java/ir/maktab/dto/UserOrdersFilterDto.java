@@ -11,9 +11,9 @@ import java.util.Date;
 
 public class UserOrdersFilterDto {
     private Integer userId;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date startDate;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date endDate;
     private OrderSituation situation;
     private Double maxOfferPrice;
