@@ -10,10 +10,5 @@ import java.util.Optional;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
-//    void saveNewCustomer(Customer customer);
-//    void updateCustomer(Customer customer);
-//    void deleteCustomer(Customer customer);
-//    List<Customer> fetchAllCustomers();
-
     Optional<Customer> findByEmail(String email);
 }

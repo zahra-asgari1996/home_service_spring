@@ -77,9 +77,7 @@ public class SubServiceServiceImpl implements SubServiceService {
     public void deleteExpertFromSubService(SubServiceDto service, ExpertDto expert) {
         service.getExperts().remove(expert);
         subServiceRepository.save(subServiceMapper.convertToSubService(service));
-//        subServiceRepository.
-//                deleteExpertFromSubService(
-//                        subServiceMapper.convertToSubService(service),mapper.toExpert(expert) );
+
     }
 
     @Override
@@ -87,9 +85,6 @@ public class SubServiceServiceImpl implements SubServiceService {
         service.getExperts().remove(oldExpert);
         service.getExperts().add(newExpert);
         subServiceRepository.save(subServiceMapper.convertToSubService(service));
-//        subServiceRepository.
-//                updateExpertInSubService
-//                        (subServiceMapper.convertToSubService(service),mapper.toExpert(newExpert),mapper.toExpert(oldExpert) );
 
     }
 
@@ -99,9 +94,6 @@ public class SubServiceServiceImpl implements SubServiceService {
         service.getExperts().add(expert);
         System.out.println(service.getExperts().size());
         subServiceRepository.save(subServiceMapper.convertToSubService(service));
-//        subServiceRepository.
-//                addExpertToSubService
-//                        (subServiceMapper.convertToSubService(service),mapper.toExpert(expert) );
 
     }
 
@@ -115,7 +107,6 @@ public class SubServiceServiceImpl implements SubServiceService {
     }
 
     @Override
-    //ist of dto beferst
     public List<String> getSubServicesByServiceName(String service) {
         return subServiceRepository.findByServiceName(service).stream().map(i -> i.getName()).collect(Collectors.toList());
 

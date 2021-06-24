@@ -4,7 +4,6 @@ import ir.maktab.data.domain.Expert;
 import ir.maktab.data.domain.Offers;
 import ir.maktab.data.enums.OfferSituation;
 import ir.maktab.data.enums.OrderSituation;
-import ir.maktab.data.repository.OfferSpecification;
 import ir.maktab.data.repository.OffersRepository;
 import ir.maktab.dto.*;
 import ir.maktab.service.exception.*;
@@ -102,11 +101,6 @@ public class OfferServiceImpl implements OfferService {
                 }
             }
         }
-//
-//        for (OrderDto order : orders) {
-//            collect = offers.stream().filter(i -> i.getOrders().equals(order)).
-//                    filter(i -> i.getOfferSituation().equals(OfferSituation.registered)).collect(Collectors.toList());
-//        }
         return collect.stream().filter(i->i.getOfferSituation().equals(OfferSituation.registered)).collect(Collectors.toList());
     }
 
@@ -123,7 +117,6 @@ public class OfferServiceImpl implements OfferService {
         orderHistoryService.save(orderHistoryDto);
         orderService.updateOrder(dto);
         updateOffer(mapper.toOfferDto(offer.get()));
-        //repository.save(offer.get());
     }
 
 
@@ -154,7 +147,6 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public void onlinePayment(OrderDto orderDto) throws NotFoundCustomerException {
-        //CustomerDto customerDto = customerService.findByEmail(customer.getEmail());
         OrderHistoryDto orderHistoryDto = new OrderHistoryDto();
         Optional<Offers> offer = repository.findByOrders(orderMapper.toOrder(orderDto));
         Expert expert=offer.get().getExpert();
@@ -168,22 +160,6 @@ public class OfferServiceImpl implements OfferService {
         expert.setCredit(expert.getCredit()+offer.get().getOfferPrice()*0.7);
         expertService.updateExpert(expertMapper.toExpertDto(expert));
     }
-
-    @Override
-    public List<OfferDto> filterOffers(OfferHistoryDto dto) {
-        List<Offers> all = repository.findAll(Specification.where(OfferSpecification.filterOffers(dto)));
-        return all.stream().map(i->mapper.toOfferDto(i)).collect(Collectors.toList());
-    }
-
-
-    //return offerPrice.stream().filter(i -> i.getOrders().equals(orderDto)).map(i -> mapper.toOfferDto(i)).collect(Collectors.toList());
-//        Pageable pageable= PageRequest.of(offset,limit,Sort.Direction.ASC,"offerPrice");
-//        Page<Offers> matchedNectarines =
-//                repository.findAll(OffersRepository.findOffersByOrders(orderMapper.toOrder(orderDto)), pageable);
-//        return
-//                matchedNectarines
-//                        .getContent().stream()
-//                        .map(i->mapper.toOfferDto(i)).collect(Collectors.toList());
 
 }
 

@@ -12,9 +12,5 @@ public interface ManagerRepository extends JpaRepository<Manager, Integer> {
     @Override
     Optional<Manager> findById(Integer integer);
 
-    //    void saveNewManager(Manager manager);
-//    void deleteManager(Manager manager);
-//    void updateManager(Manager manager);
-//    List<Manager> fetchAllManagers();
     Optional<Manager> findByUserName(String userName);
 }

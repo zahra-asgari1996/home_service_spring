@@ -87,14 +87,7 @@ public class CustomerController {
     public String changePassword(@ModelAttribute("changePassword") @Validated(ChangePasswordValidation.class) CustomerDto dto,
                                  HttpServletRequest request) {
 
-        HttpSession session = request.getSession(false);
-        CustomerDto customer = (CustomerDto) session.getAttribute("customer");
-        CustomerDto loginCustomer = (CustomerDto) session.getAttribute("loginCustomer");
-        if (customer != null)
-            dto.setEmail(customer.getEmail());
-        customerService.changePassword(dto);
-        if (loginCustomer != null)
-            dto.setEmail(loginCustomer.getEmail());
+        dto.setEmail(returnCustomer(request).getEmail());
         customerService.changePassword(dto);
         return "customerHomePage";
     }
@@ -103,13 +96,7 @@ public class CustomerController {
     public String showOrders(Model model, HttpServletRequest request)
             throws NotFoundOrderException, NotFoundCustomerException {
 
-        HttpSession session = request.getSession(false);
-        CustomerDto customer = (CustomerDto) session.getAttribute("customer");
-        CustomerDto loginCustomer = (CustomerDto) session.getAttribute("loginCustomer");
-        if (customer != null)
-            model.addAttribute("ordersList", orderService.findByCustomer(customer));
-        if (loginCustomer != null)
-            model.addAttribute("ordersList", orderService.findByCustomer(loginCustomer));
+        model.addAttribute("ordersList", orderService.findByCustomer(returnCustomer(request)));
         return "showOrdersForCustomerHomePage";
     }
 
@@ -118,33 +105,22 @@ public class CustomerController {
     public String showOffers(HttpServletRequest request, Model model)
             throws NotFoundCustomerException,
             NotFoundOrderException {
-
-        HttpSession session = request.getSession(false);
-        CustomerDto customer = (CustomerDto) session.getAttribute("customer");
-        CustomerDto loginCustomer = (CustomerDto) session.getAttribute("loginCustomer");
-        if (customer != null)
-            model.addAttribute("offersList", offerService.getOrderOffersSortByRateAndPrice(customer));
-        if (loginCustomer != null)
-            model.addAttribute("offersList", offerService.getOrderOffersSortByRateAndPrice(loginCustomer));
+        model.addAttribute("offersList", offerService.getOrderOffersSortByRateAndPrice(returnCustomer(request)));
         return "showOffersForCustomerHomePage";
     }
+
 
     @GetMapping("/paymentFromAccountCredit/{id}")
     public String paymentFromAccountCredit(@PathVariable("id") Integer id, HttpServletRequest request) throws
             NotFoundCustomerException, NotEnoughAccountBalance, NotFoundOrderException {
-        HttpSession session = request.getSession(false);
-        CustomerDto customer = (CustomerDto) session.getAttribute("customer");
-        CustomerDto loginCustomer = (CustomerDto) session.getAttribute("loginCustomer");
-        if (customer != null)
-            offerService.paymentFromAccountCredit(id, customer);
-        if (loginCustomer != null)
-            offerService.paymentFromAccountCredit(id, loginCustomer);
+
+        offerService.paymentFromAccountCredit(id, returnCustomer(request));
         return "customerHomePage";
     }
 
     @GetMapping("/onlinePayment/{id}")
-    public ModelAndView onlinePayment(@PathVariable("id") Integer id, Model model
-    ) throws NotFoundOrderException {
+    public ModelAndView onlinePayment(@PathVariable("id") Integer id, Model model)
+            throws NotFoundOrderException {
 
         OrderDto orderDto = orderService.findById(id);
         model.addAttribute("order", orderDto);
@@ -171,5 +147,16 @@ public class CustomerController {
             return "onlinePaymentPage";
         }
         return "customerHomePage";
+    }
+
+    public CustomerDto returnCustomer(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        CustomerDto customer = (CustomerDto) session.getAttribute("customer");
+        CustomerDto loginCustomer = (CustomerDto) session.getAttribute("loginCustomer");
+        if (customer != null)
+            return customer;
+        if (loginCustomer != null)
+            return loginCustomer;
+        return null;
     }
 }

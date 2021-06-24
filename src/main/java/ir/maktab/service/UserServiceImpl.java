@@ -49,17 +49,4 @@ public class UserServiceImpl implements UserService {
         return repository.findAll(UserSpecification.userHistory(dto)).stream().map(i->mapper.toUserDto(i)).collect(Collectors.toList());
     }
 
-//    @Override
-//    public void changePassword(UserDto dto) {
-//        repository.changePassword(mapper.toUser(dto));
-//
-//    }
-//
-//    @Override
-//    public List<UserDto> findByProperty(SearchCustomerDto dto) {
-//
-//        return repository.findByProperty(dto)
-//                .stream().map
-//                        (i->mapper.toUserDto(i)).collect(Collectors.toList());
-//    }
 }

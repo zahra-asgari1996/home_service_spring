@@ -2,7 +2,7 @@ package ir.maktab.service;
 
 import ir.maktab.dto.CustomerDto;
 import ir.maktab.dto.OfferDto;
-import ir.maktab.dto.OfferHistoryDto;
+import ir.maktab.dto.UserOrdersFilterDto;
 import ir.maktab.dto.OrderDto;
 import ir.maktab.service.exception.*;
 
@@ -23,5 +23,4 @@ public interface OfferService {
 
     void onlinePayment(OrderDto orderDto) throws NotFoundCustomerException;
 
-    List<OfferDto> filterOffers(OfferHistoryDto dto);
 }

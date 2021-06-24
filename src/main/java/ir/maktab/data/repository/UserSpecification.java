@@ -38,14 +38,6 @@ public interface UserSpecification {
             if (dto.getField() != null) {
                 predicates.add(criteriaBuilder.equal(expertRoot.get("field"), dto.getField()));
             }
-//            if (dto.getField()!=null || dto.getRate()!=null){
-//                query.select(expertRoot).where(predicates.toArray(new Predicate[0]));
-//            }if (dto.getName()!=null || dto.getLastName()!=null || dto.getEmail()!=null || dto.getRole()!=null){
-//                query.select(root).where(predicates.toArray(new Predicate[0]));
-//            }
-//            else {
-//                query.select(root);
-//            }
             query.select(root).where(predicates.toArray(new Predicate[0]));
             return query.getRestriction();
 
@@ -73,18 +65,22 @@ public interface UserSpecification {
             }
             if (dto.getMaxNumberOfOrders()!=null){
                 customerPredicate=criteriaBuilder.and(
-                        customerPredicate,criteriaBuilder.lessThanOrEqualTo(criteriaBuilder.size(customerRoot.get("orders")),dto.getMaxNumberOfOrders()));
+                        customerPredicate,criteriaBuilder.lessThanOrEqualTo(criteriaBuilder.size(customerRoot.get("orders")),
+                                dto.getMaxNumberOfOrders()));
 
             }if (dto.getMinNumberOfOrders()!=null){
                 customerPredicate=criteriaBuilder.and(
-                        customerPredicate,criteriaBuilder.greaterThanOrEqualTo(criteriaBuilder.size(customerRoot.get("orders")),dto.getMinNumberOfOrders()));
+                        customerPredicate,criteriaBuilder.greaterThanOrEqualTo(criteriaBuilder.size(customerRoot.get("orders")),
+                                dto.getMinNumberOfOrders()));
             }if (dto.getMaxNumberOfOffers()!=null){
                 expertPredicate=criteriaBuilder.and(
-                        expertPredicate,criteriaBuilder.lessThanOrEqualTo(criteriaBuilder.size(expertRoot.get("offers")), dto.getMaxNumberOfOffers()));
+                        expertPredicate,criteriaBuilder.lessThanOrEqualTo(criteriaBuilder.size(expertRoot.get("offers")),
+                                dto.getMaxNumberOfOffers()));
             }
             if (dto.getMinNumberOfOffers() != null) {
                 expertPredicate=criteriaBuilder.and(
-                        expertPredicate,criteriaBuilder.greaterThanOrEqualTo(criteriaBuilder.size(expertRoot.get("offers")), dto.getMinNumberOfOffers())
+                        expertPredicate,criteriaBuilder.greaterThanOrEqualTo(criteriaBuilder.size(expertRoot.get("offers")),
+                                dto.getMinNumberOfOffers())
                 );
             }
             if (customerPredicate.getExpressions().size()>0){

@@ -8,10 +8,6 @@ import java.util.List;
 
 @Repository
 public interface ServiceRepository extends JpaRepository<Service, Integer> {
-    //    void saveNewService(Service service);
-//    Service getService(Service service);
-//    void  deleteService(Service service);
-//    void updateService(Service service);
-//    List<Service> fetchAllServices();
+
     Service findByName(String name);
 }

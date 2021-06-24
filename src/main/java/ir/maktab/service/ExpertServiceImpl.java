@@ -87,10 +87,6 @@ public class ExpertServiceImpl implements ExpertService {
         expertOptional.get().getServices().add(subService.get());
         expertRepository.save(expertOptional.get());
 
-//        System.out.println(service.getExperts().size());
-//        service.getExperts().add(expert);
-//        System.out.println(service.getExperts().size());
-//        subServiceRepository.save(subServiceMapper.convertToSubService(service));
     }
 
     @Override

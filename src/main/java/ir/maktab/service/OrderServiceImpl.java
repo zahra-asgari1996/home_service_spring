@@ -195,6 +195,13 @@ public class OrderServiceImpl implements OrderService {
         return all.stream().map(i->mapper.toOrderDto(i)).collect(Collectors.toList());
     }
 
+    @Override
+    public List<OrderDto> filterUserOrders(UserOrdersFilterDto dto) {
+        List<Orders> all = repository.findAll(Specification.where(UserOrdersSpecification.filterOrders(dto)));
+        return all.stream().map(i->mapper.toOrderDto(i)).collect(Collectors.toList());
+
+    }
+
 }
 
 

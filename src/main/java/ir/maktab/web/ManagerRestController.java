@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequestMapping("/managerRestController")
@@ -31,23 +32,23 @@ public class ManagerRestController {
     @PostMapping(value = "/filterOrders",
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    private ResponseEntity<?> filterOrders(@RequestBody OrderHistoryFilterDto dto){
+    private ResponseEntity<?> filterOrders(@RequestBody @Valid OrderHistoryFilterDto dto){
         List<OrderDto> list = orderService.filterOrders(dto);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/filterOffers",
+    @PostMapping(value = "/filterUserOrders",
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    private ResponseEntity<?> filterOffers(@RequestBody OfferHistoryDto dto){
-        List<OfferDto> list = offerService.filterOffers(dto);
+    private ResponseEntity<?> filterUserOrders(@RequestBody @Valid UserOrdersFilterDto dto){
+        List<OrderDto> list = orderService.filterUserOrders(dto);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @PostMapping(value = "/filterUsers",
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    private ResponseEntity<?> filterUsers(@RequestBody UserHistoryDto dto){
+    private ResponseEntity<?> filterUsers(@RequestBody @Valid UserHistoryDto dto){
         List<UserDto> list = userService.userHistory(dto);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }

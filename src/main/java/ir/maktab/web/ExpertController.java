@@ -47,10 +47,10 @@ public class ExpertController {
 
 
     @PostMapping(value = "/register")
-    public String save(@ModelAttribute("expert") @Validated(RegisterValidation.class) ExpertDto expertDto,Model model)
+    public String save(@ModelAttribute("expert") @Validated(RegisterValidation.class) ExpertDto expertDto, Model model)
             throws DuplicatedEmailAddressException {
         ExpertDto expert = expertService.saveNewExpert(expertDto);
-        model.addAttribute("credit",expert.getCredit());
+        model.addAttribute("credit", expert.getCredit());
         return "expertHomePage";
     }
 
@@ -61,10 +61,10 @@ public class ExpertController {
     }
 
     @PostMapping("/login")
-    public String loginExpert(@ModelAttribute("loginExpert") @Validated(LoginValidation.class) ExpertDto dto,Model model)
+    public String loginExpert(@ModelAttribute("loginExpert") @Validated(LoginValidation.class) ExpertDto dto, Model model)
             throws NotFoundExpertException, InvalidPassword {
         ExpertDto expert = expertService.loginExpert(dto);
-        model.addAttribute("credit",expert.getCredit());
+        model.addAttribute("credit", expert.getCredit());
         return "expertHomePage";
     }
 
@@ -76,17 +76,8 @@ public class ExpertController {
 
     @PostMapping("/changePassword")
     public String changePassword(HttpServletRequest request, @ModelAttribute("changePassword") ExpertDto dto) {
-        HttpSession session = request.getSession(false);
-        ExpertDto expert = (ExpertDto) session.getAttribute("expert");
-        ExpertDto loginExpert = (ExpertDto) session.getAttribute("loginExpert");
-        if (expert != null) {
-            dto.setEmail(expert.getEmail());
-            expertService.changePassword(dto);
-        }
-        if (loginExpert != null) {
-            dto.setEmail(loginExpert.getEmail());
-            expertService.changePassword(dto);
-        }
+        dto.setEmail(returnExpert(request).getEmail());
+        expertService.changePassword(dto);
         return "expertHomePage";
     }
 
@@ -102,54 +93,43 @@ public class ExpertController {
     public String selectField(HttpServletRequest request, @PathVariable("id") Integer id)
             throws NotFoundExpertException,
             NotFoundSubServiceException {
-
-        HttpSession session = request.getSession(false);
-        ExpertDto expert = (ExpertDto) session.getAttribute("expert");
-        ExpertDto loginExpert = (ExpertDto) session.getAttribute("loginExpert");
         SubServiceDto subServiceDto = new SubServiceDto();
         subServiceDto.setId(id);
-        if (expert != null) {
-            expertService.addExpertToSubService(subServiceDto, expert);
-        }
-        if (loginExpert != null) {
-            expertService.addExpertToSubService(subServiceDto, loginExpert);
-        }
+        expertService.addExpertToSubService(subServiceDto, returnExpert(request));
         return "expertHomePage";
     }
 
     @GetMapping("/showOrders")
-    public String showOrders(HttpServletRequest request, Model model) throws NotFoundOrderException, NotFoundOrderForExpertException {
-        HttpSession session = request.getSession(false);
-        ExpertDto expert = (ExpertDto) session.getAttribute("expert");
-        ExpertDto loginExpert = (ExpertDto) session.getAttribute("loginExpert");
-        if (expert != null) {
-            model.addAttribute("ordersList", orderService.findOrdersBaseOnExpertSubServicesAndSituation(expert));
-        }
-        if (loginExpert != null) {
-            model.addAttribute("ordersList", orderService.findOrdersBaseOnExpertSubServicesAndSituation(loginExpert));
-        }
+    public String showOrders(HttpServletRequest request, Model model)
+            throws NotFoundOrderForExpertException {
+        model.addAttribute("ordersList", orderService.findOrdersBaseOnExpertSubServicesAndSituation(returnExpert(request)));
         return "showOrdersForExpertToSendOffer";
     }
 
     @GetMapping("/showOrdersToClickEndOfWork")
     public String showSuggestion(Model model, HttpServletRequest request)
             throws NotFoundOrderException {
-
-        HttpSession session = request.getSession(false);
-        ExpertDto expert = (ExpertDto) session.getAttribute("expert");
-        ExpertDto loginExpert = (ExpertDto) session.getAttribute("loginExpert");
-        if (expert != null) {
-            model.addAttribute("orderList", orderService.findByExpert(expert));
-        }
-        if (loginExpert != null) {
-            model.addAttribute("ordersList", orderService.findByExpert(loginExpert));
-        }
+        model.addAttribute("ordersList", orderService.findByExpert(returnExpert(request)));
         return "showOrdersForExpertToEndOfWork";
     }
 
     @ExceptionHandler(value = {NotFoundOrderForExpertException.class})
-    public String notFoundOrderForExpertException(Exception e,Model model){
-        model.addAttribute("notFoundOrder",e.getLocalizedMessage());
+    public String notFoundOrderForExpertException(Exception e, Model model) {
+        model.addAttribute("notFoundOrder", e.getLocalizedMessage());
         return "expertHomePage";
     }
+
+    public ExpertDto returnExpert(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        ExpertDto expert = (ExpertDto) session.getAttribute("expert");
+        ExpertDto loginExpert = (ExpertDto) session.getAttribute("loginExpert");
+        if (expert != null) {
+            return expert;
+        }
+        if (loginExpert != null) {
+            return loginExpert;
+        }
+        return null;
+    }
+
 }
