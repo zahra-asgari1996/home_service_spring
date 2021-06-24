@@ -1,12 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: Home
-  Date: 6/12/2021
-  Time: 11:52 AM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -17,7 +10,8 @@
 <body>
 <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
     <a href="#" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><span class="fs-4">Show Orders</span></svg>
+        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><span
+                class="fs-4">Show Orders</span></svg>
     </a>
 
 </header>
@@ -37,6 +31,7 @@
             <td colspan="2">Add Comment</td>
             <td colspan="2">Account Balance Payment</td>
             <td colspan="2">Online Payment</td>
+            <td colspan="2">Show Offers</td>
         </tr>
         </thead>
         <tbody>
@@ -68,8 +63,10 @@
                 <td rowspan="4">
                     <c:if test="${list.situation eq 'DONE'}">
                         <a onclick="onlinePayment(${list.id});" href="#" id="onlinePayment">Online Payment</a>
-
                     </c:if>
+                </td>
+                <td rowspan="4">
+                    <a onclick="showOffers(${list.id});" href="#" id="showOffer">Show Offers</a>
                 </td>
             </tr>
             <tr>
@@ -120,6 +117,9 @@
 
     function onlinePayment(id) {
         window.location.href = "http://localhost:8739/customer/onlinePayment/" + id;
+    }
+    function showOffers(id) {
+        window.location.href = "http://localhost:8739/customer/showOffers/" + id;
     }
 </script>
 </body>

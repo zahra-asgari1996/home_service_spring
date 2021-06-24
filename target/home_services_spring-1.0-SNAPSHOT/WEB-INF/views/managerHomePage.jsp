@@ -1,4 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -73,12 +75,22 @@
                 <li><a href="/user/searchUser" class="nav-link px-2 link-dark">Search Users</a></li>
                 <li><a href="/service/addNewService" class="nav-link px-2 link-dark">Add Service</a></li>
                 <li><a href="/subService/addNewSubService" class="nav-link px-2 link-dark">Add Sub Service</a></li>
+                <li><a href="/managerPage/addSubServiceToExert" class="nav-link px-2 link-dark">Add Sub Service To Expert</a></li>
             </ul>
 
         </header>
     </div>
 
     <div class="b-example-divider"></div>
+    <c:if test="${success ne null}">
+        <span class="fs-4">${success}</span>
+    </c:if>
+    <c:if test="${addNewSubService ne null}">
+        <span class="fs-4">${addNewSubService}</span>
+    </c:if>
+    <c:if test="${addNewService ne null}">
+        <span class="fs-4">${addNewService}</span>
+    </c:if>
 </main>
 <script src="/static/bootstrap.bundle.min.js"></script>
 
