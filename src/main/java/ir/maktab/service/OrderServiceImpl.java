@@ -190,15 +190,24 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDto> filterOrders(OrderHistoryFilterDto dto) {
+    public List<OrderDto> filterOrders(OrderHistoryFilterDto dto) throws NotFoundOrderException {
         List<Orders> all = repository.findAll(Specification.where(OrderSpecification.filterOrders(dto)));
-        return all.stream().map(i->mapper.toOrderDto(i)).collect(Collectors.toList());
+
+        List<OrderDto> collect = all.stream().map(i -> mapper.toOrderDto(i)).collect(Collectors.toList());
+        if(collect.size()==0){
+            throw new NotFoundOrderException(messageSource.getMessage("not.found.order",null,new Locale("fa_ir")));
+        }
+        return collect;
     }
 
     @Override
-    public List<OrderDto> filterUserOrders(UserOrdersFilterDto dto) {
+    public List<OrderDto> filterUserOrders(UserOrdersFilterDto dto) throws NotFoundOrderException {
         List<Orders> all = repository.findAll(Specification.where(UserOrdersSpecification.filterOrders(dto)));
-        return all.stream().map(i->mapper.toOrderDto(i)).collect(Collectors.toList());
+        List<OrderDto> collect = all.stream().map(i -> mapper.toOrderDto(i)).collect(Collectors.toList());
+        if(collect.size()==0){
+            throw new NotFoundOrderException(messageSource.getMessage("not.found.order",null,new Locale("fa_ir")));
+        }
+        return collect;
 
     }
 

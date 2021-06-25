@@ -33,7 +33,7 @@ public interface OrderService {
 
     void startWork(Integer id) throws NotFoundOrderException;
 
-    List<OrderDto> filterOrders(OrderHistoryFilterDto dto);
+    List<OrderDto> filterOrders(OrderHistoryFilterDto dto) throws NotFoundOrderException;
 
-    List<OrderDto> filterUserOrders(UserOrdersFilterDto dto);
+    List<OrderDto> filterUserOrders(UserOrdersFilterDto dto) throws NotFoundOrderException;
 }

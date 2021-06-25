@@ -10,9 +10,9 @@ public class OrderHistoryFilterDto {
     private OrderSituation situation;
     private String serviceName;
     private String subServiceName;
-    //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date startDate;
-    //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date endDate;
 
     public OrderSituation getSituation() {

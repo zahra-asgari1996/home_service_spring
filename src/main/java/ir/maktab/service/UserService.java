@@ -5,6 +5,7 @@ import ir.maktab.dto.FilterUsersDto;
 import ir.maktab.dto.SearchCustomerDto;
 import ir.maktab.dto.UserDto;
 import ir.maktab.dto.UserHistoryDto;
+import ir.maktab.service.exception.NotFoundUserException;
 
 import java.util.List;
 
@@ -16,5 +17,5 @@ public interface UserService {
     //    void changePassword(UserDto dto);
 //    List<UserDto> findByProperty(SearchCustomerDto dto);
     List<UserDto> filterUsers(FilterUsersDto dto);
-    List<UserDto> userHistory(UserHistoryDto dto);
+    List<UserDto> userHistory(UserHistoryDto dto) throws NotFoundUserException;
 }

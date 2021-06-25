@@ -9,7 +9,6 @@ import java.util.List;
 @Entity
 public class Expert extends Users {
     @Column
-    //double begir
     private Double rate;
     @Lob
     @Column(columnDefinition = "BLOB", length = 300000)
@@ -29,17 +28,8 @@ public class Expert extends Users {
     private List<Comments> comments = new ArrayList<>();
     @OneToMany(mappedBy = "expert")
     private List<Orders> orders = new ArrayList<>();
-    @Column
-    private String field;
 
-    public String getField() {
-        return field;
-    }
 
-    public Expert setField(String field) {
-        this.field = field;
-        return this;
-    }
 
     public Expert() {
         this.setRole(UserRole.Expert);

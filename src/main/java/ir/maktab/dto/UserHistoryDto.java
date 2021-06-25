@@ -5,9 +5,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 public class UserHistoryDto {
-    //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date startDate;
-    //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date endDate;
     private Integer maxNumberOfOrders;
     private Integer minNumberOfOrders;

@@ -38,7 +38,6 @@ public class ExpertMapperImpl implements ExpertMapper {
         expert.setSituation(dto.getSituation());
         expert.setDate(dto.getDate());
         expert.setCredit(dto.getCredit());
-        expert.setField(dto.getField());
 //        expert.setComments(dto.getComments().stream().map(i->commentMapper.toComment(i)).collect(Collectors.toList()));
         expert.setImage(dto.getImage());
         expert.setRate(dto.getRate());
@@ -57,7 +56,6 @@ public class ExpertMapperImpl implements ExpertMapper {
         dto.setEmail(expert.getEmail());
         dto.setPassword(expert.getPassword());
         dto.setDate(expert.getDate());
-        dto.setField(expert.getField());
 //        dto.setComments(expert.getComments().stream().map(i->commentMapper.toCommentDto(i)).collect(Collectors.toList()));
         dto.setRole(expert.getRole());
         dto.setSituation(expert.getSituation());
